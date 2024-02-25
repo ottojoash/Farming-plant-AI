@@ -1,25 +1,23 @@
 disease_dic = {
     'Apple___Apple_scab': """ <b>Crop</b>: Apple <br/>Disease: Apple Scab<br/>
-        <br/> Cause of disease:
-        <br/><br/> 1. Apple scab overwinters primarily in fallen leaves and in the soil. Disease development is favored by wet, cool weather that generally occurs in spring and early summer.
-        <br/> 2. Fungal spores are carried by wind, rain or splashing water from the ground to flowers, leaves or fruit. During damp or rainy periods, newly opening apple leaves are extremely susceptible to infection. The longer the leaves remain wet, the more severe the infection will be. Apple scab spreads rapidly between 55-75 degrees Fahrenheit.
-        <br/><br/> How to prevent/cure the disease <br/>
-        <br/>1. Choose resistant varieties when possible.
-        <br/>2. Rake under trees and destroy infected leaves to reduce the number of fungal spores available to start the disease cycle over again next spring
-        
-        <br/>3. Water in the evening or early morning hours (avoid overhead irrigation) to give the leaves time to dry out before infection can occur.
-        <br/>4. Spread a 3- to 6-inch layer of compost under trees, keeping it away from the trunk, to cover soil and prevent splash dispersal of the fungal spores.""",
+        <br/>Cause of disease:
+        <br/>Apple scab is caused by the fungus Venturia inaequalis. It thrives in wet, cool conditions, infecting leaves, fruits, and twigs. The fungus overwinters in fallen leaves and initiates infections in spring.
+        <br/><br/>How to prevent/cure the disease:
+        <br/>1. Practice good sanitation by removing fallen leaves and pruning affected branches.
+        <br/>2. Apply fungicides early in the season as a preventive measure. Products containing captan, mancozeb, or sulfur are effective. 
+        <br/>3. Choose resistant apple varieties for new plantings.
+        <br/><br/>Pesticides to avoid:
+        <br/>Do not use copper-based fungicides late in the season as they can cause fruit russetting.""",
 
     'Apple___Black_rot': """ <b>Crop</b>: Apple <br/>Disease: Black Rot<br/>
-        <br/> Cause of disease:
-        <br/><br/>Black rot is caused by the fungus Diplodia seriata (syn Botryosphaeria obtusa).The fungus can infect dead tissue as well as living trunks, branches, leaves and fruits. In wet weather, spores are released from these infections and spread by wind or splashing water. The fungus infects leaves and fruit through natural openings or minor wounds.
-        <br/><br/> How to prevent/cure the disease <br/>
-        <br/>1. Prune out dead or diseased branches.
-        <br/>2. Prune out dead or diseased branches.
-        
-        <br/>3. Remove infected plant material from the area.
-        <br/>4. Remove infected plant material from the area.
-        <br/>5. Be sure to remove the stumps of any apple trees you cut down. Dead stumps can be a source of spores.""",
+        <br/>Cause of disease:
+        <br/>Black rot is caused by the fungus Diplodia seriata (syn Botryosphaeria obtusa). The fungus can infect both dead and living parts of the apple tree, such as trunks, branches, leaves, and fruits. It spreads through wind or splashing water in wet conditions, entering through natural openings or minor wounds.
+        <br/><br/>How to prevent/cure the disease:
+        <br/>1. Prune out dead or diseased branches to prevent the spread of the disease.
+        <br/>2. Remove infected plant material from the area to eliminate sources of fungal spores.
+        <br/>3. Ensure to remove the stumps of any cut-down apple trees. Dead stumps can be a source of spores.
+        <br/><br/>Pesticides to avoid:
+        <br/>[No specific pesticides to avoid mentioned, but always consider consulting with a local expert or extension service for the best management practices in your area.]""",
 
     'Apple___Cedar_apple_rust': """ <b>Crop</b>: Apple <br/>Disease: Cedar Apple Rust<br/>
         <br/> Cause of disease:
