@@ -65,6 +65,8 @@
             <input type="text" name="username" required><br>
             Password:<br>
             <input type="password" name="password" required><br><br>
+            <!-- Include CSRF token -->
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
             <input type="submit" value="Login">
         </form>
         <a href="/register">Register</a>

@@ -40,6 +40,11 @@
           <li><a href="#about">About</a></li>
           <li><a href="#features">Features</a></li>
           <li><a href="#test">Detect</a></li>
+          <form action="/logout" method="post" id="logout-form" style="display: none;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
+          </form>
+          
+          <li><a href="#" onclick="document.getElementById('logout-form').submit();">Logout</a></li>
         </ul>
       </nav>
       <!-- //nav -->
@@ -134,16 +139,16 @@
     <div class="container pb-xl-5 pb-lg-3">
       <h3 class="title text-center mb-lg-5 mb-md-4 mb-sm-4 mb-3"> Test Your Plants</h3>
       <div class="row" style="justify-content: center;">
-        <form action="{{ url_for('predict') }}" method="POST" enctype=multipart/form-data>
+        <form action="{{ url_for('predict') }}" method="POST" enctype="multipart/form-data">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}"> <!-- Include CSRF token -->
           <div class="form-group text-center">
             <label for="exampleFormControlFile1"><b>Input a file</b></label>
-            <input type="file" name="file" class="form-control-file" id="inputImage" onchange=previewImage(event)
-              required>
-            <br />
-            <button class="btn btn-primary" type="submit"> Predict </button>
+            <input type="file" name="file" class="form-control-file" id="inputImage" onchange="previewImage(event)" required>
+            <br>
+            <button class="btn btn-primary" type="submit">Predict</button>
           </div>
         </form>
-      </div>
+      </div>       
       <img id="output-image" class="rounded mx-auto d-block" />
       <br />
     </div>
