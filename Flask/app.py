@@ -48,6 +48,7 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    csrf_token = generate_csrf()
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -56,7 +57,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
-    return render_template('register.html')
+    return render_template('register.html',csrf_token=csrf_token)
 
 @app.route('/logout', methods=['POST'])  # Adjusted to handle POST method
 def logout():
