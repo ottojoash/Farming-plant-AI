@@ -34,15 +34,30 @@
           <h1><a href="index.html">Plant-AI</a></h1>
         </div>
         <label for="drop" class="toggle">Menu</label>
-        <input type="checkbox" id="drop">
-        <ul class="menu mt-2">
-          <li class="active"><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#test">Detect</a></li>
-          <form action="/logout" method="post" id="logout-form" style="display: none;">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
-          </form>
+  <input type="checkbox" id="drop">
+  <ul class="menu mt-2">
+    <li class="active"><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#test">Detect</a></li>
+    <!-- Model Dropdown Start -->
+    <li>
+      <!-- This is the Model menu item that will show dropdown on hover/click -->
+      <label for="drop-1" class="toggle">Model +</label>
+      <a href="#">Model</a>
+      <input type="checkbox" id="drop-1"/>
+      <ul>
+        <li><a href="#Farm-1">Farm-1</a></li>
+        <li><a href="#Farm-2">Farm-2</a></li>
+        <li><a href="#Farm-3">Farm-3</a></li>
+      </ul>
+        </li>
+        <!-- Model Dropdown End -->
+        <li><a href="#" onclick="document.getElementById('logout-form').submit();">Logout</a></li>
+      </ul>
+      <form action="/logout" method="post" id="logout-form" style="display: none;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
+      </form>
           
           <li><a href="#" onclick="document.getElementById('logout-form').submit();">Logout</a></li>
         </ul>
