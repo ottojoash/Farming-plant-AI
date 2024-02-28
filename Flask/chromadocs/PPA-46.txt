@@ -1,0 +1,830 @@
+PPA-46
+In this chapter:
+History and Significance                                                                           01
+Pathogens                                                                                                      01
+Conditions for Disease Development                                             02
+Fungi                                                                                                            02
+Oomycetes (Water Molds)                                                                   07
+Bacteria                                                                                                       09
+Viruses                                                                                                        11
+Plant Parasitic Nematodes                                                                   13
+Phytoplasmas                                                                                           15
+Parasitic Seed Plants                                                                              15
+Table of Common Symptoms                                                                 16
+Plant Disease Diagnostics                                                                        18
+Plant Disease Management                                                                     19
+Resources                                                                                                       20
+Anyone who has ever planted a garden knows not only the 
+rewards of beautiful flowers, fruit, and/or vegetables, but 
+also the disappointment when plants become diseased or damaged. Many factors cause plants to exhibit poor vigor, changes in 
+appearance, or even death. Both abiotic (non-living) and biotic 
+(living) factors can negatively impact plant heath. Disorders 
+that result from non-living factors (such as nutrient deficiencies, too much or too little watering, temperature stress, and 
+chemical damage) are discussed in subsequent chapters. This 
+chapter focuses on those living organisms that cause disease: 
+fungi, water molds, bacteria, viruses, nematodes, phytoplasmas, 
+and parasitic plants.
+History and Significance
+Plant loss to homeowners may result in frustration and 
+minor monetary cost. However, on a global scale, plant diseases 
+cause an estimated $38 billion1 in annual losses. History also 
+provides some perspective on the impacts of plant disease.
+One of the most notable historical impacts of plant disease 
+was caused by late blight of potato. This disease was a major 
+contributing factor in the Irish potato famine of 1845. During 
+this time, approximately one million people perished from 
+starvation; a million and a half more are believed to have left 
+Ireland and immigrated to the United States. The late blight 
+pathogen is still present in production systems today, but it is 
+managed by resistant varieties, sanitation, and fungicides.
+Near complete loss of the American chestnut was caused 
+by a fungal disease that nearly wiped out forests in the eastern 
+United States. The trees once grew to majestic heights within 
+their native forest habitat, as well as in urban plantings. They 
+provided high-quality hardwood for building construction and 
+nuts as a food source for people and wildlife. However, in the 
+late 1800s, chestnut blight was accidentally introduced to the 
+United States through imported Chinese chestnut trees. While 
+Chinese chestnuts are tolerant to the blight, American chestnut 
+trees are not, and in less than 40 years, approximately 30 million 
+acres of chestnut trees died. Chestnut blight remains a problem, 
+and researchers are still seeking options for management.
+Disease management changed drastically when the French 
+wine industry gave way to the first fungicide, Bordeaux mixture. 
+France’s grape production had long been devastated by powdery mildew and downy mildew. Then in 1882, the discovery 
+of a copper sulfate and lime mixture helped manage these 
+vineyard diseases. Bordeaux mixture is still used in a modified 
+form to manage powdery mildew, downy mildew, and other 
+fungal diseases on numerous types of plants.
+These examples represent situations in which plant diseases 
+have reached historical proportions. However, the amount of 
+damage that plant diseases cause varies depending upon factors such as environment, host health and susceptibility, and 
+pathogen biology. There are many options for managing disease 
+development and spread. The effectiveness of management 
+techniques begins with proper identification of the disease 
+and/or causal organism.
+Pathogens
+A plant disease is any physiological or structural abnormality that is caused by a living organism. Organisms that cause 
+disease are referred to as pathogens, and affected plants are 
+referred to as hosts. Many organisms rely on other species for 
+sources of nutrients or as a means of survival, but they are not 
+always harmful to the host. For example, saprophytic organisms 
+obtain nutrients from dead organic material and are a vital 
+part of many ecosystems. Plant pathogens, on the other hand, 
+utilize hosts for nutrients and/or reproduction at the hosts’ 
+expense. Disease-causing organisms include fungi, oomycetes 
+(fungus-like organisms called water molds), bacteria, viruses, 
+nematodes, phytoplasmas, and parasitic seed plants.
+Once a pathogen infects a host, symptoms often develop. 
+Symptoms are the outward changes in the physical appearance 
+of plants. Symptoms take time to develop, and thus, disease 
+By Kimberly Leonberger, plant pathology Extension associate; Kelly Jackson and Robbie Smith, Extension horticulture agents; and 
+Nicole Gauthier, Extension plant pathologist.
+Plant Diseases
+CHAPTER 05 Plant Diseases
+5-2
+development may be delayed for several days, weeks, months, or 
+even years after initial infection occurs. Examples of symptoms 
+include wilt, leaf spots, cankers, rots, and decline.
+Physical evidence of pathogens (called signs) may also be 
+observed on diseased tissue. Examples of signs include fungal 
+fruiting bodies, bacterial ooze, nematode cysts, and fungal 
+mycelia. Both symptoms and signs are utilized in making disease diagnoses.
+Conditions for Disease Development
+Disease development is dependent upon three conditions: 
+a susceptible host plant, a favorable environment, and a viable 
+pathogen. All three of these factors must be present for disease 
+to occur. Figure 5.1 presents this concept as a “disease triangle.” 
+Each side of the triangle represents one of these factors: host 
+plant, environment, or pathogen. When all three sides of the 
+triangle are complete, disease occurs. If one of the conditions 
+is not present (one side of the triangle is missing), then disease 
+does not occur. By altering the susceptibility of host plants, the 
+surrounding environment, and/or the viability of pathogens, 
+the disease triangle can be broken and disease development 
+prevented.
+Host plant genetic makeup determines its susceptibility to 
+disease. This susceptibility depends upon various physical and 
+biochemical factors within the plant. A plant’s stature, growth 
+habit, cuticle thickness (a protective outer layer on plant tissues), and shape of stomata (small openings that allow water, 
+oxygen, and carbon dioxide in and out of plant tissues) are a 
+few physical factors that influence disease development. Plants 
+may also produce biochemical compounds that limit or prevent 
+colonization or infection. Growth stage and ability to deter 
+pathogens can also impact plant susceptibility to disease. For 
+example, young leaves are often more susceptible to infection 
+than mature leaves.
+Environment plays an important role in disease development. Pathogens generally require specific environmental 
+conditions for infection and spread. Most plant pathogens 
+require high humidity and moderate temperatures. Other 
+pathogens, such as bacteria and water molds, require surface 
+water for spread. In some disease cycles, environmental conditions influence the development of symptoms. For example, 
+extreme temperatures or drought can cause plant stress; this 
+loss of vigor can increase host susceptibility to both infection 
+and disease development. Other environmental factors affecting disease can include those resulting from planting and maintenance practices. For example, high-density plantings can have 
+higher relative humidity, while overhead watering increases leaf 
+surface moisture needed by pathogens to infect plant leaves.
+Pathogens must be present and viable in order to infect 
+plants and cause disease. Removal of infected plant parts and 
+other remnants of pathogens makes them unavailable for infection. Fungicides also reduce amounts of inoculum (infective 
+propagules) available for infection. Many pathogens, however, 
+have developed specialized structures that ensure survival during adverse conditions. For example, several water molds and 
+fungi are capable of surviving in soil for many years until conditions are favorable for infection. Pathogens may also survive 
+winter temperatures and other harsh conditions in infected 
+plant tissue. If a susceptible host and favorable environment 
+are not available, some pathogens can assume a dormant state 
+for many years.
+Fungi
+Fungi are the most abundant group of plant pathogens. There 
+are thousands of fungi capable of causing plant diseases. These 
+multicellular organisms are typically microscopic. The body of 
+a fungus is composed of filament-like threads called hyphae. 
+Masses of hyphae are called mycelia. When large enough, these 
+masses can be seen without the aid of a microscope. Powdery 
+mildew is one example of a disease in which fungal mycelia 
+are visible.
+Fungi reproduce via spores, which can be produced sexually 
+or asexually. Spores vary in color, shape, size, and function, and 
+this variation can often be used by diagnosticians as a means to 
+identify pathogens. Some fungi produce spores within sexual 
+fruiting structures (ascocarps, pustules, mushrooms) or asexual 
+fruiting structures (pycnidia, acervuli). While many of these 
+fruiting structures are small and may require the aid of a microscope, some (such as mushrooms or rust pustules) can be seen 
+with the naked eye. Other types of fungi produce exposed or 
+unprotected spores that are not enclosed in structures. These 
+spore types are more sensitive to environmental conditions 
+than enclosed spores.
+Once a fungal spore makes contact with a plant surface, it 
+germinates, much like a seed, as long as conditions are favorable for the pathogen. Hyphae emerge from spores and are 
+Figure 5.1. Disease Triangle—Plant disease results when there is a capable of infecting plants via natural plant openings (such 
+susceptible host, viable pathogen, and favorable environment.
+Plant Diseases CHAPTER 05
+5-3
+as stomata), through wounds, or by direct penetration of the 
+plant epidermis. Upon infection, fungi utilize nutrients from 
+their hosts. Many fungi produce additional spores as they grow, 
+which aids in the spread of the pathogen.
+Spores or mycelial fragments (these infective units are 
+referred to as propagules) can be spread via wind, water, soil, 
+insects, animals, and humans. Fungi spread not only from plant 
+to plant, but also within a single plant. Fungi may spread through 
+a single plant as a systemic infection by utilizing the vascular 
+Figure 5.2. Septoria leaf spot of tomato is a disease familiar to many gardeners. Spores survive winter on infected plant debris (2a) and weed 
+hosts. In spring, when temperatures are favorable, rain splashes spores (2b) onto new plant growth where infection occurs. Small circular lesions 
+develop on leaves (2c), petioles, and stems. This pathogen is not known to infect fruit. Symptoms first develop on lower plant parts where 
+humidity is high and the first splashed spores land. As the season progresses the fungus produces additional spores, which are splashed by 
+water further up plants. Severely infected plants may exhibit necrosis and defoliation (2d).
+system or by splashing spores that result in multiple infection 
+sites on multiple plant tissues.
+Common symptoms caused by fungi include leaf spots, 
+wilts, blights, cankers, fruit rots, and dieback. For additional 
+information on symptoms that can result from fungal infections, 
+refer to Table 5.1. Fungi cause a wide range of diseases including Septoria leaf spot, powdery mildew, cedar-apple rust, and 
+Armillaria root rot. Life cycles of these diseases are presented 
+in Figures 5.2, 5.3, 5.4, and 5.5 respectively.
+2a
+2b 2c
+2d
+CHAPTER 05 Plant Diseases
+5-4
+Figure 5.3. Powdery mildew is a common disease that is known to infect numerous landscape and garden plants. Spores of this fungal pathogen survive winter on infected plant debris or woody tissue (3a). In spring, when temperatures are favorable, rain splashes spores (3b) from leaf 
+litter onto new plant growth where infection occurs. Throughout the season the fungus produces additional spores (3c) causing subsequent 
+infections. The result is a white powdery plant (3d) that may exhibit early defoliation.
+3a 3b
+3c
+3d
+Plant Diseases CHAPTER 05
+5-5
+Figure 5.4. Cedar-apple rust is caused by a unique group of fungi known as rusts. Many rust pathogens require multiple hosts to complete their 
+life cycles. In the case of cedar-apple rust, the pathogen overwinters as galls on juniper (4a). Once spring rains begin, galls produce slimy “horns” 
+comprised of spores (4b). These spores infect leaves and fruit of apple (and related hosts) (4c). In late summer, apple lesions produce another 
+spore type that infects juniper (4d).
+4a 4b
+4c 4d
+CHAPTER 05 Plant Diseases
+5-6
+Figure 5.5. Recently transplanted and older stressed trees are susceptible to Armillaria root rot (also called shoestring rot). These fungal pathogens survive in dead wood and roots, as well as soil. Infection occurs in the roots or base of the tree via rhizomorphs (cord-like strands of fungal 
+hyphae) (5a). If bark is removed from infected trees, a white mycelial growth may be observed (5b). During rainy weather, pale brown mushrooms 
+may develop at bases of infected trees or along dead or dying surface roots (5c). Severely diseased plants exhibit decline or even death (5d).
+5a 5b
+5c 5d
+Plant Diseases CHAPTER 05
+5-7
+Oomycetes (Water Molds)
+As the name implies, water is essential for survival, reproduction, infection, and spread of oomycetes (commonly called 
+water molds). Water molds were once considered true fungi, 
+but they are now classified as fungus-like organisms. Water 
+molds and fungi are similar in appearance, as the body is composed of hyphae that mass together to form mycelia. Downy 
+mildew is an example of a disease with visible oomycete mycelia.
+Reproduction by water molds may be via sexual or asexual 
+spores. Asexually produced spores (zoospores) have the ability 
+to move in water using tail-like structures (flagella) that propel 
+them, a trait not associated with true fungi. Zoospores develop 
+within capsules (sporangia) under specific environmental conditions. Sporulation can occur numerous times per growing 
+season, as long as water is available. In contrast, sexual spores 
+of water molds are typically produced prior to dormancy in 
+response to environmental stress. They serve as a means for 
+survival under adverse conditions. Spores of water molds 
+Figure 5.6. Downy mildew is a common disease that is known to infect numerous landscape and garden plants, including cucumber. Most water 
+mold pathogens are host-specific. Spores (6a) of the cucurbit downy mildew pathogen are windblown north each year from overwintering sites 
+in the southern United States Soon after infection, yellow, angular leaf spots develop (6b). Spores are produced on the undersides of leaves (6c); 
+spores are spread to new tissue via water/rain. Defoliation may occur on severely infected plants (6d). The cucurbit downy mildew pathogen 
+cannot survive winter in Kentucky because it requires living plant tissue, and it is not known to produce overwintering spores outside of laboratory conditions. Other downy mildew pathogens can overwinter on leaf debris in Kentucky.
+6a 6b
+6c
+6d
+are microscopic, but their examination is essential for proper 
+species identification.
+Water molds infect in the same ways as true fungi by entering 
+through natural plant openings or by direct penetration into 
+plant tissues. Once infection occurs, water mold pathogens continue to grow and produce additional spores for new infections.
+Infective propagules are spread via water, soil, and infected 
+plants and weeds, as well as by wind and wind-driven rain. 
+Survival structures produced by water mold pathogens have 
+the ability to persist in water and soil for several years.
+Common symptoms caused by water molds include leaf 
+spots, blights, cankers, root rots, wilt, dampingoff, and dieback. 
+For additional information on symptoms that can result from 
+water mold infections, see Table 5.1. Two common diseases 
+caused by water molds are downy mildew and late blight. 
+Life cycles of these diseases are presented in Figures 5.6 and 
+5.7, respectively.
+CHAPTER 05 Plant Diseases
+5-8
+Figure 5.7. Late blight is a disease of solanaceous crops, primarily potato and tomato. The pathogen most commonly overwinters in the southern United States in infected plant or weed tissue. In spring, overwintering spores are windblown north from these southern sites. Once infection 
+occurs, water-soaked, grey-brown lesions may develop on leaves (7a), petioles, stems, and/or fruit (7b). Defoliation follows (7c). Potato tubers 
+(7d) may become infected via systemic infections or by spores washed into soil.
+7a 7b
+7d
+7c
+Plant Diseases CHAPTER 05
+5-9
+Figure 5.8. Bacterial wilt is a disease of cucumber, melons, and pumpkin. Bacterial cells overwinter in striped and spotted cucumber beetles, 
+which transmit the pathogen during the growing season (8a). When insects feed on plant tissue, bacteria in their feces are deposited near 
+feeding wounds. Infected plants wilt (8b) when large numbers of bacterial cells block water movement. Feeding beetles obtain bacterial cells 
+from infected plants and move them to new portions of plants or to new plants. Bacteria continue to reproduce and move throughout plants, 
+eventually resulting in plant death (8c). Bacterial ooze can be observed by cutting vines, holding the two cut ends together for 5 seconds, and 
+then slowly pulling them apart again (8d).
+8a
+8c
+8b
+8d
+Bacteria
+Bacteria are microscopic organisms typically composed of 
+single cells. About 200 types of bacteria are known to cause 
+plant diseases. Due to their small size, a high-magnification 
+microscope is required to observe bacteria. Occasionally, when 
+a large number of cells are present, plants may be observed 
+“oozing” bacteria and other organic byproducts.
+Bacteria are capable of rapid reproduction through a process 
+known as binary fission. In this process, one cell divides to 
+become two, then two divide to become four cells, and so on. 
+Within a few hours, one bacterial cell can become thousands, 
+and under ideal conditions, populations can double in as little 
+as 20 minutes.
+Unlike fungi and water molds, bacteria are not able to penetrate plant tissue directly. They must infect via wounds or 
+natural plant openings such as stomata. Free water is required 
+for infection. Once inside plants, bacteria begin to reproduce 
+immediately. Some types of bacteria produce toxins or enzymes 
+that degrade plant tissue, and the tissue is then utilized as a food 
+source. Some bacteria can colonize vascular systems of plants, 
+which results in restriction of water movement.
+Bacteria spread by water/splashing rain, wind, or insects and 
+then move across plant tissues in surface water to reach wounds 
+or natural openings. Some can survive for five or more years in 
+soil, as well as in plant debris and cankers.
+Common symptoms caused by bacteria include leaf spots, 
+blights, cankers, galls, wilt, dieback, and soft rots. For additional information on symptoms that can result from bacterial 
+infections, refer to Table 5.1. Two common diseases caused by 
+bacteria are bacterial wilt and fire blight. Life cycles of these 
+diseases are presented in Figures 5.8 and 5.9, respectively.
+CHAPTER 05 Plant Diseases
+5-10
+Figure 5.9. Certain apple cultivars and other pome fruit are susceptible to a bacterial disease called fire blight. The pathogen overwinters in cankers and other diseased or dying wood (9a). In spring, bacterial cells are transported from cankers to blossoms by wind and rain or by pollinating insects. This first phase of disease is called the blossom blight phase (9b). Blossom and spur infections move through woody tissue to form 
+cankers (9c). Rain, wind, and insects later carry bacterial cells from infected blossoms to actively growing shoots, causing shoot blight (9d). As 
+weather cools and active plant growth stops, bacteria become dormant until warm rainy weather returns (often the following spring). Over many 
+seasons, bacteria can spread throughout trees, resulting in branch or trunk girdling and eventual plant death.
+9a 9b
+9c 9d
+Plant Diseases CHAPTER 05
+5-11
+Viruses
+Viruses are extremely small particles that require magnification of 100,000 times or more for observation. This can only 
+be achieved with specialized equipment, such as an electron 
+microscope. Diseases caused by viruses are often named for the 
+first host plant for which symptoms were reported and/or the 
+most common symptom. An example is tobacco mosaic virus; 
+this virus was first reported as a mosaic symptom on tobacco. 
+However, this disease is known to infect more than 100 plant 
+species, including many vegetable and ornamental plants.
+Once viruses enter host cells, they “hijack” plants and 
+“instruct” cells to produce more virus particles. As plant cells 
+are converted from their normal function and processes (such 
+as cell division or chlorophyll production), changes in plant 
+growth and development may be observed.
+Plant viruses do not move in and out of plant tissue as 
+readily as fungal and bacterial pathogens. They require vectors (such as insects or humans) to carry them from one plant 
+to another. After entry into plant cells, reproduction begins. 
+Viruses spread throughout plant hosts, infecting all plant parts 
+(systemic infection). Viruses are dependent upon live hosts 
+for replication, thus disease progresses slowly. Virus-infected 
+Figure 5.10. Most cultivated roses are susceptible to rose rosette virus. This virus is vectored by a microscopic rose leaf curl mite (10a). These 
+mites move from plant to plant in wind currents, via other insects, or by crawling to adjacent plants. Symptoms, which may develop months or 
+years after infection, can include short internodes (called witches’ broom), strapping and reddening of leaf and stem tissue (10b), and excessive 
+thorn development (10c). Infected plants that remain in the landscape (10d) serve as inoculum and sources of vectoring mites. When removing 
+infected plants, dig out all roots and destroy all plant parts.
+10a 10b 10c
+10d
+plants often survive for many years before they die, as rapid 
+plant death would be detrimental to a pathogen that depends 
+upon its host for replication.
+Insect vectors are a common means for virus spread. 
+Numerous insects are capable of acquiring virus particles while 
+feeding on infected plants. These particles are transferred to 
+new plants or plant parts during subsequent feedings. Some 
+virus particles can enter an insect’s gut, where the virus may 
+persist and replicate throughout the insect’s life. Other types of 
+particles are only carried for short periods inside probing insect 
+mouthparts. Insects are capable of transmitting viruses multiple times throughout the season. Viruses can also spread by 
+infected seed or pollen, nematodes, humans, animals, or tools. 
+A few viruses with very stable structures can remain viable in 
+dormant plant tissue and on nonliving materials, which can 
+serve as inoculum for future infections.
+Common symptoms caused by viruses include mottling, 
+mosaic, leaf distortion, stunting, poor fruit set, and chlorosis. 
+For additional information on symptoms that can result from 
+virus infections, see Table 5.1. Two common viral diseases are 
+rose rosette and tomato spotted wilt. Life cycles of these diseases 
+are presented in Figures 5.10 and 5.11, respectively.
+CHAPTER 05 Plant Diseases
+5-12
+Figure 5.11. Tomato spotted wilt virus (TSWV) is known to infect thousands of different plant species. Virus particles are vectored by thrips, 
+which acquire the virus while feeding during the larval stage (11a). TSWV can replicate within insect hosts and persist throughout an insect’s life.
+Once infected, plants such as tomatoes may exhibit symptoms of wilting and ringspots on leaves (11b), lesions on stems (11c), and mottling or 
+ringspots on fruit (11d). Multiple generations of thrips occur each season, and infected weedy hosts contribute to virus spread.
+11a 11b
+11c 11d
+Plant Diseases CHAPTER 05
+5-13
+Plant Parasitic Nematodes
+Plant parasitic nematodes are microscopic roundworms 
+that primarily infect roots, but a few occur in foliar portions of 
+plants. While there are many species of nematodes, only a few 
+are known to parasitize plants. All plant parasitic nematodes 
+have needle-like mouthparts (stylets) that are used to pierce 
+plant tissues and extract cell contents. Nematodes reproduce 
+via eggs that result from either the mating of a male and a female 
+or by the female alone.
+Symptom development occurs as a result of extracted cellular contents or other plant damage. Nematodes may remain 
+on the exterior of roots during feeding (stubby-root nematode) 
+or penetrate plant tissues completely to feed while inside plants 
+(dagger nematode). Nematodes may select a single feeding site 
+or feed in multiple locations. Long-distance spread is achieved 
+via movement of infested soil, floodwater, or plant material; 
+nematodes are only capable of moving very short distances 
+on their own.
+Common symptoms caused by nematode feeding include 
+chlorosis, root galls, damaged or stubby roots, stunting, dieback, and reduced yields. Some heavily infested herbaceous 
+plants develop symptoms similar to nutrient deficiencies as 
+a result of root loss. For additional information on symptoms 
+that can result from nematode infestations, refer to Table 5.1. 
+Two common plant parasitic nematodes include soybean cyst 
+nematode and foliar nematode. Life cycles of these organisms 
+are presented in Figures 5.12 and 5.13, respectively.
+Figure 5.12. Soybean cyst nematode juvenile nematodes (12a) infect plants by penetrating root tissue. Males feed for a short time before moving on to another feeding site. Females remain at the same feeding site and expand to encyst egg masses. These lemon-shaped females are white 
+or yellow, but they become brown as they mature and die (12b). The dead female bodies are known as cysts; each cyst contains several hundred 
+eggs. Cysts protect eggs from adverse conditions, such as heat and drought. When conditions are favorable for nematode development, cysts 
+burst open and release eggs (12c). Soybean plants may not exhibit any aboveground symptoms other than poor vigor and/or yield loss (12d).
+12a 12b
+12c 12d
+CHAPTER 05 Plant Diseases
+5-14
+Figure 5.13. Foliar nematodes can infect numerous plant species, including anemone. Adult nematodes (13a) survive winter in plant crowns or 
+leaf debris. In spring, foliar nematodes move upward via splashing water. Once adults reach leaves (13b), they enter through stomata and begin 
+feeding. Eggs (13c) are produced within leaves, where they hatch, molt, and begin to feed. Infected leaf cells are varying shades of green that 
+turn brown and necrotic (13d) as cell contents are consumed.
+13a 13b
+13c
+13d
+Plant Diseases CHAPTER 05
+5-15
+Phytoplasmas
+Phytoplasmas are extremely small, bacteria-like plant pathogens. While they are similar to bacteria, phytoplasmas differ 
+in their inability to survive without a host, their smaller size, 
+and their lack of cell walls. Phytoplasmas rely on insect vectors, such as leafhoppers, for transmission into hosts. During 
+feeding, leafhoppers acquire phytoplasmas from infected host 
+phloem (nutrient-conducting vascular system) and introduce 
+them into healthy tissue. Once in the phloem, phytoplasmas 
+are capable of reproducing and spreading throughout plants, 
+which results in systemic infections. Phytoplasmas persist 
+within their insect vectors, making this the main method of 
+spread for these pathogens.
+Common symptoms caused by phytoplasmas are virescence 
+(development of chlorophyll in tissues where it is normally 
+absent) and abnormal growth such as a “witches’ broom” 
+symptom. The most common disease caused by a phytoplasma 
+is aster yellows. The symptoms of this disease are depicted 
+in Figure 5.14.
+Parasitic Seed Plants
+Parasitic seed plants share many common characteristics 
+with true plants, such as their ability to reproduce and spread 
+by seeds. Like other plants, seeds are disseminated via wind, 
+water, and animals. However, parasitic plants lack the ability to 
+produce all of the nutrients or water they require, so they rely 
+on host plants. In some cases, parasitic plants have developed 
+modified structures, such as haustoria, that allow them to 
+penetrate host plants and obtain nutrients and water. Common 
+symptoms caused by parasitic plants are reduced vigor and 
+dieback. The most common parasitic plant is mistletoe, shown 
+in Figure 5.15.
+Figure 5.14. Aster yellows, which is caused by a phytoplasma, is 
+a common disease of purple cone flower. Infected plants exhibit 
+symptoms such as stunting, abnormal growth, sterile flowers, and 
+virescence in flowers.
+Figure 5.15. Mistletoe often parasitizes oaks and other forest trees.
+It produces large clumps of foliage on host plant branches. Mistletoe 
+does not produce roots and is reliant upon hosts for water and 
+nutrients. In Kentucky, infected host plants do not suffer major damage or stress. In locations where other mistletoe species are present, 
+extensive damage to the host may occur.
+CHAPTER 05 Plant Diseases
+5-16
+Table 5.1. The most common symptoms associated with each pathogen group.
+Symptom Description
+Plant Pathogen Groups
+Fungi Water 
+molds Bacteria Viruses Nematodes Phytoplasmas Parasitic 
+plants
+Blight
+Rapid discoloration, 
+wilting and death of 
+plant tissue
+X X X
+Blotch
+Blotch or large spot 
+on leaves, shoots, 
+or fruit
+X X
+Bronzing
+Leaves or needles 
+develop a bronze 
+color
+X X
+Canker
+Dead region on 
+bark of twigs, 
+stems, or trunks, 
+often discolored 
+and either raised or 
+sunken
+X X X
+Chlorosis
+An abnormal 
+yellowing of plant 
+parts
+X X X X X
+Dampingoff
+Decay of seeds 
+in soil or young 
+seedlings shortly 
+after emergence
+X X
+Decline
+Gradual, often 
+uniform, decline of 
+plant health or death 
+of plant tissue
+X X X X X X
+Dieback
+Progressive death 
+of shoots, branches, 
+or roots, generally 
+starting at tips
+X X X X X
+Distortion Irregularly shaped 
+plant parts X X X X X
+Flagging
+Decline of a shoot or 
+branch, while nearby 
+branches remain 
+healthy
+X X X
+Gall
+Abnormal, localized 
+swelling on leaf, 
+stem, or root tissue
+X X X
+Gummosis
+Production of a 
+sticky gum that is 
+exuded by the plant
+X X X
+Leaf spot
+Lesion on a leaf, 
+which may vary in 
+color, shape, and size
+X X X X
+Plant Diseases CHAPTER 05
+5-17
+Table 5.1. The most common symptoms associated with each pathogen group (continued).
+Symptom Description
+Plant Pathogen Groups
+Fungi Water 
+molds Bacteria Viruses Nematodes Phytoplasmas Parasitic 
+plants
+Mosaic
+Nonuniform foliage 
+coloration, normally 
+an intermingling 
+of green color 
+variations and 
+yellowish patches
+X
+Mottle Irregular pattern of 
+light and dark areas X
+Mummy Hard, dried, diseased 
+fruit X
+Necrosis Death of plant tissue X X X
+Ring spot
+A lesion with a 
+dark outer ring and 
+lighter center
+X
+Rot Decomposition and 
+destruction of tissue X X X
+Rugose
+Wrinkled 
+appearance to plant 
+tissue
+X X
+Russet
+Yellowish-brown or 
+reddish-brown scar 
+tissue on a fruit’s 
+surface
+X
+Scab Crust-like disease 
+lesion X X
+Scorch
+Browning and 
+necrosis of leaf 
+margins
+X X X
+Shot-hole
+Lesions where 
+centers have fallen 
+out
+X X
+Stunting
+Reduced growth of 
+a plant, where plant 
+or plant parts are 
+smaller than normal
+X X X X X
+Tip blight Death of tissue at 
+the tip of a shoot X X
+Vein clearing Leaf veins become 
+yellow or clear X
+Watersoaking
+Wet, dark, or greasy 
+lesions, usually 
+sunken and/or 
+translucent
+X X X
+Wilt Drooping of leaves 
+or other plant parts X X X X
+Witches’ broom Abnormal brush-like 
+shoot development X X X
+CHAPTER 05 Plant Diseases
+5-18
+Plant Disease Diagnostics
+Plant disease diagnostics begins with the observation of 
+both the symptomatic plant(s) and surrounding environment. 
+Sometimes the cause of plant problems is evident: wildlife 
+damage, insect feeding, or mechanical injury. However, a wide 
+range of abiotic and biotic factors can cause disease or diseaselike symptoms. Basic plant diagnostics and differentiation 
+between biotic and abiotic problems are discussed in Chapter 
+6, Diagnosing Plant Problems. Plant disease diagnostics are 
+covered in this section.
+There are several steps to disease diagnostics, including 
+evaluation of vital site information and examination of diseased tissue. Since the majority of plant pathogens cannot be 
+seen without the aid of a microscope, it may not be possible to 
+confirm disease agents by visual assessment alone. In order to 
+diagnose plant problems, it may be necessary to submit samples 
+of symptomatic plants to a university or commercial laboratory 
+for further analysis.
+Even though it may not always be possible to diagnose plant 
+diseases by symptoms alone, the following strategies can be 
+used to determine whether an infectious agent is the cause of 
+disease symptoms. In addition, detailed site and plant information can lead to a more complete diagnosis.
+Know the Host Plant(s)
+A single plant species can have numerous cultivars or varieties, with many different colors, shapes, patterns, textures, and 
+sizes. Occasionally, diversity or variation in plant appearance 
+can be mistaken for disease. The difference between normal 
+growth and appearance and abnormal appearance can indicate 
+whether a problem is present. Furthermore, disease symptoms 
+may differ with plant species or cultivar. Some species and/or 
+cultivars may be more susceptible or tolerant to disease than 
+others. Host information can be critical for diagnosis.
+Document Plant Part(s) Affected
+In some cases, symptoms develop on plant parts that are 
+different from infected tissue. For example, dieback and wilting 
+seem to indicate problems in the plant canopy. However, a root 
+rot pathogen or bacterial colonization of vascular tissue may 
+cause similar symptoms. It is important to examine all aboveand belowground portions of plants to determine potential 
+infection site or symptom origin. Digging or cutting into plant 
+tissue may sometimes be necessary to fully understand the 
+extent of parts affected.
+Check for Symptoms and Signs
+The presence of symptoms often indicates some sort of 
+plant problem. A wide range of symptoms can be expressed 
+by diseased plants. Appendix A (separate document) presents common diseases and symptoms of woody ornamentals, 
+bedding plants, fruits, vegetables, and turfgrasses. However, 
+multiple pathogen groups can cause similar symptoms (Table 
+5.1). This is further complicated when abiotic factors induce 
+disease-like symptoms. For example, fungi and bacteria can 
+cause leaf spots that are similar to those caused by herbicides 
+and ozone. Plant disease diagnoses, therefore, cannot be based 
+upon symptoms alone. Identification of signs (mycelial growth, 
+fruiting structures, and bacterial cells) with a hand lens or 
+microscope is required to confirm diagnoses. Often, a trained 
+diagnostician can assist with this task.
+Examine the Site
+Examine the area around plants for additional clues as to 
+the cause of plant problems. This is particularly important 
+with abiotic problems. Information regarding soil makeup and 
+disturbances, as well as soil compaction and drainage patterns, 
+can assist in differentiating abiotic maladies from diseases. 
+Additionally, examination of surrounding plants can provide 
+vital information regarding disease spread. Patterns of injury 
+or symptoms can give clues as to whether variety- or speciesspecific infections are possible, or whether a more expansive 
+problem exists.
+Ask Questions
+Ask questions and collect additional information that is critical in making diagnoses. More information can lead to a more 
+accurate diagnoses. Consider these site specifics:
+• Planting date and practices
+• Irrigation practices
+• Fertilization
+• Symptom development
+• Weather conditions
+• Site disturbances
+• Traffic or pedestrians
+• Pet and livestock habits
+• Herbicide applications (dates applied in relation to when 
+symptoms were observed)
+Diagnosis
+After collection of site information and analysis of the 
+symptomatic plant(s), it may be possible to diagnose some 
+plant problems at this stage. However, if the cause cannot be 
+determined, it may be necessary to submit symptomatic plant 
+samples to a diagnostic laboratory. Contact a county Extension 
+agent regarding appropriate steps for selecting and submitting 
+samples to the University of Kentucky Plant Disease Diagnostic 
+Laboratories. The University of Kentucky Plant Pathology 
+fact sheet, Submitting Plant Specimens for Disease Diagnosis 
+(PPFSGEN-09), provides helpful information for collecting 
+appropriate samples.
+Plant Diseases CHAPTER 05
+5-19
+Plant Disease Management
+Disease management begins with accurate diagnoses. 
+Diseases can only be managed once they are correctly identified. 
+The best management practice is to avoid disease altogether. 
+While disease prevention is not always possible, there are often 
+recommended management practices that can be used to limit 
+disease spread and subsequent infections.
+Principles of Plant Disease Management
+There are five principles to disease management that focus 
+on prevention and limit of disease spread. These techniques 
+are most effective in combination.
+Exclusion
+• Definition: Prevent pathogen introductions to areas where 
+they do not currently exist.
+• Common Practices: Quarantine, inspection, and certified 
+disease-free plant material.
+Avoidance
+• Definition: Inhibit establishment of pathogens that exist in 
+other areas.
+• Common Practices: Use certified disease-free plants or seed, 
+inspect plants before purchase or installation, reduce plant 
+stresses, rotate crops, and avoid wounding.
+Resistance
+• Definition: Select plants with increased tolerance to 
+pathogen(s).
+• Common Practices: Select seeds or plants with resistance to 
+common pathogens. Consult a county Extension agent or 
+reliable source for information on resistant cultivars.
+Protection
+• Definition: Implement steps to protect plants from infections.
+• Common Practices: Modify environment to prevent pathogen infections, remove alternate hosts, apply physical barriers, 
+use biological or fungicide treatments.
+Eradication
+• Definition: Limit pathogen spread once a plant is infected.
+• Common Practices: Remove infected plant portions, remove 
+(rogue) entire herbaceous plants including roots, practice 
+sanitation, use fungicide applications to minimize inoculum 
+(fungicides do not cure disease or eradicate pathogens).
+Important Plant Disease Management Practices
+Once plant disease is confirmed, sanitation is the most 
+important management practice in the garden. However, 
+homeowners and growers should implement sanitation practices throughout the growing season to prevent and limit plant 
+disease development. Infected plants and plant parts (leaves, 
+stems, branches, roots, and fruit) should be removed since 
+many pathogens overwinter in plant debris. Throughout the 
+growing season, including senescence and dormancy, all plant 
+debris should be gathered and destroyed by burning, burying, 
+or putting in the trash. Composting diseased plant material is not advised, as most home compost bins do not reach 
+temperatures high enough to kill plant pathogens. Sanitation 
+practices also assist in increasing the effectiveness of other 
+management techniques.
+Healthy, stress-free plants are less likely to become diseased. 
+Maintain plant vigor and avoid stress with proper site selection 
+and nutritional balance; this significantly decreases the likelihood of infections. Select plants with resistance or tolerance 
+to common diseases, when available. Never save seeds from 
+diseased fruit or vegetables.
+Fungicides can be effective in protecting plants from infection or limiting spread. Although the term “fungicide” is often 
+used as a broad term, products are usually pathogen-specific. 
+True fungicides are used to manage fungal pathogens; other 
+products are specific to water mold pathogens. Bactericides/
+antibiotics are used to manage bacterial pathogens. All of these 
+products are suppressive, but only a few have curative effects. 
+Fungicide applications will not reverse disease symptoms or 
+save plants from death if disease is severe. Always follow label 
+directions when applying fungicides. For up-to-date information regarding fungicide use and recommendations, consult a 
+county Extension agent.
+Summary
+Plant diseases can be caused by fungi, water molds, bacteria, viruses, nematodes, phytoplasmas, or parasitic plants. 
+Understanding the biology and symptoms common to these 
+plant pathogens will aid in identification and management of 
+disease problems. Once a disease is properly diagnosed, management options can be deployed to mitigate disease impact.
+Appendix
+Common diseases and symptoms of woody ornamentals, 
+bedding plants, fruits, vegetables, turfgrass, and grains can be 
+found in the Appendix A document at:
+https://plantpathology.ca.uky.edu/files/mg_ch6_appendix.pdf
+CHAPTER 05 Plant Diseases
+Resources
+University of Kentucky Department of Plant Pathology 
+Publications 
+https://plantpathology.ca.uky.edu/extension/publications
+Submitting Plant Specimens for Disease Diagnosis
+http://plantpathology.ca.uky.edu/files/ppfs-gen-09.pdf
+American Phytopathological Society Introductory Materials 
+https://www.apsnet.org/edcenter/resources/Pages/
+Introductory.aspx
+American Phytopathological Society Glossary 
+https://www.apsnet.org/edcenter/resources/illglossary/Pages/
+default.aspx
+1The Future World Food Situation and the Role of Plant 
+Diseases, Dr. Per Pinstrup-Andersen https://www.apsnet.
+org/edcenter/apsnetfeatures/Pages/WorldFoodSituation.
+aspx
+Acknowledgements
+The authors would like to acknowledge and thank the following University of Kentucky contributors: Amanda Sears 
+and Andy Rideout, Extension horticulture agents, for feedback 
+regarding drafts of this chapter; and Dr. Emily Pfeufer, Extension 
+plant pathologist; Julie Beale and Brenda Kennedy, plant disease 
+diagnosticians; and Cheryl Kaiser, Extension staff associate, for 
+editorial and composition contributions.
+Photo Credits
+California Polytechnic State University at San Luis Obispo
+Gerald Holmes, Bugwood.org – Fig. 5.11C-D
+Colorado State University
+Whitney Cranshaw, Bugwood.org – Fig. 5.14
+William Jacobi, Bugwood.org – Fig. 5.5B
+Cornell University
+Karen Snover-Clift, Bugwood.org – Fig. 5.13B
+Florida Department of Agriculture and Consumer Services
+Florida Division of Plant Industry, Bugwood.org – Fig. 5.5D
+Leiden University
+Mohammad Mirnezhad – Fig. 5.11A
+Swiss Federal Research Station for Agroecology and 
+Agriculture
+Agroscope FAL Reckenholz, Bugwood.org – Fig. 5.12A
+University of Delaware
+Tracy Wootten, Bugwood.org – Fig. 5.10A
+University of Georgia
+University of Georgia Plant Pathology, Bugwood.org – Fig. 5.3A
+University of Hamburg
+Ulrich Zunke, Bugwood.org – Fig. 5.13C
+University of Kentucky
+Paul Bachi – Fig. 5.2A-B, 5.4D, 5.6A, 5.11B, 5.12B
+Ric Bessin – Fig. 5.8A
+Nicole Ward Gauthier – Fig. 5.3B-C, 5.4A, 5.9A-D, 5.10B-C
+John Hartman – Fig. 5.3D, 5.8C, 5.15
+Cheryl Kaiser – Fig. 5.5C, 5.12C
+Brenda Kennedy – Fig. 5.12D
+Kimberly Leonberger – Fig. 5.4C
+William Nesmith – Fig. 5.8B
+Steve Osborne – Fig. 5.8D
+Kenneth Seebold – Fig. 5.2C-D, 5.6B-D, 5.7A-C, 5.8D
+University of Maine
+Bruce Watt, Bugwood.org – Fig. 5.13A
+University of Tennessee Extension
+Alan Windham – Fig. 5.10D, 5.13D
+USDA Agricultural Research Service
+Scott Bauer, Bugwood.org – Fig. 5.7D
+USDA Forest Service
+Joseph OBrien, Bugwood.org – Fig. 5.5A
+Virginia Polytechnic Institute and State University
+Elizabeth Bush, Bugwood.org – Fig. 5.4B
+Revised 01-2024
