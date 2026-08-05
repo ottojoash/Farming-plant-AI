@@ -1,0 +1,7 @@
+{% extends "app_shell.html" %}
+{% block title %}System status{% endblock %}{% block page_name %}System status{% endblock %}
+{% block content %}
+  <section class="app-heading"><div><p class="eyebrow">Operations</p><h1>System status.</h1><p>Confirm the active database and application safeguards.</p></div></section>
+  <section class="metric-grid metric-grid-three"><article><span>Database backend</span><strong>{{ system.database|upper }}</strong></article><article><span>Environment</span><strong>{{ system.environment }}</strong></article><article><span>CSRF protection</span><strong>{{ 'Enabled' if system.csrf else 'Disabled' }}</strong></article></section>
+  <section class="dashboard-panel"><p class="eyebrow">Database records</p><h2>Storage overview</h2><div class="system-list"><div><span>User accounts</span><strong>{{ system.users_table }}</strong></div><div><span>Monthly usage rows</span><strong>{{ system.usage_rows }}</strong></div><div><span>Premium history rows</span><strong>{{ system.history_rows }}</strong></div></div><a class="secondary-button" href="{{ url_for('health') }}">Open health endpoint</a></section>
+{% endblock %}

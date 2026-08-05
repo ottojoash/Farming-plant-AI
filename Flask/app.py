@@ -8,10 +8,17 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from flask import Flask, render_template, request
+from flask_login import LoginManager, current_user
+from flask_wtf.csrf import CSRFProtect
 from PIL import Image, UnidentifiedImageError
+from sqlalchemy import create_engine
+from sqlalchemy.exc import SQLAlchemyError
 
+from accounts import accounts, payment_webhooks, pricing
 from ai_diagnosis import diagnose_with_ai, is_ai_available
 from crop_models import CropModelRegistry
+from database import User, bootstrap_admin, db, get_int_setting, seed_defaults
+from entitlements import record_successful_scan, scan_allowance
 from leaf_validator import LeafValidator
 from model import Prediction, predict_image
 import utils
@@ -28,25 +35,77 @@ logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"))
 logger = logging.getLogger(__name__)
 CROP_MODELS = CropModelRegistry(BASE_DIR.parent)
 LEAF_VALIDATOR = LeafValidator()
+LOGIN_MANAGER = LoginManager()
+CSRF = CSRFProtect()
+
+
+def resolve_database_uri(test_config: dict | None) -> tuple[str, str]:
+    if test_config and test_config.get("SQLALCHEMY_DATABASE_URI"):
+        return test_config["SQLALCHEMY_DATABASE_URI"], "test"
+    primary = os.getenv("DATABASE_URL", "sqlite:///plant_ai.db")
+    if not os.getenv("ALLOW_DATABASE_FALLBACK", "false").lower() == "true":
+        return primary, "mysql" if primary.startswith(("mysql", "mariadb")) else "sqlite"
+    try:
+        engine = create_engine(primary, pool_pre_ping=True)
+        with engine.connect():
+            pass
+        engine.dispose()
+        return primary, "mysql" if primary.startswith(("mysql", "mariadb")) else "sqlite"
+    except SQLAlchemyError:
+        logger.warning("Primary database unavailable; using configured local fallback")
+        return os.getenv("DATABASE_FALLBACK_URL", "sqlite:///plant_ai.db"), "sqlite_fallback"
 
 
 def create_app(test_config: dict | None = None) -> Flask:
     app = Flask(__name__)
+    database_uri, database_backend = resolve_database_uri(test_config)
     app.config.update(
         MAX_CONTENT_LENGTH=MAX_UPLOAD_BYTES,
         SECRET_KEY=os.getenv("FLASK_SECRET_KEY", "development-only-change-me"),
+        SQLALCHEMY_DATABASE_URI=database_uri,
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        DATABASE_BACKEND=database_backend,
     )
     if test_config:
         app.config.update(test_config)
 
+    db.init_app(app)
+    LOGIN_MANAGER.init_app(app)
+    LOGIN_MANAGER.login_view = "accounts.login"
+    LOGIN_MANAGER.login_message = "Please log in to continue."
+    CSRF.init_app(app)
+    app.register_blueprint(accounts)
+    app.register_blueprint(payment_webhooks)
+    CSRF.exempt(payment_webhooks)
+
+    @LOGIN_MANAGER.user_loader
+    def load_user(user_id: str):
+        try:
+            return db.session.get(User, int(user_id))
+        except (TypeError, ValueError):
+            return None
+
+    with app.app_context():
+        db.create_all()
+        seed_defaults()
+        if not app.config.get("TESTING"):
+            bootstrap_admin()
+
+    def home_context(**extra):
+        context = {
+            "ai_available": is_ai_available(),
+            "model_count": 1 + len(CROP_MODELS.available_crops()),
+            "max_upload_mb": MAX_UPLOAD_BYTES // (1024 * 1024),
+            "allowance": scan_allowance(),
+            "pricing": pricing(),
+            "free_account_limit": get_int_setting("free_monthly_scan_limit"),
+        }
+        context.update(extra)
+        return context
+
     @app.get("/")
     def home():
-        return render_template(
-            "index.html",
-            ai_available=is_ai_available(),
-            model_count=1 + len(CROP_MODELS.available_crops()),
-            max_upload_mb=MAX_UPLOAD_BYTES // (1024 * 1024),
-        )
+        return render_template("index.html", **home_context())
 
     @app.get("/health")
     def health():
@@ -55,10 +114,20 @@ def create_app(test_config: dict | None = None) -> Flask:
             "local_model": "ready",
             "leaf_validator": "ready",
             "ai_fallback": "ready" if is_ai_available() else "not_configured",
+            "database": app.config["DATABASE_BACKEND"],
         }
 
     @app.post("/predict")
     def predict():
+        allowance = scan_allowance()
+        if not allowance["allowed"]:
+            return (
+                render_template(
+                    "index.html",
+                    **home_context(limit_reached=True, allowance=allowance),
+                ),
+                403,
+            )
         uploaded_file = request.files.get("file")
         if uploaded_file is None or not uploaded_file.filename:
             return _render_upload_error("Please choose a plant image to analyse.", 400)
@@ -132,8 +201,15 @@ def create_app(test_config: dict | None = None) -> Flask:
 
             result["model_votes"] = format_model_votes(local_candidates)
 
+            try:
+                history_confidence = None if result["is_ai"] else local_prediction.confidence
+                record_successful_scan(result, history_confidence)
+            except SQLAlchemyError:
+                db.session.rollback()
+                logger.exception("Could not record scan usage")
+
             return render_template(
-                "display.html",
+                "display_signed_in.html" if current_user.is_authenticated else "display.html",
                 result=result,
                 preview_url=preview_url,
                 references=trusted_references(),
@@ -152,13 +228,20 @@ def create_app(test_config: dict | None = None) -> Flask:
         )
 
     def _render_upload_error(message: str, status_code: int):
+        if current_user.is_authenticated:
+            return (
+                render_template(
+                    "dashboard_scan.html",
+                    allowance=scan_allowance(),
+                    max_upload_mb=MAX_UPLOAD_BYTES // (1024 * 1024),
+                    error=message,
+                ),
+                status_code,
+            )
         return (
             render_template(
                 "index.html",
-                error=message,
-                ai_available=is_ai_available(),
-                model_count=1 + len(CROP_MODELS.available_crops()),
-                max_upload_mb=MAX_UPLOAD_BYTES // (1024 * 1024),
+                **home_context(error=message),
             ),
             status_code,
         )

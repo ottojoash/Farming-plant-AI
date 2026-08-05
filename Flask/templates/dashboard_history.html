@@ -1,0 +1,8 @@
+{% extends "app_shell.html" %}
+{% block title %}Scan history{% endblock %}{% block page_name %}Scan history{% endblock %}
+{% block content %}
+  <section class="app-heading"><div><p class="eyebrow">Premium records</p><h1>Your plant history.</h1><p>Review the diagnosis metadata saved from your previous scans. Uploaded images are not stored.</p></div><a class="primary-button compact-button" href="{{ url_for('accounts.dashboard_scan') }}"><span>New scan</span><span aria-hidden="true">+</span></a></section>
+  <section class="dashboard-panel">
+    {% if history %}<div class="table-wrap"><table><thead><tr><th>Date</th><th>Plant</th><th>Condition</th><th>Confidence</th><th>Model</th><th></th></tr></thead><tbody>{% for scan in history %}<tr><td>{{ scan.created_at.strftime('%d %b %Y, %H:%M') }}</td><td>{{ scan.crop }}</td><td>{{ scan.condition }}</td><td>{{ '%.1f%%'|format(scan.confidence * 100) if scan.confidence is not none else 'AI assisted' }}</td><td>{{ scan.source }}</td><td><a class="table-action" href="{{ url_for('accounts.scan_record_detail', record_id=scan.id) }}">View details</a></td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state"><strong>No saved scans yet</strong><p>Your first premium scan will appear here.</p><a class="secondary-button" href="{{ url_for('accounts.dashboard_scan') }}">Scan a plant</a></div>{% endif %}
+  </section>
+{% endblock %}

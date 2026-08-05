@@ -9,6 +9,14 @@ tests cover the main routes, and the app runs through Waitress. A reproducible m
 now catalogues bean, cassava, rice, and PlantDoc data; trained Bean and PlantDoc Field checkpoints
 are registered in the application.
 
+The account and subscription foundation is also implemented: visitors receive two trial scans,
+free accounts receive five scans per calendar month without retained results, and premium accounts
+receive unlimited scans with metadata-only diagnosis history. Users and administrators share one
+login page and are redirected by role. The administrator dashboard controls prices, scan limits,
+roles, plans, active status, and premium upgrade approvals. Default premium pricing is $20 monthly
+or $240 yearly. Payment collection is intentionally not included yet; upgrades use an explicit
+administrator-approval workflow until a payment provider is connected.
+
 Still requiring owner/domain action: revoke the API key exposed in Git history, obtain independent
 farm validation, have agricultural guidance reviewed locally, and add languages needed by users.
 

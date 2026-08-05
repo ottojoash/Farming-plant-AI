@@ -1,0 +1,31 @@
+{% extends "app_shell.html" %}
+{% block title %}Plant assessment{% endblock %}{% block page_name %}Scan result{% endblock %}
+{% block content %}
+<div class="result-page signed-result-page">
+  <section class="result-heading">
+    <div><p class="eyebrow">Plant assessment</p><h1>{{ result.crop }}</h1><p class="diagnosis-name">{{ result.disease }}</p></div>
+    <div class="confidence-card"><span>Confidence</span><strong>{{ result.confidence_text }}</strong><small>{{ result.source }}</small></div>
+  </section>
+  {% if result.warning %}<div class="alert alert-warning" role="alert">{{ result.warning }}</div>{% endif %}
+  {% if result.local_note %}<p class="local-note">{{ result.local_note }}</p>{% endif %}
+  <section class="result-layout">
+    <div class="plant-preview"><img src="{{ preview_url }}" alt="Uploaded plant used for this assessment"><p>Uploaded image</p></div>
+    <div class="result-content">
+      {% if result.model_votes %}<article class="result-section"><h2>Models checked automatically</h2><ul>{% for vote in result.model_votes %}<li><strong>{{ vote.source }}:</strong> {{ vote.prediction }} ({{ vote.confidence }})</li>{% endfor %}</ul></article>{% endif %}
+      {% if result.is_ai %}
+        <article class="result-section"><h2>Assessment</h2><p>{{ result.summary }}</p></article>
+        <article class="result-section"><h2>Visible observations</h2><ul>{% for item in result.observations %}<li>{{ item }}</li>{% endfor %}</ul></article>
+        <article class="result-section"><h2>Possible causes</h2><ul>{% for item in result.causes %}<li>{{ item }}</li>{% endfor %}</ul></article>
+        <article class="result-section"><h2>Recommended next steps</h2><ul>{% for item in result.actions %}<li>{{ item }}</li>{% endfor %}</ul></article>
+      {% else %}
+        <article class="result-section legacy-details"><h2>Known-class guidance</h2>{% if result.details_html %}{{ result.details_html | safe }}{% else %}<p>This class comes from a newly trained field model. Detailed management guidance has not yet been reviewed for this class.</p>{% endif %}</article>
+      {% endif %}
+    </div>
+  </section>
+  <section class="responsible-use">
+    <div><p class="eyebrow">Before treating the plant</p><h2>Confirm important decisions locally.</h2></div>
+    <div class="decision-guidance"><p>Do not apply a pesticide based only on this result. Correct identification, the crop, local registration, and label instructions all matter.</p>{% for reference in references %}<article class="guidance-summary"><h3>{{ reference.title }}</h3><p>{{ reference.summary }}</p><ul>{% for tip in reference.tips %}<li>{{ tip }}</li>{% endfor %}</ul><a class="source-link" href="{{ reference.url }}" target="_blank" rel="noopener noreferrer">Full source: {{ reference.source_name }}</a></article>{% endfor %}</div>
+  </section>
+  <a class="primary-button result-action" href="{{ url_for('accounts.dashboard_scan') }}"><span>Analyse another plant</span><span aria-hidden="true">-&gt;</span></a>
+</div>
+{% endblock %}

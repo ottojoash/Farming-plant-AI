@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ 'Log in' if mode == 'login' else 'Create account' }} — Plant AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('home') }}"><span class="brand-mark">●</span>Plant AI</a>
+    <a class="header-link" href="{{ url_for('home') }}#pricing">View plans</a>
+  </header>
+  <main class="auth-page">
+    <section class="auth-copy">
+      <p class="eyebrow">One account, role-based access</p>
+      <h1>{{ 'Welcome back.' if mode == 'login' else 'Continue caring for your plants.' }}</h1>
+      <p>Users and administrators use this same secure login. Your role determines which dashboard opens.</p>
+    </section>
+    <section class="auth-card">
+      <h2>{{ 'Log in' if mode == 'login' else 'Create free account' }}</h2>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}<div class="alert alert-{{ 'error' if category == 'error' else 'success' }}">{{ message }}</div>{% endfor %}
+      {% endwith %}
+      <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        {% if mode == 'register' %}
+          <label for="name">Name</label>
+          <input id="name" name="name" maxlength="120" required autocomplete="name">
+        {% endif %}
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" maxlength="255" required autocomplete="email">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" minlength="10" required autocomplete="{{ 'current-password' if mode == 'login' else 'new-password' }}">
+        {% if mode == 'login' %}<label class="check-label"><input type="checkbox" name="remember"> Keep me logged in</label>{% endif %}
+        <button class="primary-button" type="submit"><span>{{ 'Log in' if mode == 'login' else 'Create account' }}</span><span>→</span></button>
+      </form>
+      <p class="auth-switch">
+        {% if mode == 'login' %}New to Plant AI? <a href="{{ url_for('accounts.register') }}">Create an account</a>{% else %}Already registered? <a href="{{ url_for('accounts.login') }}">Log in</a>{% endif %}
+      </p>
+    </section>
+  </main>
+</body>
+</html>

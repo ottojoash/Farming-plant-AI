@@ -1,0 +1,6 @@
+{% extends "app_shell.html" %}
+{% block title %}Scan records{% endblock %}{% block page_name %}Scan records{% endblock %}
+{% block content %}
+  <section class="app-heading"><div><p class="eyebrow">Premium history</p><h1>Retained scan records.</h1><p>Diagnosis metadata retained for premium users. Plant images are not stored.</p></div></section>
+  <section class="dashboard-panel">{% if recent_scans %}<div class="table-wrap"><table><thead><tr><th>Date</th><th>User</th><th>Plant</th><th>Condition</th><th>Confidence</th><th>Source</th><th></th></tr></thead><tbody>{% for scan in recent_scans %}<tr><td>{{ scan.created_at.strftime('%d %b %Y, %H:%M') }}</td><td>{{ scan.user.email }}</td><td>{{ scan.crop }}</td><td>{{ scan.condition }}</td><td>{{ '%.1f%%'|format(scan.confidence * 100) if scan.confidence is not none else 'AI assisted' }}</td><td>{{ scan.source }}</td><td><a class="table-action" href="{{ url_for('accounts.scan_record_detail', record_id=scan.id) }}">View details</a></td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state"><strong>No premium records</strong><p>Retained diagnosis metadata will appear here.</p></div>{% endif %}</section>
+{% endblock %}

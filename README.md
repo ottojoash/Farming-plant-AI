@@ -22,6 +22,11 @@ The fallback is an AI-assisted assessment, not additional training of the ResNet
 - Health-check endpoint at `/health`
 - Mobile-friendly upload and result pages
 - Automated route, upload, and class-mapping tests
+- Shared user/admin authentication with hashed passwords and CSRF-protected forms
+- Anonymous two-scan trial and configurable free monthly scan allowance
+- Premium unlimited scanning with metadata-only plant history
+- Role-based user and administrator dashboards
+- Administrator-managed pricing, limits, users, plans, and upgrade approvals
 
 ## Supported local classes
 
@@ -97,6 +102,93 @@ FLASK_DEBUG=false
 ```
 
 Never commit `.env` or an API key. If a key has previously been committed, revoke it and remove it from published Git history.
+
+### Database and accounts
+
+Plant AI supports MariaDB/MySQL through SQLAlchemy. Configure the application in `.env`:
+
+```dotenv
+DATABASE_URL=mariadb+mariadbconnector://plant_app:url_encoded_password@127.0.0.1:3306/plant
+ALLOW_DATABASE_FALLBACK=false
+ADMIN_NAME=Plant AI Administrator
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=use-a-unique-long-password
+```
+
+Create the database and a dedicated application account as a database administrator:
+
+```sql
+CREATE DATABASE IF NOT EXISTS plant CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'plant_app'@'localhost' IDENTIFIED BY 'replace-with-a-long-database-password';
+GRANT ALL PRIVILEGES ON plant.* TO 'plant_app'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+On the first successful connection, Plant AI creates its tables, default prices and limits, and
+the initial administrator from the `ADMIN_*` environment variables. Remove `ADMIN_PASSWORD`
+from `.env` after confirming the account exists. Avoid using the database root account in the
+application.
+
+For local development only, a SQLite fallback can be enabled:
+
+```dotenv
+DATABASE_FALLBACK_URL=sqlite:///plant_ai.db
+ALLOW_DATABASE_FALLBACK=true
+```
+
+The `/health` response reports `mysql`, `sqlite`, or `sqlite_fallback` so deployment mistakes are
+visible.
+
+## Accounts, plans, and scan rules
+
+- Visitors can complete two successful plant scans before being prompted to register.
+- Free accounts receive five scans per calendar month by default. Free results are not retained.
+- Monthly and Yearly accounts receive unlimited scans and a metadata-only plant history. Uploaded
+  images are never stored by this application.
+- Each new paid-plan history record includes a detail page with the crop, condition, confidence,
+  model evidence, saved guidance, observations, possible causes, recommended actions, warnings,
+  source, and timestamp. Older records remain available with their original basic metadata.
+- Administrators use the same login page and are redirected to the role-protected admin dashboard.
+- The default premium price is $20 monthly or $240 yearly. Administrators can change both prices,
+  the anonymous trial allowance, and the free monthly allowance.
+- Monthly and Yearly checkout uses Flutterwave Standard when `FLW_PUBLIC_KEY` and `FLW_SECRET_KEY`
+  are configured. Plant AI verifies the transaction reference, status, amount, currency, and customer
+  before activating access.
+
+### Flutterwave subscriptions
+
+Add Flutterwave test keys before testing payments, then replace them with live keys only for a public
+HTTPS deployment:
+
+```dotenv
+FLW_PUBLIC_KEY=FLWPUBK_TEST-...
+FLW_SECRET_KEY=FLWSECK_TEST-...
+FLW_SECRET_HASH=choose-the-same-secret-in-the-Flutterwave-dashboard
+FLW_CURRENCY=USD
+APP_BASE_URL=https://your-public-plant-ai-domain.example
+```
+
+Configure the Flutterwave webhook URL as:
+
+```text
+https://your-public-plant-ai-domain.example/webhooks/flutterwave
+```
+
+The webhook verifies its HMAC-SHA256 signature and re-verifies the transaction with Flutterwave.
+Callbacks and repeated webhooks are handled idempotently. Never place Flutterwave secret keys in
+source control or expose them to browser code.
+
+### Role-aware dashboard navigation
+
+Signed-in accounts use a responsive sidebar with short, consistent destinations:
+
+- Free users: Overview, Scan Plant, Plan & Usage, and Account Settings.
+- Premium users: all free destinations plus Scan History.
+- Administrators: Overview, Scan Plant, Users, Upgrade Requests, Plans & Limits, Scan Records,
+  System Status, and Account Settings.
+
+Each destination has its own protected route. The current page is marked visually and with
+`aria-current="page"`; the sidebar becomes a keyboard-accessible menu on smaller screens.
 
 ## Run the application
 

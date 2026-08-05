@@ -1,0 +1,15 @@
+{% extends "app_shell.html" %}
+{% block title %}Overview{% endblock %}{% block page_name %}Overview{% endblock %}
+{% block content %}
+  <section class="app-heading"><div><p class="eyebrow">User dashboard</p><h1>Welcome back, {{ current_user.name }}.</h1><p>Track your allowance and continue checking your plants.</p></div><a class="primary-button compact-button" href="{{ url_for('accounts.dashboard_scan') }}"><span>Scan a plant</span><span aria-hidden="true">+</span></a></section>
+  <section class="metric-grid">
+    <article><span>Current plan</span><strong>{{ current_user.plan_label }}</strong></article>
+    <article><span>Scans used this month</span><strong>{{ allowance.used }}</strong></article>
+    <article><span>Scans remaining</span><strong>{{ 'Unlimited' if allowance.remaining is none else allowance.remaining }}</strong></article>
+    <article><span>Saved records</span><strong>{{ history|length if current_user.has_premium else 'Premium only' }}</strong></article>
+  </section>
+  <section class="dashboard-panel">
+    <p class="eyebrow">Next step</p><h2>{{ 'Your recent plant records' if current_user.has_premium else 'Make the most of your free scans' }}</h2>
+    {% if current_user.has_premium and history %}<div class="table-wrap"><table><thead><tr><th>Date</th><th>Plant</th><th>Condition</th><th>Confidence</th></tr></thead><tbody>{% for scan in history %}<tr><td>{{ scan.created_at.strftime('%d %b %Y') }}</td><td>{{ scan.crop }}</td><td>{{ scan.condition }}</td><td>{{ '%.1f%%'|format(scan.confidence * 100) if scan.confidence is not none else 'AI assisted' }}</td></tr>{% endfor %}</tbody></table></div><a class="text-link" href="{{ url_for('accounts.dashboard_history') }}">View complete history</a>{% elif current_user.has_premium %}<p>Your saved diagnoses will appear here after your first scan.</p>{% else %}<p>Your free plan includes {{ allowance.limit }} scans each month. Results are not retained on the free plan.</p><a class="secondary-button" href="{{ url_for('accounts.dashboard_plan') }}">Compare plans</a>{% endif %}
+  </section>
+{% endblock %}

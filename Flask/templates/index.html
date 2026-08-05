@@ -16,7 +16,19 @@
       <span class="brand-mark" aria-hidden="true">●</span>
       Plant AI
     </a>
-    <a class="header-link" href="#how-it-works">How it works</a>
+    <nav class="header-nav" aria-label="Account navigation">
+      <a class="header-link" href="#pricing">Premium</a>
+      {% if current_user.is_authenticated %}
+        <a class="header-link" href="{{ url_for('accounts.admin_dashboard' if current_user.role == 'admin' else 'accounts.dashboard') }}">Dashboard</a>
+        <form action="{{ url_for('accounts.logout') }}" method="post" class="inline-form">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="text-button" type="submit">Log out</button>
+        </form>
+      {% else %}
+        <a class="header-link" href="{{ url_for('accounts.login') }}">Log in</a>
+        <a class="nav-cta" href="{{ url_for('accounts.register') }}">Create account</a>
+      {% endif %}
+    </nav>
   </header>
 
   <main>
@@ -51,8 +63,22 @@
         {% if error %}
           <div class="alert alert-error" role="alert">{{ error }}</div>
         {% endif %}
+        {% if limit_reached %}
+          <div class="scan-gate" role="alert">
+            {% if allowance.audience == 'anonymous' %}
+              <strong>Your two free trial scans are complete.</strong>
+              <p>Create a free account for {{ free_account_limit }} scans every month, or choose Premium for unlimited scans and history.</p>
+              <a class="primary-button" href="{{ url_for('accounts.register') }}"><span>Create free account</span><span>→</span></a>
+            {% else %}
+              <strong>You have used all {{ allowance.limit }} free scans for this month.</strong>
+              <p>Premium unlocks unlimited scans and saves your plant history.</p>
+              <a class="primary-button" href="{{ url_for('accounts.dashboard') }}"><span>View upgrade options</span><span>→</span></a>
+            {% endif %}
+          </div>
+        {% endif %}
 
-        <form action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data" id="upload-form">
+        <form action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data" id="upload-form" {% if limit_reached %}hidden{% endif %}>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <label class="drop-zone" for="inputImage" id="drop-zone">
             <input type="file" name="file" id="inputImage" accept="image/jpeg,image/png,image/webp" required>
             <img id="preview" alt="Selected plant preview" hidden>
@@ -75,7 +101,12 @@
           </button>
         </form>
 
-        <p class="privacy-note">Your image is processed for this diagnosis and is not stored by this application.</p>
+        {% if allowance.remaining is none %}
+          <p class="usage-note">Premium access · unlimited scans</p>
+        {% else %}
+          <p class="usage-note">{{ allowance.remaining }} of {{ allowance.limit }} scans remaining{% if allowance.audience == 'free' %} this month{% else %} in your trial{% endif %}</p>
+        {% endif %}
+        <p class="privacy-note">Images are processed for diagnosis and are not stored. Only premium accounts retain result metadata.</p>
       </div>
     </section>
 
@@ -98,6 +129,42 @@
         Serious, spreading, or uncertain problems should be checked by a local agricultural extension officer
         or plant diagnostic laboratory.
       </p>
+    </section>
+
+    <section class="premium-section" id="pricing">
+      <div class="premium-heading">
+        <p class="eyebrow">Plant AI Premium</p>
+        <h2>Build a longer view of plant health.</h2>
+        <p>Premium is designed for growers managing repeated scans, more crops, and ongoing plant records.</p>
+      </div>
+      <div class="feature-grid">
+        <article><span>01</span><h3>Unlimited scans</h3><p>Scan as often as needed without the free monthly limit.</p></article>
+        <article><span>02</span><h3>Expanded plant intelligence</h3><p>Priority access to the growing specialist crop library and newly added plant datasets.</p></article>
+        <article><span>03</span><h3>Plant history</h3><p>Review previous crops, conditions, confidence, model source, and scan dates.</p></article>
+        <article><span>04</span><h3>Ongoing records</h3><p>Keep diagnosis metadata together while uploaded images remain private and unstored.</p></article>
+      </div>
+      <div class="pricing-grid">
+        <article class="price-card">
+          <p class="eyebrow">Free</p>
+          <h3>$0</h3>
+          <p>5 scans per calendar month after creating an account.</p>
+          <ul><li>Automatic model scanning</li><li>No saved scan history</li><li>Core diagnosis guidance</li></ul>
+          <a class="secondary-button" href="{{ url_for('accounts.register') }}">Start free</a>
+        </article>
+        <article class="price-card price-featured">
+          <p class="eyebrow">Premium monthly</p>
+          <h3>${{ '%.2f'|format(pricing.monthly) }}<small>/month</small></h3>
+          <p>Unlimited scans, expanded intelligence, and plant history.</p>
+          <a class="primary-button" href="{{ url_for('accounts.dashboard') if current_user.is_authenticated else url_for('accounts.register') }}"><span>Choose monthly</span><span>→</span></a>
+        </article>
+        <article class="price-card">
+          <p class="eyebrow">Premium yearly</p>
+          <h3>${{ '%.2f'|format(pricing.yearly) }}<small>/year</small></h3>
+          <p>One yearly plan with the same unlimited premium access.</p>
+          <a class="secondary-button" href="{{ url_for('accounts.dashboard') if current_user.is_authenticated else url_for('accounts.register') }}">Choose yearly</a>
+        </article>
+      </div>
+      <p class="billing-note">Upgrade requests require administrator approval. Payment processing is not yet connected, so submitting a request does not charge you.</p>
     </section>
   </main>
 

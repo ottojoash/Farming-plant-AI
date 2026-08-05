@@ -1,0 +1,7 @@
+{% extends "app_shell.html" %}
+{% block title %}Account settings{% endblock %}{% block page_name %}Account settings{% endblock %}
+{% block content %}
+  <section class="app-heading"><div><p class="eyebrow">Profile &amp; security</p><h1>Account settings.</h1><p>Review your identity and protect your Plant AI account.</p></div></section>
+  <section class="dashboard-panel account-summary"><div><span>Name</span><strong>{{ current_user.name }}</strong></div><div><span>Email</span><strong>{{ current_user.email }}</strong></div><div><span>Role</span><strong>{{ current_user.role|title }}</strong></div><div><span>Plan</span><strong>{{ current_user.plan_label }}</strong></div></section>
+  <section class="dashboard-panel"><p class="eyebrow">Account security</p><h2>Change your password</h2><form class="settings-grid password-form" action="{{ url_for('accounts.change_password') }}" method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label>Current password<input type="password" name="current_password" autocomplete="current-password" required></label><label>New password<input type="password" name="new_password" minlength="10" autocomplete="new-password" required></label><label>Confirm new password<input type="password" name="confirm_password" minlength="10" autocomplete="new-password" required></label><button class="secondary-button" type="submit">Update password</button></form></section>
+{% endblock %}

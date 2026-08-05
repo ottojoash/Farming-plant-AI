@@ -1,0 +1,68 @@
+{% extends "app_shell.html" %}
+{% block title %}Scan plant{% endblock %}{% block page_name %}Scan plant{% endblock %}
+{% block content %}
+  <section class="app-heading"><div><p class="eyebrow">New assessment</p><h1>Scan a plant leaf.</h1><p>Plant AI checks every available model automatically and rejects images that are not plant leaves.</p></div></section>
+  {% if error %}<div class="alert alert-error" role="alert">{{ error }}</div>{% endif %}
+  <section class="dashboard-panel scan-workspace">
+    {% if allowance.allowed %}
+      <form action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data" id="dashboard-upload-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label class="drop-zone" for="dashboard-file-input">
+          <input id="dashboard-file-input" name="file" type="file" accept="image/jpeg,image/png,image/webp" required>
+          <img id="dashboard-image-preview" class="dashboard-image-preview" alt="Selected plant preview" hidden>
+          <span class="upload-icon" id="dashboard-upload-icon" aria-hidden="true">+</span><strong id="dashboard-file-label">Choose a clear leaf photo</strong><span id="dashboard-file-help">JPEG, PNG or WebP, up to {{ max_upload_mb }} MB</span>
+        </label>
+        <div class="alert alert-error upload-client-error" id="dashboard-upload-error" role="alert" hidden></div>
+        <button class="primary-button" id="dashboard-scan-button" type="submit"><span>Scan all plant models</span><span aria-hidden="true">-&gt;</span></button>
+      </form>
+      <p class="usage-note">{{ 'Unlimited scans' if allowance.remaining is none else allowance.remaining ~ ' scans remaining this month' }}</p>
+    {% else %}
+      <div class="scan-gate"><strong>Your monthly scan allowance is used.</strong><p>Review your plan to continue scanning.</p><a class="secondary-button" href="{{ url_for('accounts.dashboard_plan') }}">View plan options</a></div>
+    {% endif %}
+  </section>
+  <script>
+    (() => {
+      const input = document.getElementById('dashboard-file-input');
+      const preview = document.getElementById('dashboard-image-preview');
+      const icon = document.getElementById('dashboard-upload-icon');
+      const label = document.getElementById('dashboard-file-label');
+      const help = document.getElementById('dashboard-file-help');
+      const error = document.getElementById('dashboard-upload-error');
+      const form = document.getElementById('dashboard-upload-form');
+      const button = document.getElementById('dashboard-scan-button');
+      if (!input || !form) return;
+      input.addEventListener('change', () => {
+        error.hidden = true;
+        const file = input.files?.[0];
+        if (!file) return;
+        if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+          input.value = '';
+          error.textContent = 'Choose a JPEG, PNG, or WebP plant image.';
+          error.hidden = false;
+          return;
+        }
+        if (file.size > {{ max_upload_mb }} * 1024 * 1024) {
+          input.value = '';
+          error.textContent = 'This image is larger than {{ max_upload_mb }} MB.';
+          error.hidden = false;
+          return;
+        }
+        preview.src = URL.createObjectURL(file);
+        preview.hidden = false;
+        icon.hidden = true;
+        label.textContent = file.name;
+        help.textContent = 'Click the preview to choose another image.';
+      });
+      form.addEventListener('submit', event => {
+        if (!input.files?.length) {
+          event.preventDefault();
+          error.textContent = 'Choose a plant leaf image before scanning.';
+          error.hidden = false;
+          return;
+        }
+        button.disabled = true;
+        button.querySelector('span').textContent = 'Scanning every plant model...';
+      });
+    })();
+  </script>
+{% endblock %}

@@ -17,7 +17,13 @@ if str(FLASK_DIR) not in sys.path:
 def app():
     from app import create_app
 
-    return create_app({"TESTING": True})
+    return create_app(
+        {
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False,
+            "SQLALCHEMY_DATABASE_URI": "sqlite://",
+        }
+    )
 
 
 @pytest.fixture(autouse=True)

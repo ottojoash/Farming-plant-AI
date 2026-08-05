@@ -1,0 +1,15 @@
+{% extends "app_shell.html" %}
+{% block title %}Users{% endblock %}{% block page_name %}Users{% endblock %}
+{% block content %}
+  <section class="app-heading"><div><p class="eyebrow">Accounts</p><h1>Users and roles.</h1><p>Control access, roles, Free, Monthly, and Yearly plans, and account status.</p></div></section>
+  <section class="dashboard-panel"><div class="table-wrap"><table><thead><tr><th>User</th><th>Joined</th><th>Access controls</th></tr></thead><tbody>
+    {% for user in users %}<tr><td><strong>{{ user.name }}</strong><br><small>{{ user.email }}</small></td><td>{{ user.created_at.strftime('%d %b %Y') }}</td><td>
+      <form class="user-control-form" action="{{ url_for('accounts.update_user', user_id=user.id) }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <select name="role" aria-label="Role for {{ user.email }}"><option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option><option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option></select>
+        <select name="plan" aria-label="Plan for {{ user.email }}"><option value="free" {% if user.plan == 'free' %}selected{% endif %}>Free</option><option value="monthly" {% if user.plan in ['monthly', 'premium'] %}selected{% endif %}>Monthly</option><option value="yearly" {% if user.plan == 'yearly' %}selected{% endif %}>Yearly</option></select>
+        <label class="check-label"><input type="checkbox" name="active" {% if user.active %}checked{% endif %}> Active</label><button class="small-button" type="submit">Update</button>
+      </form>
+    </td></tr>{% endfor %}
+  </tbody></table></div></section>
+{% endblock %}
