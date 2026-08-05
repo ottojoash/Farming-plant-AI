@@ -1,0 +1,5 @@
+--index-url https://download.pytorch.org/whl/cu126
+
+# Install this file after requirements.txt on an NVIDIA Windows/Linux machine.
+torch==2.12.1
+torchvision==0.27.1

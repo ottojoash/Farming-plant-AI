@@ -8,3 +8,5 @@ myenv/
 .ipynb_checkpoints/
 chroma_db/
 *.log
+data/raw/
+data/processed/

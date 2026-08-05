@@ -43,6 +43,16 @@
       </div>
 
       <div class="result-content">
+        {% if result.model_votes %}
+          <article class="result-section">
+            <h2>Models checked automatically</h2>
+            <ul>
+              {% for vote in result.model_votes %}
+                <li><strong>{{ vote.source }}:</strong> {{ vote.prediction }} ({{ vote.confidence }})</li>
+              {% endfor %}
+            </ul>
+          </article>
+        {% endif %}
         {% if result.is_ai %}
           <article class="result-section">
             <h2>Assessment</h2>
@@ -63,7 +73,11 @@
         {% else %}
           <article class="result-section legacy-details">
             <h2>Known-class guidance</h2>
-            {{ result.details_html | safe }}
+            {% if result.details_html %}
+              {{ result.details_html | safe }}
+            {% else %}
+              <p>This class comes from a newly trained field model. Detailed management guidance has not yet been reviewed for this class.</p>
+            {% endif %}
           </article>
         {% endif %}
       </div>
@@ -74,13 +88,20 @@
         <p class="eyebrow">Before treating the plant</p>
         <h2>Confirm important decisions locally.</h2>
       </div>
-      <div>
+      <div class="decision-guidance">
         <p>Do not apply a pesticide based only on this result. Correct identification, the crop, local registration, and label instructions all matter.</p>
-        <ul class="reference-list">
-          {% for reference in references %}
-            <li><a href="{{ reference.url }}" target="_blank" rel="noopener noreferrer">{{ reference.name }} ↗</a></li>
-          {% endfor %}
-        </ul>
+        {% for reference in references %}
+          <article class="guidance-summary">
+            <h3>{{ reference.title }}</h3>
+            <p>{{ reference.summary }}</p>
+            <ul>
+              {% for tip in reference.tips %}<li>{{ tip }}</li>{% endfor %}
+            </ul>
+            <a class="source-link" href="{{ reference.url }}" target="_blank" rel="noopener noreferrer">
+              Full source: {{ reference.source_name }} ↗
+            </a>
+          </article>
+        {% endfor %}
       </div>
     </section>
 

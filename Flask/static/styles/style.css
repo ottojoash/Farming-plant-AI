@@ -99,8 +99,13 @@ main { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
 .result-section li { margin: 7px 0; }
 .legacy-details { line-height: 1.75; }
 .responsible-use { border: 1px solid var(--line); background: var(--card); padding: clamp(28px, 5vw, 58px); display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
-.reference-list { padding-left: 18px; }
-.reference-list a { text-underline-offset: 4px; }
+.decision-guidance > p { margin: 0 0 26px; }
+.guidance-summary { border-top: 1px solid var(--line); padding: 24px 0; }
+.guidance-summary h3 { font: 600 1.25rem "Fraunces", serif; margin-bottom: 8px; }
+.guidance-summary p { color: var(--muted); }
+.guidance-summary ul { padding-left: 20px; margin: 14px 0; }
+.guidance-summary li { margin: 7px 0; }
+.source-link { display: inline-block; color: var(--green); font-size: .82rem; font-weight: 700; text-underline-offset: 4px; }
 .result-action { max-width: 330px; margin-top: 26px; }
 
 footer { border-top: 1px solid var(--line); min-height: 100px; color: var(--muted); font-size: .85rem; }

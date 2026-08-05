@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "models": {
+    "PlantDoc_Field": {
+      "path": "Models/crops/plantdoc_field_mobilenet_v3_small.pth",
+      "architecture": "mobilenet_v3_small",
+      "classes": [
+        "Apple___Apple_scab",
+        "Apple___Cedar_apple_rust",
+        "Apple___healthy",
+        "Blueberry___healthy",
+        "Cherry_(including_sour)___healthy",
+        "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+        "Corn_(maize)___Common_rust_",
+        "Corn_(maize)___Northern_Leaf_Blight",
+        "Grape___Black_rot",
+        "Grape___healthy",
+        "Peach___healthy",
+        "Pepper,_bell___Bacterial_spot",
+        "Pepper,_bell___healthy",
+        "Potato___Early_blight",
+        "Potato___Late_blight",
+        "Raspberry___healthy",
+        "Soybean___healthy",
+        "Squash___Powdery_mildew",
+        "Strawberry___healthy",
+        "Tomato___Bacterial_spot",
+        "Tomato___Early_blight",
+        "Tomato___Late_blight",
+        "Tomato___Leaf_Mold",
+        "Tomato___Septoria_leaf_spot",
+        "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+        "Tomato___Tomato_mosaic_virus",
+        "Tomato___healthy"
+      ],
+      "image_size": 224,
+      "test_accuracy": 0.6101694915254238,
+      "test_macro_f1": 0.6107676615414062
+    },
+    "Beans": {
+      "path": "Models/crops/beans_mobilenet_v3_small.pth",
+      "architecture": "mobilenet_v3_small",
+      "classes": [
+        "Common_bean___Anthracnose",
+        "Common_bean___Bean_rust",
+        "Common_bean___healthy"
+      ],
+      "image_size": 224,
+      "test_accuracy": 0.9968602825745683,
+      "test_macro_f1": 0.996901367167054
+    }
+  }
+}

@@ -29,6 +29,8 @@
           cautious vision fallback for plants outside the training dataset.
         </p>
         <div class="status-row" aria-label="System capabilities">
+          <span class="status-pill status-online">Leaf-only validation</span>
+          <span class="status-pill">{{ model_count }} models scanned automatically</span>
           <span class="status-pill">14 trained crops</span>
           <span class="status-pill">38 trained classes</span>
           <span class="status-pill {{ 'status-online' if ai_available else 'status-muted' }}">
@@ -41,7 +43,7 @@
         <div class="card-heading">
           <span>01</span>
           <div>
-            <h2>Upload a plant photo</h2>
+            <h2>Upload a clear leaf photo</h2>
             <p>JPEG, PNG, or WebP · maximum {{ max_upload_mb }} MB</p>
           </div>
         </div>

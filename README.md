@@ -1,15 +1,20 @@
 # Plant AI - Smart Plant Disease Detection
 
-Plant AI is a Flask application that screens plant photos for signs of disease. It combines:
+Plant AI is a Flask application that screens plant-leaf photos for signs of disease. It combines:
 
-1. A local ResNet34 classifier trained on 38 healthy and diseased leaf classes from 14 crops.
-2. An optional LangChain and OpenAI vision fallback for low-confidence images or plants outside the local dataset.
+1. An OpenCLIP leaf gate that rejects unrelated photos before classification.
+2. A local ResNet34 classifier trained on 38 healthy and diseased leaf classes from 14 crops.
+3. Optional crop-specific models trained with the included dataset pipeline.
+4. An optional LangChain and OpenAI vision fallback for low-confidence images or plants outside the local dataset.
 
 The fallback is an AI-assisted assessment, not additional training of the ResNet model. New classes require a labelled dataset, evaluation, and model retraining before they become supported local predictions.
 
 ## Features
 
 - Local inference using the included PyTorch checkpoint
+- Leaf-only validation that rejects cars, buildings, people, and other unrelated images
+- Explicit original, bean, and field-model selection, plus optional experimental comparison
+- Dataset download, preparation, evaluation, and crop-model registration tools
 - Confidence score and configurable acceptance threshold
 - Optional multimodal LangChain fallback with validated structured output
 - JPEG, PNG, and WebP validation with a 5 MB upload limit
@@ -20,7 +25,10 @@ The fallback is an AI-assisted assessment, not additional training of the ResNet
 
 ## Supported local classes
 
-The local model contains 38 classes across Apple, Blueberry, Cherry, Corn, Grape, Orange, Peach, Bell Pepper, Potato, Raspberry, Soybean, Squash, Strawberry, and Tomato.
+The original model contains 38 classes across Apple, Blueberry, Cherry, Corn, Grape, Orange,
+Peach, Bell Pepper, Potato, Raspberry, Soybean, Squash, Strawberry, and Tomato. The registered
+bean specialist adds healthy common bean, anthracnose, and bean rust. The PlantDoc field model
+adds a second opinion for 27 field-image classes.
 
 See [the complete class list](Src/README.md).
 
@@ -52,6 +60,13 @@ python -m pip install --upgrade pip
 python -m pip install -r Flask\requirements.txt
 ```
 
+For NVIDIA GPU training, install the CUDA build after the base dependencies:
+
+```powershell
+python -m pip install --upgrade --force-reinstall -r Flask\requirements-cuda.txt
+python -c "import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name(0))"
+```
+
 If Python 3.11 is unavailable, use another supported Python installation and adjust the first command.
 
 ## Configuration
@@ -74,6 +89,9 @@ Other useful settings:
 OPENAI_VISION_MODEL=gpt-5.6-sol
 OPENAI_REASONING_EFFORT=low
 LOCAL_CONFIDENCE_THRESHOLD=0.75
+LEAF_VALIDATION_THRESHOLD=0.60
+LEAF_VALIDATOR_MODEL=ViT-B-32-quickgelu
+LEAF_VALIDATOR_WEIGHTS=openai
 FLASK_SECRET_KEY=replace-with-a-long-random-value
 FLASK_DEBUG=false
 ```
@@ -89,7 +107,8 @@ Set-Location Flask
 python app.py
 ```
 
-Open <http://127.0.0.1:5000>.
+Open the address printed by Flask (normally <http://127.0.0.1:5000>, or the
+`FLASK_PORT` configured in `.env`).
 
 Production-style local server:
 
@@ -113,7 +132,13 @@ Uploaded image
 Validate and decode image
       |
       v
-Local ResNet34 prediction
+OpenCLIP leaf gate -- not a leaf --> reject with upload guidance
+      |
+      v
+Selected original or registered crop model
+      |
+      v
+Local prediction (or optional experimental cross-model comparison)
       |
       +-- confidence >= threshold --> known-class guidance
       |
@@ -126,7 +151,31 @@ Local ResNet34 prediction
 
 The vision fallback uses structured fields for plant name, likely condition, visible observations, possible causes, next steps, and uncertainty. It is instructed not to provide pesticide products or dosages.
 
-## Training and evaluation
+## Multi-crop datasets and training
+
+The reproducible pipeline in `training/` currently catalogues beans, cassava, rice/paddy,
+and PlantDoc field images. Dataset files are deliberately ignored by Git because they are
+large and may have separate terms. Read [DATASETS.md](DATASETS.md) before downloading or
+publishing a trained model.
+
+Typical workflow:
+
+```powershell
+# Download and prepare a freely downloadable dataset
+python training\download_datasets.py beans_tanzania
+python training\prepare_dataset.py beans_tanzania
+
+# Train, evaluate on the held-out test split, then register it in the app
+python training\train_crop_model.py beans_tanzania --crop Beans --epochs 12 --register
+```
+
+The app discovers registered checkpoints from `Models/registry.json` and exposes them in the
+model selector. The original 14-crop model is the safe default; choosing Beans or PlantDoc Field
+runs only that checkpoint. An experimental option compares all models and shows every result, but
+explicit selection is recommended because zero-shot crop routing is not reliable for every field
+photo. A model is registered only after a full run; smoke-test checkpoints are never registered.
+
+## Training and evaluation guidance
 
 The original training notebook is in [Src/Plant Disease Identification.ipynb](Src/Plant%20Disease%20Identification.ipynb). Before adding a new plant or disease to the local model:
 
@@ -149,6 +198,7 @@ Flask/
   static/              Styles and images
   tests/               Automated tests
 Models/                Local ResNet34 checkpoint
+training/              Dataset catalogue, preparation, training, and evaluation
 Src/                   Training notebook and class documentation
 TestImages/            Small manual test set
 ```

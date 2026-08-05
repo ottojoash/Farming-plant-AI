@@ -19,6 +19,8 @@ def test_home_page_loads(client):
 
     assert response.status_code == 200
     assert b"Plant AI" in response.data
+    assert b'name="crop_model"' not in response.data
+    assert b"Automatic / original 14 crops" not in response.data
 
 
 def test_missing_upload_returns_400(client):
@@ -39,6 +41,23 @@ def test_non_image_upload_returns_400(client):
     assert b"valid JPEG, PNG, or WebP" in response.data
 
 
+def test_non_leaf_image_is_rejected(client, jpeg_bytes, monkeypatch):
+    from leaf_validator import LeafValidation
+
+    monkeypatch.setattr(
+        "app.LEAF_VALIDATOR.validate",
+        lambda _: LeafValidation(is_leaf=False, confidence=0.02),
+    )
+    response = client.post(
+        "/predict",
+        data={"file": (io.BytesIO(jpeg_bytes), "car.jpg")},
+        content_type="multipart/form-data",
+    )
+
+    assert response.status_code == 422
+    assert b"does not appear to contain a clear plant leaf" in response.data
+
+
 def test_valid_upload_renders_local_result(client, jpeg_bytes, monkeypatch):
     monkeypatch.setattr("app.predict_image", lambda _: Prediction("Tomato___healthy", 0.99))
 
@@ -52,6 +71,70 @@ def test_valid_upload_renders_local_result(client, jpeg_bytes, monkeypatch):
     assert b"Tomato" in response.data
     assert b"Healthy" in response.data
     assert b"99.0%" in response.data
+    assert b"Improve the evidence before deciding" in response.data
+    assert b"Treat only after confirming the cause" in response.data
+
+
+def test_all_registered_models_are_scanned_automatically(client, jpeg_bytes, monkeypatch):
+    monkeypatch.setattr("app.predict_image", lambda _: Prediction("Tomato___healthy", 0.70))
+    monkeypatch.setattr(
+        "app.CROP_MODELS.predict_all",
+        lambda _: [("Bean model", Prediction("Common_bean___Bean_rust", 0.92))],
+    )
+
+    response = client.post(
+        "/predict",
+        data={"file": (io.BytesIO(jpeg_bytes), "leaf.jpg")},
+        content_type="multipart/form-data",
+    )
+
+    assert response.status_code == 200
+    assert b"Common bean" in response.data
+    assert b"Bean rust" in response.data
+    assert b"automatically compared 2 disease models" in response.data
+    assert b"Original ResNet34 model" in response.data
+
+
+def test_crop_aware_routing_blocks_unrelated_specialist(client, jpeg_bytes, monkeypatch):
+    monkeypatch.setattr("app.predict_image", lambda _: Prediction("Tomato___healthy", 0.80))
+    monkeypatch.setattr(
+        "app.CROP_MODELS.predict_all",
+        lambda _: [("Bean model", Prediction("Common_bean___Bean_rust", 0.99))],
+    )
+    monkeypatch.setattr(
+        "app.LEAF_VALIDATOR.crop_probabilities",
+        lambda _image, _crops: {"Tomato": 0.95, "Common bean": 0.05},
+    )
+
+    response = client.post(
+        "/predict",
+        data={"file": (io.BytesIO(jpeg_bytes), "tomato.jpg")},
+        content_type="multipart/form-data",
+    )
+
+    assert response.status_code == 200
+    assert b"Tomato" in response.data
+    assert b"Healthy" in response.data
+    assert b"strongest crop-aware match from Original ResNet34 model" in response.data
+
+
+def test_posted_model_hint_is_ignored_and_all_models_are_scanned(client, jpeg_bytes, monkeypatch):
+    monkeypatch.setattr("app.predict_image", lambda _: Prediction("Tomato___healthy", 0.90))
+    monkeypatch.setattr(
+        "app.CROP_MODELS.predict_all",
+        lambda _: [("Beans model", Prediction("Common_bean___Bean_rust", 0.80))],
+    )
+
+    response = client.post(
+        "/predict",
+        data={"file": (io.BytesIO(jpeg_bytes), "bean.jpg"), "crop_model": "Beans"},
+        content_type="multipart/form-data",
+    )
+
+    assert response.status_code == 200
+    assert b"Tomato" in response.data
+    assert b"Healthy" in response.data
+    assert b"automatically compared 2 disease models" in response.data
 
 
 def test_ai_fallback_output_is_escaped(client, jpeg_bytes, monkeypatch):

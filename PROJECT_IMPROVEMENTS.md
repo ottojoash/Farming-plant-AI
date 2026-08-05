@@ -1,5 +1,17 @@
 # Plant AI — Project Improvement Roadmap
 
+## Implementation update — 2026-08-05
+
+The critical application work from this review has now been implemented: credentials were removed
+from current source, upload validation and confidence handling were added, the class typo and route
+failures were fixed, OpenCLIP now rejects non-leaf images, the LangChain vision fallback is optional,
+tests cover the main routes, and the app runs through Waitress. A reproducible multi-crop pipeline
+now catalogues bean, cassava, rice, and PlantDoc data; trained Bean and PlantDoc Field checkpoints
+are registered in the application.
+
+Still requiring owner/domain action: revoke the API key exposed in Git history, obtain independent
+farm validation, have agricultural guidance reviewed locally, and add languages needed by users.
+
 ## Project title
 
 **Plant AI — Smart Plant Disease Detection**

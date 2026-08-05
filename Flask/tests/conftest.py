@@ -20,6 +20,21 @@ def app():
     return create_app({"TESTING": True})
 
 
+@pytest.fixture(autouse=True)
+def accept_leaf_images(monkeypatch):
+    from leaf_validator import LeafValidation
+
+    monkeypatch.setattr(
+        "app.LEAF_VALIDATOR.validate",
+        lambda _: LeafValidation(is_leaf=True, confidence=0.99),
+    )
+    monkeypatch.setattr("app.CROP_MODELS.predict_all", lambda _: [])
+    monkeypatch.setattr(
+        "app.LEAF_VALIDATOR.crop_probabilities",
+        lambda _image, crops: {crop: 1 / len(set(crops)) for crop in set(crops)},
+    )
+
+
 @pytest.fixture()
 def client(app):
     return app.test_client()

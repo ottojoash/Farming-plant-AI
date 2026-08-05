@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "datasets": {
+    "beans_tanzania": {
+      "title": "A Labeled Dataset of Healthy and Diseased Common Beans from Tanzania",
+      "crop": "Common bean",
+      "source": "https://zenodo.org/records/15685315",
+      "doi": "10.5281/zenodo.15685315",
+      "license": "Creative Commons Attribution 4.0 International",
+      "acquisition": "http_files",
+      "starter_files": ["anthra.zip", "rust1.zip", "healthy1.zip"],
+      "files": {
+        "anthra.zip": {
+          "url": "https://zenodo.org/api/records/15685315/files/anthra.zip/content",
+          "md5": "b42f3a3fc39acafdc7892eaea9879f2f",
+          "label": "Common_bean___Anthracnose"
+        },
+        "rust1.zip": {
+          "url": "https://zenodo.org/api/records/15685315/files/rust1.zip/content",
+          "md5": "3147aecedfcb5a4ff85b899c9882c817",
+          "label": "Common_bean___Bean_rust"
+        },
+        "rust2.zip": {
+          "url": "https://zenodo.org/api/records/15685315/files/rust2.zip/content",
+          "md5": "5f1c26cd9ba615430781fd68005336f0",
+          "label": "Common_bean___Bean_rust"
+        },
+        "healthy1.zip": {
+          "url": "https://zenodo.org/api/records/15685315/files/healthy1.zip/content",
+          "md5": "7cf7789c3b8c84ccf89e45234506f91f",
+          "label": "Common_bean___healthy"
+        }
+      },
+      "notes": "The starter selection is intentionally balanced. The complete 17.8 GB record contains eleven healthy and two rust archives."
+    },
+    "cassava_makerere": {
+      "title": "Makerere University Cassava Image Dataset",
+      "crop": "Cassava",
+      "source": "https://doi.org/10.7910/DVN/T4RB0B",
+      "doi": "10.7910/DVN/T4RB0B",
+      "license": "CC0 1.0",
+      "acquisition": "http_files",
+      "starter_files": ["cbsd-1.rar", "cmd_001.rar", "healthy_001.rar"],
+      "files": {
+        "cbsd-1.rar": {
+          "url": "https://dataverse.harvard.edu/api/access/datafile/6419127",
+          "label": "Cassava___Brown_streak_disease"
+        },
+        "cbsd-2.rar": {
+          "url": "https://dataverse.harvard.edu/api/access/datafile/6419132",
+          "label": "Cassava___Brown_streak_disease"
+        },
+        "cmd_001.rar": {
+          "url": "https://dataverse.harvard.edu/api/access/datafile/6419150",
+          "label": "Cassava___Mosaic_disease"
+        },
+        "cmd_002.rar": {
+          "url": "https://dataverse.harvard.edu/api/access/datafile/6419152",
+          "label": "Cassava___Mosaic_disease"
+        },
+        "cmd_003.rar": {
+          "url": "https://dataverse.harvard.edu/api/access/datafile/6419151",
+          "label": "Cassava___Mosaic_disease"
+        },
+        "cmd_004.rar": {
+          "url": "https://dataverse.harvard.edu/api/access/datafile/6420454",
+          "label": "Cassava___Mosaic_disease"
+        },
+        "cmd_005.rar": {
+          "url": "https://dataverse.harvard.edu/api/access/datafile/6420455",
+          "label": "Cassava___Mosaic_disease"
+        },
+        "healthy_001.rar": {
+          "url": "https://dataverse.harvard.edu/api/access/datafile/6419125",
+          "label": "Cassava___healthy"
+        },
+        "healthy_002.rar": {
+          "url": "https://dataverse.harvard.edu/api/access/datafile/6419126",
+          "label": "Cassava___healthy"
+        }
+      },
+      "notes": "Archives are RAR files and require 7-Zip, unrar, or another compatible extractor before preparation."
+    },
+    "paddy_doctor": {
+      "title": "Paddy Doctor visual image dataset",
+      "crop": "Rice",
+      "source": "https://paddydoc.github.io/paddy-doctor-dataset/dataset/",
+      "paper": "https://arxiv.org/abs/2205.11108",
+      "license": "Verify the current competition and IEEE DataPort terms before use",
+      "acquisition": "kaggle_competition",
+      "competition": "paddy-disease-classification",
+      "archive": "paddy-disease-classification.zip",
+      "label_aliases": {
+        "bacterial_leaf_blight": "Rice___Bacterial_leaf_blight",
+        "bacterial_leaf_streak": "Rice___Bacterial_leaf_streak",
+        "bacterial_panicle_blight": "Rice___Bacterial_panicle_blight",
+        "blast": "Rice___Blast",
+        "brown_spot": "Rice___Brown_spot",
+        "dead_heart": "Rice___Dead_heart",
+        "downy_mildew": "Rice___Downy_mildew",
+        "hispa": "Rice___Hispa",
+        "normal": "Rice___healthy",
+        "tungro": "Rice___Tungro"
+      },
+      "classes": [
+        "Rice___Bacterial_leaf_blight",
+        "Rice___Bacterial_leaf_streak",
+        "Rice___Bacterial_panicle_blight",
+        "Rice___Blast",
+        "Rice___Brown_spot",
+        "Rice___Dead_heart",
+        "Rice___Downy_mildew",
+        "Rice___Hispa",
+        "Rice___Tungro",
+        "Rice___healthy"
+      ],
+      "notes": "Kaggle authentication and acceptance of the competition terms are required."
+    },
+    "plantdoc": {
+      "title": "Cropped PlantDoc field-image dataset",
+      "crop": "Mixed",
+      "source": "https://github.com/pratikkayal/PlantDoc-Dataset",
+      "paper": "https://arxiv.org/abs/1911.10317",
+      "license": "CC BY 4.0",
+      "acquisition": "repository_zip",
+      "url": "https://codeload.github.com/pratikkayal/PlantDoc-Dataset/zip/refs/heads/master",
+      "archive": "plantdoc-master.zip",
+      "label_aliases": {
+        "Apple Scab Leaf": "Apple___Apple_scab",
+        "Apple leaf": "Apple___healthy",
+        "Apple rust leaf": "Apple___Cedar_apple_rust",
+        "Bell_pepper leaf spot": "Pepper,_bell___Bacterial_spot",
+        "Bell_pepper leaf": "Pepper,_bell___healthy",
+        "Blueberry leaf": "Blueberry___healthy",
+        "Cherry leaf": "Cherry_(including_sour)___healthy",
+        "Corn Gray leaf spot": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+        "Corn leaf blight": "Corn_(maize)___Northern_Leaf_Blight",
+        "Corn rust leaf": "Corn_(maize)___Common_rust_",
+        "Peach leaf": "Peach___healthy",
+        "Potato leaf early blight": "Potato___Early_blight",
+        "Potato leaf late blight": "Potato___Late_blight",
+        "Raspberry leaf": "Raspberry___healthy",
+        "Soyabean leaf": "Soybean___healthy",
+        "Squash Powdery mildew leaf": "Squash___Powdery_mildew",
+        "Strawberry leaf": "Strawberry___healthy",
+        "Tomato Early blight leaf": "Tomato___Early_blight",
+        "Tomato Septoria leaf spot": "Tomato___Septoria_leaf_spot",
+        "Tomato leaf bacterial spot": "Tomato___Bacterial_spot",
+        "Tomato leaf late blight": "Tomato___Late_blight",
+        "Tomato leaf mosaic virus": "Tomato___Tomato_mosaic_virus",
+        "Tomato leaf yellow virus": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+        "Tomato leaf": "Tomato___healthy",
+        "Tomato mold leaf": "Tomato___Leaf_Mold",
+        "Tomato two spotted spider mites leaf": "Tomato___Spider_mites Two-spotted_spider_mite",
+        "grape leaf black rot": "Grape___Black_rot",
+        "grape leaf": "Grape___healthy"
+      },
+      "notes": "Use primarily for field-domain robustness and external evaluation; labels overlap several PlantVillage classes."
+    }
+  }
+}

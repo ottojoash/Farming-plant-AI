@@ -11,6 +11,8 @@ from flask import Flask, render_template, request
 from PIL import Image, UnidentifiedImageError
 
 from ai_diagnosis import diagnose_with_ai, is_ai_available
+from crop_models import CropModelRegistry
+from leaf_validator import LeafValidator
 from model import Prediction, predict_image
 import utils
 
@@ -24,6 +26,8 @@ LOCAL_CONFIDENCE_THRESHOLD = float(os.getenv("LOCAL_CONFIDENCE_THRESHOLD", "0.75
 
 logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"))
 logger = logging.getLogger(__name__)
+CROP_MODELS = CropModelRegistry(BASE_DIR.parent)
+LEAF_VALIDATOR = LeafValidator()
 
 
 def create_app(test_config: dict | None = None) -> Flask:
@@ -40,6 +44,7 @@ def create_app(test_config: dict | None = None) -> Flask:
         return render_template(
             "index.html",
             ai_available=is_ai_available(),
+            model_count=1 + len(CROP_MODELS.available_crops()),
             max_upload_mb=MAX_UPLOAD_BYTES // (1024 * 1024),
         )
 
@@ -48,6 +53,7 @@ def create_app(test_config: dict | None = None) -> Flask:
         return {
             "status": "ok",
             "local_model": "ready",
+            "leaf_validator": "ready",
             "ai_fallback": "ready" if is_ai_available() else "not_configured",
         }
 
@@ -65,8 +71,22 @@ def create_app(test_config: dict | None = None) -> Flask:
             return _render_upload_error(str(exc), 400)
 
         try:
-            local_prediction = predict_image(image_bytes)
-            result = build_local_result(local_prediction)
+            leaf_validation = LEAF_VALIDATOR.validate(image_bytes)
+            if not leaf_validation.is_leaf:
+                logger.info("Rejected non-leaf upload with leaf confidence %.3f", leaf_validation.confidence)
+                return _render_upload_error(
+                    "This image does not appear to contain a clear plant leaf. Please upload a close, "
+                    "well-lit photograph of a living leaf.",
+                    422,
+                )
+            local_candidates = [("Original ResNet34 model", predict_image(image_bytes))]
+            local_candidates.extend(CROP_MODELS.predict_all(image_bytes))
+            local_source, local_prediction = select_local_candidate(image_bytes, local_candidates)
+            result = build_local_result(local_prediction, local_source)
+            result["local_note"] = (
+                f"Plant AI automatically compared {len(local_candidates)} disease models and selected "
+                f"the strongest crop-aware match from {local_source}."
+            )
             force_ai = request.form.get("analysis_mode") == "ai"
 
             if force_ai or local_prediction.confidence < LOCAL_CONFIDENCE_THRESHOLD:
@@ -107,8 +127,10 @@ def create_app(test_config: dict | None = None) -> Flask:
                     else:
                         result["warning"] = (
                             "This local prediction is below the acceptance threshold. Configure "
-                            "OPENAI_API_KEY to enable the AI-assisted fallback, or consult a plant specialist."
+                        "OPENAI_API_KEY to enable the AI-assisted fallback, or consult a plant specialist."
                         )
+
+            result["model_votes"] = format_model_votes(local_candidates)
 
             return render_template(
                 "display.html",
@@ -135,6 +157,7 @@ def create_app(test_config: dict | None = None) -> Flask:
                 "index.html",
                 error=message,
                 ai_available=is_ai_available(),
+                model_count=1 + len(CROP_MODELS.available_crops()),
                 max_upload_mb=MAX_UPLOAD_BYTES // (1024 * 1024),
             ),
             status_code,
@@ -181,10 +204,10 @@ def format_label(label: str) -> tuple[str, str]:
     return crop, disease
 
 
-def build_local_result(prediction: Prediction) -> dict:
+def build_local_result(prediction: Prediction, source: str = "Local ResNet34 model") -> dict:
     crop, disease = format_label(prediction.label)
     return {
-        "source": "Local ResNet34 model",
+        "source": source,
         "is_ai": False,
         "crop": crop,
         "disease": disease,
@@ -205,14 +228,70 @@ def local_comparison_note(prediction: Prediction, force_ai: bool) -> str:
     )
 
 
-def trusted_references() -> list[dict[str, str]]:
+def format_model_votes(candidates: list[tuple[str, Prediction]]) -> list[dict[str, str]]:
+    votes = []
+    for source, prediction in sorted(candidates, key=lambda item: item[1].confidence, reverse=True):
+        crop, disease = format_label(prediction.label)
+        votes.append(
+            {
+                "source": source,
+                "prediction": f"{crop} - {disease}",
+                "confidence": f"{prediction.confidence:.1%}",
+            }
+        )
+    return votes
+
+
+def select_local_candidate(
+    image_bytes: bytes,
+    candidates: list[tuple[str, Prediction]],
+) -> tuple[str, Prediction]:
+    """Select across closed-set models using disease confidence and visual crop relevance."""
+    candidate_crops = [format_label(prediction.label)[0] for _, prediction in candidates]
+    try:
+        crop_probabilities = LEAF_VALIDATOR.crop_probabilities(image_bytes, candidate_crops)
+    except Exception:
+        logger.exception("Crop-aware model routing failed; falling back to confidence")
+        crop_probabilities = {crop: 1.0 for crop in candidate_crops}
+
+    def routing_score(candidate: tuple[str, Prediction]) -> float:
+        crop, _ = format_label(candidate[1].label)
+        crop_match = crop_probabilities.get(crop, 0.0)
+        return candidate[1].confidence * (0.25 + 0.75 * crop_match)
+
+    return max(candidates, key=routing_score)
+
+
+def trusted_references() -> list[dict]:
     return [
         {
-            "name": "University of Minnesota Extension — diagnostic photo guidance",
+            "title": "Improve the evidence before deciding",
+            "summary": (
+                "A diagnosis is only as reliable as the photo and context provided. Photograph a "
+                "living symptomatic plant in natural light and compare it with a healthy plant nearby."
+            ),
+            "tips": [
+                "Capture both the top and underside of the affected leaf.",
+                "Fill the frame and keep symptoms sharply focused.",
+                "Include unusual stems, stalks, roots, or lesions when relevant.",
+                "Seek laboratory confirmation when an image cannot distinguish the cause.",
+            ],
+            "source_name": "University of Minnesota Extension",
             "url": "https://extension.umn.edu/crop-production/digital-crop-doc",
         },
         {
-            "name": "UC Integrated Pest Management — pesticide safety",
+            "title": "Treat only after confirming the cause",
+            "summary": (
+                "Plant damage may come from pests, watering, drainage, chemicals, weather, or physical "
+                "injury. Confirm the cause and try suitable nonchemical controls before using a pesticide."
+            ),
+            "tips": [
+                "If treatment is justified, choose the least-toxic effective option.",
+                "The label must list the crop, site, and target problem.",
+                "Follow label amounts, timing, protective equipment, storage, and disposal instructions.",
+                "Avoid applications during wind or expected rain and prevent runoff.",
+            ],
+            "source_name": "UC Integrated Pest Management",
             "url": "https://ipm.ucanr.edu/home-and-landscape/understanding-pesticides/",
         },
     ]
