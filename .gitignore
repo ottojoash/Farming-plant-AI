@@ -1,4 +1,10 @@
-*/__pycache__
-myenv
+__pycache__/
+*.py[cod]
 .env
-/env
+.venv/
+env/
+myenv/
+.pytest_cache/
+.ipynb_checkpoints/
+chroma_db/
+*.log

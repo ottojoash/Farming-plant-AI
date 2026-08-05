@@ -1,99 +1,92 @@
-<!DOCTYPE html>
-<html>
-
+<!doctype html>
+<html lang="en">
 <head>
-  <title>Plant-AI</title>
-  <!--meta tags -->
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!--//meta tags ends here-->
-  <!--booststrap-->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <!--//booststrap end-->
-
-  <!-- font-awesome icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
-    crossorigin="anonymous" />
-  <!-- //font-awesome icons -->
-
-  <!--stylesheets-->
-  <link href="../static/styles/style.css" rel='stylesheet' type='text/css' media="all">
-  <!--//stylesheets-->
-
+  <title>Plant assessment — Plant AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
 </head>
-
 <body>
-  <!--headder-->
-  <div class="header-outs inner_page-banner" id="home">
-    <div class="headder-top">
-      <!-- nav -->
-      <nav>
-        <div id="logo">
-          <h1><a href="/">Plant-AI</a></h1>
-        </div>
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('home') }}"><span class="brand-mark" aria-hidden="true">●</span>Plant AI</a>
+    <a class="header-link" href="{{ url_for('home') }}#diagnose">New assessment</a>
+  </header>
 
-      </nav>
-      <!-- //nav -->
-    </div>
-  </div>
-  <!--//headder-->
-  <!-- short -->
-  <div class="using-border py-3">
-    <div class="inner_breadcrumb  ml-4">
-      <ul class="short_ls">
-        <li>
-          <a href="/">Home</a>
-      </ul>
-    </div>
-  </div>
-  <!-- //short-->
-  <!-- about -->
-  <section class="about py-lg-4 py-md-3 py-sm-3 py-3" id="about">
-    <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
-      <div class="row" style="justify-content: center;">
-        <div class="col-md-10 about-two-grids">
-          <h3 class="mb-md-4 mb-sm-3 mb-3 text-center">Result</h3>
-          <div class="about-para-txt text-justify">
-            {{result}}
+  <main class="result-page">
+    <section class="result-heading">
+      <div>
+        <p class="eyebrow">Plant assessment</p>
+        <h1>{{ result.crop }}</h1>
+        <p class="diagnosis-name">{{ result.disease }}</p>
+      </div>
+      <div class="confidence-card">
+        <span>Confidence</span>
+        <strong>{{ result.confidence_text }}</strong>
+        <small>{{ result.source }}</small>
+      </div>
+    </section>
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- //about -->
+    {% if result.warning %}
+      <div class="alert alert-warning" role="alert">{{ result.warning }}</div>
+    {% endif %}
+    {% if result.local_note %}
+      <p class="local-note">{{ result.local_note }}</p>
+    {% endif %}
 
-  <!-- footer -->
-  <footer>
-    <div class="container pt-5 pb-3">
-      <div class="footer-w3layouts-head text-center">
-        <h2><a href="/">Plant-AI</a></h2>
+    <section class="result-layout">
+      <div class="plant-preview">
+        <img src="{{ preview_url }}" alt="Uploaded plant used for this assessment">
+        <p>Uploaded image</p>
       </div>
-      <div class="bottem-wthree-footer text-center pt-md-4 pt-3">
-        <p>
-          All Rights Reserved | Design by Joash Otto
-        </p>
-      </div>
-      <!-- move icon -->
-      <div class="text-center">
-        <a href="#home" class="move-top text-center mt-3"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-      </div>
-      <!--//move icon -->
-    </div>
-  </footer>
-  <!--//footer -->
 
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+      <div class="result-content">
+        {% if result.is_ai %}
+          <article class="result-section">
+            <h2>Assessment</h2>
+            <p>{{ result.summary }}</p>
+          </article>
+          <article class="result-section">
+            <h2>Visible observations</h2>
+            <ul>{% for item in result.observations %}<li>{{ item }}</li>{% endfor %}</ul>
+          </article>
+          <article class="result-section">
+            <h2>Possible causes</h2>
+            <ul>{% for item in result.causes %}<li>{{ item }}</li>{% endfor %}</ul>
+          </article>
+          <article class="result-section">
+            <h2>Recommended next steps</h2>
+            <ul>{% for item in result.actions %}<li>{{ item }}</li>{% endfor %}</ul>
+          </article>
+        {% else %}
+          <article class="result-section legacy-details">
+            <h2>Known-class guidance</h2>
+            {{ result.details_html | safe }}
+          </article>
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="responsible-use">
+      <div>
+        <p class="eyebrow">Before treating the plant</p>
+        <h2>Confirm important decisions locally.</h2>
+      </div>
+      <div>
+        <p>Do not apply a pesticide based only on this result. Correct identification, the crop, local registration, and label instructions all matter.</p>
+        <ul class="reference-list">
+          {% for reference in references %}
+            <li><a href="{{ reference.url }}" target="_blank" rel="noopener noreferrer">{{ reference.name }} ↗</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </section>
+
+    <a class="primary-button result-action" href="{{ url_for('home') }}#diagnose"><span>Analyse another plant</span><span>→</span></a>
+  </main>
+
+  <footer><span>Plant AI</span><span>Screening, not a confirmed diagnosis</span></footer>
 </body>
-
 </html>

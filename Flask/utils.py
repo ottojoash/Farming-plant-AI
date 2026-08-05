@@ -335,7 +335,7 @@ disease_dic = {
         <br/>3. Overhead irrigation or prolonged periods of rain can help reduce populations.""",
 
 
-    'Tomato___Target_Spo': """ <b>Crop</b>: Tomato <br/>Disease: Target Spot<br/>
+    'Tomato___Target_Spot': """ <b>Crop</b>: Tomato <br/>Disease: Target Spot<br/>
         <br/> Cause of disease:
         <br/><br/> 1. The fungus causes plants to lose their leaves; it is a major disease. If infection occurs before the fruit has developed, yields are low.
         <br/> 2. This is a common disease on tomato in Pacific island countries. The disease occurs in the screen house and in the field.
