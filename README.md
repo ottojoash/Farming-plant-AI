@@ -75,6 +75,13 @@ python -m pip install --upgrade pip
 python -m pip install -r Flask\requirements.txt
 ```
 
+For a repeatable Python 3.11 environment, use the lock snapshot captured for
+the competition branch:
+
+```powershell
+python -m pip install -r Flask\requirements-lock-py311.txt
+```
+
 For NVIDIA GPU training, install the CUDA build after the base dependencies:
 
 ```powershell
@@ -224,6 +231,27 @@ waitress-serve --host=127.0.0.1 --port=5000 app:app
 ```powershell
 python -m pytest Flask\tests -q
 ```
+
+Run the secret-free startup smoke test from a clean clone (no MariaDB, API key,
+or downloaded dataset is needed):
+
+```powershell
+python scripts\smoke_test.py
+```
+
+To reproduce the representative local evaluation after preparing its documented
+datasets, use the v1 frozen cases or the evidence-aware v2 view:
+
+```powershell
+python -m evaluation.run --manifest evaluation\cases\v1\manifest.json --adapter agent --output agent-v1.json
+python -m evaluation.run --manifest evaluation\cases\v2-evidence-manifest.json --adapter agent --output agent-evidence-v2.json
+```
+
+The first model startup can take several minutes while OpenCLIP weights are
+verified in the local cache. Subsequent offline cases use the cached weights.
+The local evaluations have zero external API cost; enabling the optional AI
+fallback incurs the configured OpenAI usage cost and requires a secret kept only
+in `.env`.
 
 ## How hybrid diagnosis works
 

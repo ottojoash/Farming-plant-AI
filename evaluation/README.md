@@ -23,6 +23,10 @@ python training\download_datasets.py beans_tanzania
 python training\prepare_dataset.py beans_tanzania
 ```
 
+For a clean-clone smoke check that does not need either dataset or private
+credentials, run `python scripts\smoke_test.py` from the repository root. It
+starts the app against an in-memory SQLite database and verifies `/health`.
+
 The manifest references exact held-out paths and SHA-256 digests. Preparation is
 deterministic, so a changed or missing asset causes a visible error instead of
 silently changing the benchmark. The evidence-aware comparison uses
@@ -61,6 +65,13 @@ Run the current local agent workflow with structured traces:
 
 ```powershell
 python -m evaluation.run --adapter agent --output evaluation\results\agent-v1.json
+```
+
+The evidence-aware v2 comparison uses the same image assets and labels with
+case-specific approved source IDs:
+
+```powershell
+python -m evaluation.run --manifest evaluation\cases\v2-evidence-manifest.json --adapter agent --output agent-evidence-v2.json
 ```
 
 The Stage 2 adapter disables the optional LLM call so its first comparison is
