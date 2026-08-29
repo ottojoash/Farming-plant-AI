@@ -9,6 +9,7 @@ from typing import Any
 def _load_agent(project_root: Path):
     os.environ["DATABASE_URL"] = "sqlite:///:memory:"
     os.environ["ALLOW_DATABASE_FALLBACK"] = "false"
+    os.environ["HF_HUB_OFFLINE"] = "1"
     os.environ.pop("ADMIN_PASSWORD", None)
     flask_dir = project_root / "Flask"
     if str(flask_dir) not in sys.path:

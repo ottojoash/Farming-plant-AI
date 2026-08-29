@@ -45,6 +45,8 @@ python -m evaluation.run --adapter baseline --output evaluation\results\baseline
 ```
 
 The real leaf gate may download its configured OpenCLIP weights on first use.
+After acquisition, both evaluation adapters set `HF_HUB_OFFLINE=1` so a network
+or model-hub delay cannot silently distort the comparison.
 The runner records every case, failure, latency, selected model, model votes,
 component checks, critical violations, the primary metric, and its 95 percent
 Wilson interval.
