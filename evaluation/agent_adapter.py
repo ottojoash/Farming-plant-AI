@@ -37,11 +37,7 @@ class AgentWorkflowAdapter:
             context=case.get("context", {}),
         )
         result = outcome.result
-        management_claims = []
-        if result.get("details_html"):
-            management_claims.append(
-                {"text": self.details_as_text(result["details_html"]) or "", "source_ids": []}
-            )
+        management_claims = result.get("management_claims", [])
         return {
             "disposition": outcome.disposition,
             "crop": result.get("crop"),
@@ -59,4 +55,7 @@ class AgentWorkflowAdapter:
             "model_votes": result.get("model_votes", []),
             "workflow_trace": outcome.trace,
             "workflow_errors": outcome.errors,
+            "evidence_corpus_versions": sorted(
+                {item["corpus_version"] for item in result.get("evidence", [])}
+            ),
         }

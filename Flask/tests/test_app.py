@@ -80,6 +80,30 @@ def test_valid_upload_renders_local_result(client, jpeg_bytes, monkeypatch):
     assert b"Treat only after confirming the cause" in response.data
 
 
+def test_matching_condition_renders_cited_evidence_instead_of_legacy_guidance(
+    client, jpeg_bytes, monkeypatch
+):
+    monkeypatch.setattr("app.predict_image", lambda _: Prediction("Tomato___Late_blight", 0.99))
+
+    response = client.post(
+        "/predict",
+        data={
+            "file": (io.BytesIO(jpeg_bytes), "tomato.jpg"),
+            "reported_crop": "Tomato",
+            "symptoms": "Dark wet-looking patches",
+            "location": "Nairobi, Kenya",
+        },
+        content_type="multipart/form-data",
+    )
+
+    assert response.status_code == 200
+    assert b"Approved evidence library" in response.data
+    assert b"Source-backed next steps" in response.data
+    assert b"University of Minnesota Extension" in response.data
+    assert b"plant-ai-evidence-2026-08-29-v1" in response.data
+    assert b"How to prevent/cure the disease" not in response.data
+
+
 def test_all_registered_models_are_scanned_automatically(client, jpeg_bytes, monkeypatch):
     monkeypatch.setattr("app.predict_image", lambda _: Prediction("Tomato___healthy", 0.70))
     monkeypatch.setattr(

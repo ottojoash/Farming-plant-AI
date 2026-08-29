@@ -123,6 +123,10 @@ def record_successful_scan(result: dict, confidence: float | None) -> None:
                 actions=result.get("actions") or [],
                 warning=result.get("warning"),
                 model_votes=result.get("model_votes") or [],
+                evidence=result.get("evidence") or [],
+                evidence_corpus_version=(
+                    result["evidence"][0].get("corpus_version") if result.get("evidence") else None
+                ),
             )
         )
     db.session.commit()

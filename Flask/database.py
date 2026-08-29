@@ -6,7 +6,7 @@ import os
 
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import UniqueConstraint
+from sqlalchemy import UniqueConstraint, inspect, text
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
@@ -88,6 +88,8 @@ class ScanRecord(db.Model):
     actions = db.Column(db.JSON, nullable=True)
     warning = db.Column(db.Text, nullable=True)
     model_votes = db.Column(db.JSON, nullable=True)
+    evidence = db.Column(db.JSON, nullable=True)
+    evidence_corpus_version = db.Column(db.String(120), nullable=True)
     created_at = db.Column(db.DateTime, nullable=False, default=utc_now, index=True)
 
     user = db.relationship("User", back_populates="scans")
@@ -137,6 +139,19 @@ DEFAULT_SETTINGS = {
     "anonymous_scan_limit": "2",
     "free_monthly_scan_limit": "5",
 }
+
+
+def ensure_schema_compatibility() -> None:
+    """Apply the two additive scan-record columns needed by existing installs."""
+    columns = {column["name"] for column in inspect(db.engine).get_columns("scan_records")}
+    additions = {
+        "evidence": "JSON NULL",
+        "evidence_corpus_version": "VARCHAR(120) NULL",
+    }
+    for name, sql_type in additions.items():
+        if name not in columns:
+            db.session.execute(text(f"ALTER TABLE scan_records ADD COLUMN {name} {sql_type}"))
+    db.session.commit()
 
 
 def get_setting(key: str, default: str | None = None) -> str:

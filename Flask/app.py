@@ -18,8 +18,9 @@ from accounts import accounts, payment_webhooks, pricing
 from agent_workflow import PlantTriageWorkflow, WorkflowTools
 from ai_diagnosis import diagnose_with_ai, is_ai_available
 from crop_models import CropModelRegistry
-from database import User, bootstrap_admin, db, get_int_setting, seed_defaults
+from database import User, bootstrap_admin, db, ensure_schema_compatibility, get_int_setting, seed_defaults
 from entitlements import record_successful_scan, relevant_plant_history, scan_allowance
+from evidence_retrieval import EVIDENCE_RETRIEVER
 from leaf_validator import LeafValidator
 from model import Prediction, predict_image
 import utils
@@ -88,6 +89,7 @@ def create_app(test_config: dict | None = None) -> Flask:
 
     with app.app_context():
         db.create_all()
+        ensure_schema_compatibility()
         seed_defaults()
         if not app.config.get("TESTING"):
             bootstrap_admin()
@@ -378,6 +380,9 @@ def build_triage_workflow() -> PlantTriageWorkflow:
             local_comparison_note=lambda prediction, force_ai: local_comparison_note(prediction, force_ai),
             ai_available=lambda: is_ai_available(),
             diagnose_ai=lambda image, mime: diagnose_with_ai(image, mime),
+            retrieve_evidence=lambda crop, condition, location: EVIDENCE_RETRIEVER.retrieve(
+                crop, condition, location
+            ),
             local_confidence_threshold=LOCAL_CONFIDENCE_THRESHOLD,
         )
     )

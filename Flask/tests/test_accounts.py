@@ -117,7 +117,8 @@ def test_premium_user_can_open_detailed_scan_record(client, app, jpeg_bytes, mon
     with app.app_context():
         record = ScanRecord.query.filter_by(user_id=user_id).one()
         record_id = record.id
-        assert record.details
+        assert record.summary
+        assert record.actions
         assert record.model_votes
 
     page = client.get(f"/scan-records/{record_id}")
@@ -127,6 +128,33 @@ def test_premium_user_can_open_detailed_scan_record(client, app, jpeg_bytes, mon
     assert b"Models checked" in page.data
     assert b"Original ResNet34 model" in page.data
     assert b"Privacy note" in page.data
+
+
+def test_premium_scan_record_preserves_evidence_provenance(client, app, jpeg_bytes, monkeypatch):
+    monkeypatch.setattr("app.predict_image", lambda _: Prediction("Tomato___Late_blight", 0.98))
+    user_id = create_user(app, "evidence@example.com", "evidence-pass-123", plan="premium")
+    login(client, "evidence@example.com", "evidence-pass-123")
+
+    response = client.post(
+        "/predict",
+        data={
+            "file": (io.BytesIO(jpeg_bytes), "tomato.jpg"),
+            "reported_crop": "Tomato",
+            "symptoms": "Dark wet-looking patches",
+        },
+        content_type="multipart/form-data",
+    )
+    assert response.status_code == 200
+
+    with app.app_context():
+        record = ScanRecord.query.filter_by(user_id=user_id).one()
+        record_id = record.id
+        assert record.evidence[0]["id"] == "umn-extension-tomato-potato-late-blight"
+        assert record.evidence_corpus_version == "plant-ai-evidence-2026-08-29-v1"
+
+    detail = client.get(f"/scan-records/{record_id}")
+    assert b"Approved evidence" in detail.data
+    assert b"University of Minnesota Extension" in detail.data
 
 
 def test_user_cannot_open_another_users_scan_record(client, app):

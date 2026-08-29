@@ -33,6 +33,7 @@ def make_tools(**overrides):
         "local_comparison_note": lambda _prediction, _force: "Local comparison",
         "ai_available": lambda: False,
         "diagnose_ai": lambda *_: None,
+        "retrieve_evidence": lambda _crop, _condition, _location: [],
         "local_confidence_threshold": 0.75,
     }
     defaults.update(overrides)
@@ -78,9 +79,53 @@ def test_local_branch_runs_all_model_tools_and_returns_serializable_trace():
         "intake",
         "leaf_gate",
         "vision_models",
+        "evidence_retrieval",
         "finalize_local",
     ]
     json.dumps(outcome.trace)
+
+
+def test_evidence_node_attaches_only_source_backed_management_claims():
+    evidence = {
+        "id": "approved-tomato-source",
+        "title": "Reviewed tomato guidance",
+        "summary": "Reviewed summary",
+        "actions": ["Keep foliage dry."],
+        "source_name": "Extension service",
+        "url": "https://extension.example.edu/tomato",
+        "corpus_version": "test-corpus-v1",
+    }
+    workflow = PlantTriageWorkflow(
+        make_tools(retrieve_evidence=lambda crop, condition, location: [evidence])
+    )
+
+    outcome = workflow.run(b"image", "image/jpeg", context={"location": "Nairobi"})
+
+    assert outcome.result["evidence"] == [evidence]
+    assert outcome.result["management_claims"] == [
+        {
+            "text": "Keep foliage dry.",
+            "source_ids": ["approved-tomato-source"],
+            "source_name": "Extension service",
+            "url": "https://extension.example.edu/tomato",
+        }
+    ]
+    assert outcome.trace[-2]["node"] == "evidence_retrieval"
+    assert outcome.trace[-2]["status"] == "found"
+
+
+def test_evidence_failure_omits_treatment_claims_and_continues_safely():
+    def fail(*_args):
+        raise RuntimeError("corpus unavailable")
+
+    workflow = PlantTriageWorkflow(make_tools(retrieve_evidence=fail))
+
+    outcome = workflow.run(b"image", "image/jpeg")
+
+    assert outcome.disposition == "preliminary_triage"
+    assert outcome.result["management_claims"] == []
+    assert "evidence library was unavailable" in outcome.result["warning"]
+    assert outcome.trace[-2]["status"] == "error"
 
 
 def test_ai_node_retries_once_then_returns_structured_result():
@@ -116,6 +161,8 @@ def test_ai_node_retries_once_then_returns_structured_result():
     assert calls["ai"] == 2
     assert outcome.result["source"] == "AI-assisted fallback"
     assert outcome.result["crop"] == "Cassava"
+    assert "Seek extension review" not in outcome.result["actions"]
+    assert outcome.result["management_claims"] == []
     attempts = [event for event in outcome.trace if event["node"] == "ai_assessment"]
     assert [event["status"] for event in attempts] == ["retry", "ok"]
 

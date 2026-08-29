@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "corpus_version": "plant-ai-evidence-2026-08-29-v1",
+  "created_at": "2026-08-29",
+  "policy": "Human-curated paraphrases from university extension and public IPM guidance. No page content is scraped at scan time. Chemical product, rate, and timing instructions are deliberately excluded.",
+  "entries": [
+    {
+      "id": "unh-extension-apple-scab",
+      "crop": "Apple",
+      "crop_aliases": ["Apple"],
+      "condition": "Apple scab",
+      "condition_aliases": ["Apple scab"],
+      "title": "Apple scab: reduce carry-over and leaf wetness",
+      "summary": "Apple scab management starts with sanitation and practices that help leaves and fruit dry more quickly.",
+      "actions": [
+        "Remove or break down fallen infected leaves after the season.",
+        "Prune to improve air movement and sunlight through the canopy.",
+        "Avoid overhead irrigation where practical and consider locally suitable resistant varieties."
+      ],
+      "source_name": "University of New Hampshire Extension",
+      "url": "https://extension.unh.edu/resource/apple-scab-fact-sheet",
+      "region_scope": "New England guidance; cultural principles are broadly relevant, but varieties and pesticide decisions must be confirmed locally.",
+      "retrieved_at": "2026-08-29"
+    },
+    {
+      "id": "umn-extension-corn-common-rust",
+      "crop": "Corn",
+      "crop_aliases": ["Corn", "Maize"],
+      "condition": "Common rust",
+      "condition_aliases": ["Common rust", "Common rust of corn"],
+      "title": "Corn common rust: start with resistant hybrids",
+      "summary": "Common rust often remains below damaging levels, and resistant corn hybrids are the main management measure.",
+      "actions": [
+        "Compare pustules on both leaf surfaces with local common-rust guidance before acting.",
+        "Choose resistant hybrids when common rust is a recurring local problem.",
+        "Ask a local crop adviser whether disease pressure and crop stage justify any further action."
+      ],
+      "source_name": "University of Minnesota Extension",
+      "url": "https://extension.umn.edu/agriculture/crop-production/corn/common-rust-on-corn",
+      "region_scope": "Upper Midwestern United States; disease pressure and hybrid recommendations vary by region.",
+      "retrieved_at": "2026-08-29"
+    },
+    {
+      "id": "iastate-extension-grape-black-rot",
+      "crop": "Grape",
+      "crop_aliases": ["Grape", "Grapevine"],
+      "condition": "Black rot",
+      "condition_aliases": ["Black rot", "Grape black rot"],
+      "title": "Grape black rot: sanitation and canopy drying",
+      "summary": "Removing infected material and helping the canopy dry can reduce sources and conditions that favor grape black rot.",
+      "actions": [
+        "Remove diseased material and black, shriveled fruit left on vines or the ground.",
+        "Use pruning, training, and spacing to promote canopy drying.",
+        "Confirm any preventive spray program with current local grape guidance before use."
+      ],
+      "source_name": "Iowa State University Extension and Outreach",
+      "url": "https://yardandgarden.extension.iastate.edu/encyclopedia/black-rot-grape",
+      "region_scope": "Iowa and similar production settings; pesticide registration and timing are location-specific.",
+      "retrieved_at": "2026-08-29"
+    },
+    {
+      "id": "uc-ipm-potato-early-blight",
+      "crop": "Potato",
+      "crop_aliases": ["Potato"],
+      "condition": "Early blight",
+      "condition_aliases": ["Early blight", "Potato early blight"],
+      "title": "Potato early blight: maintain crop vigor",
+      "summary": "Early blight risk can be reduced by maintaining suitable crop nutrition and irrigation and by limiting infected potato refuse between crops.",
+      "actions": [
+        "Review fertility, irrigation, and other stresses that may be reducing crop vigor.",
+        "Reduce infected potato refuse and rotate crops where locally appropriate.",
+        "Confirm the diagnosis and any fungicide decision with current local potato guidance."
+      ],
+      "source_name": "University of California Statewide Integrated Pest Management Program",
+      "url": "https://ipm.ucanr.edu/agriculture/potato/early-blight/",
+      "region_scope": "California production guidance; local climate, resistance, registration, and timing may differ.",
+      "retrieved_at": "2026-08-29"
+    },
+    {
+      "id": "umn-extension-tomato-potato-late-blight",
+      "crop": "Tomato",
+      "crop_aliases": ["Tomato", "Potato"],
+      "condition": "Late blight",
+      "condition_aliases": ["Late blight", "Tomato late blight", "Potato late blight"],
+      "title": "Late blight: confirm quickly and keep foliage dry",
+      "summary": "Late blight can spread quickly in cool, wet conditions, so suspected cases need prompt confirmation and nearby crops may also be at risk.",
+      "actions": [
+        "Keep foliage dry where practical and inspect nearby tomato and potato plants.",
+        "Do not move or compost suspect infected material before obtaining local disposal guidance.",
+        "Contact a local extension service or plant clinic promptly for confirmation and region-specific management."
+      ],
+      "source_name": "University of Minnesota Extension",
+      "url": "https://extension.umn.edu/agriculture/specialty-crops/vegetable-farming/disease-management/late-blight",
+      "region_scope": "Minnesota garden and farm guidance; outbreak status and permitted products vary by region.",
+      "retrieved_at": "2026-08-29"
+    },
+    {
+      "id": "uc-ipm-bean-anthracnose",
+      "crop": "Common bean",
+      "crop_aliases": ["Common bean", "Bean", "Dry bean", "Snap bean"],
+      "condition": "Bean anthracnose",
+      "condition_aliases": ["Bean anthracnose", "Anthracnose"],
+      "title": "Bean anthracnose: clean seed and moisture management",
+      "summary": "Bean anthracnose can move with infected seed, debris, splashing rain, irrigation water, and field activity under cool, moist conditions.",
+      "actions": [
+        "Use certified disease-free seed and resistant varieties when available.",
+        "Avoid overhead irrigation where practical and avoid working wet plants.",
+        "Manage infected debris and plan a locally suitable non-bean rotation."
+      ],
+      "source_name": "University of California Statewide Integrated Pest Management Program",
+      "url": "https://ipm.ucanr.edu/agriculture/dry-beans/bean-anthracnose/",
+      "region_scope": "California dry-bean guidance; rotation length, cultivars, and production practices require local confirmation.",
+      "retrieved_at": "2026-08-29"
+    },
+    {
+      "id": "uc-ipm-bean-rust",
+      "crop": "Common bean",
+      "crop_aliases": ["Common bean", "Bean", "Dry bean", "Snap bean"],
+      "condition": "Bean rust",
+      "condition_aliases": ["Bean rust", "Rust"],
+      "title": "Bean rust: airflow and splash reduction",
+      "summary": "Spacing, reduced leaf wetness, removal of infected material, and resistant varieties can help limit bean rust.",
+      "actions": [
+        "Space plants to support air circulation and avoid overhead sprinklers where practical.",
+        "Remove infected leaves and shoots without spreading debris through the crop.",
+        "Check locally adapted resistant varieties and seek local advice before considering a pesticide."
+      ],
+      "source_name": "University of California Statewide Integrated Pest Management Program",
+      "url": "https://ipm.ucanr.edu/home-and-landscape/bean-rust/",
+      "region_scope": "California home and landscape guidance; commercial management and pesticide registration require local confirmation.",
+      "retrieved_at": "2026-08-29"
+    }
+  ]
+}

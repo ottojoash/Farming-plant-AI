@@ -42,6 +42,8 @@ class TriageState(TypedDict, total=False):
     ai_failed: bool
     missing_context: list[str]
     memory_count: int
+    evidence: list[dict[str, Any]]
+    evidence_error: bool
     errors: Annotated[list[str], operator.add]
     trace: Annotated[list[TraceEvent], operator.add]
     disposition: Disposition
@@ -59,6 +61,7 @@ class WorkflowTools:
     local_comparison_note: Callable[[Prediction, bool], str]
     ai_available: Callable[[], bool]
     diagnose_ai: Callable[[bytes, str], Any]
+    retrieve_evidence: Callable[[str, str, str | None], list[dict[str, Any]]]
     local_confidence_threshold: float
 
 
@@ -194,7 +197,7 @@ class PlantTriageWorkflow:
             return "request_context"
         if state.get("ai_requested") and self.tools.ai_available():
             return "ai_assessment"
-        return "finalize_local"
+        return "evidence_retrieval"
 
     def _request_context(self, state: TriageState) -> dict[str, Any]:
         started = time.perf_counter()
@@ -277,8 +280,85 @@ class PlantTriageWorkflow:
         }
 
     @staticmethod
-    def _after_ai(state: TriageState) -> str:
-        return "finalize_local" if state.get("ai_failed") else "finalize_ai"
+    def _after_ai(_state: TriageState) -> str:
+        return "evidence_retrieval"
+
+    def _evidence_retrieval(self, state: TriageState) -> dict[str, Any]:
+        started = time.perf_counter()
+        diagnosis = state.get("ai_diagnosis")
+        if diagnosis is not None and not state.get("ai_failed"):
+            crop = diagnosis.plant_name
+            condition = diagnosis.likely_condition
+        else:
+            prediction = state["selected_prediction"]
+            provisional = self.tools.build_local_result(prediction, state["selected_source"])
+            crop = provisional["crop"]
+            condition = provisional["disease"]
+        try:
+            evidence = self.tools.retrieve_evidence(
+                crop,
+                condition,
+                state.get("context", {}).get("location"),
+            )
+            return {
+                "evidence": evidence,
+                "evidence_error": False,
+                "trace": [
+                    self._event(
+                        "evidence_retrieval",
+                        "found" if evidence else "empty",
+                        f"Retrieved {len(evidence)} approved evidence records from the versioned corpus.",
+                        started,
+                    )
+                ],
+            }
+        except Exception as exc:
+            return {
+                "evidence": [],
+                "evidence_error": True,
+                "trace": [
+                    self._event(
+                        "evidence_retrieval",
+                        "error",
+                        f"Approved evidence retrieval failed with {type(exc).__name__}; treatment guidance was omitted.",
+                        started,
+                    )
+                ],
+            }
+
+    @staticmethod
+    def _after_evidence(state: TriageState) -> str:
+        if state.get("ai_diagnosis") is not None and not state.get("ai_failed"):
+            return "finalize_ai"
+        return "finalize_local"
+
+    @staticmethod
+    def _attach_evidence(result: dict[str, Any], state: TriageState) -> dict[str, Any]:
+        evidence = state.get("evidence", [])
+        result.pop("details_html", None)
+        result["evidence"] = evidence
+        result["management_claims"] = [
+            {
+                "text": action,
+                "source_ids": [item["id"]],
+                "source_name": item["source_name"],
+                "url": item["url"],
+            }
+            for item in evidence
+            for action in item.get("actions", [])
+        ]
+        if evidence:
+            result["actions"] = [claim["text"] for claim in result["management_claims"]]
+        else:
+            result["actions"] = [
+                "No approved crop-and-condition guidance was found. Consult a local extension officer or plant clinic before treatment."
+            ]
+            note = "Condition-specific management advice was omitted because no approved matching source was found."
+            result["warning"] = " ".join(filter(None, [result.get("warning"), note]))
+        if state.get("evidence_error"):
+            note = "The evidence library was unavailable, so no treatment guidance is shown."
+            result["warning"] = " ".join(filter(None, [result.get("warning"), note]))
+        return result
 
     def _finalize_rejection(self, _state: TriageState) -> dict[str, Any]:
         started = time.perf_counter()
@@ -293,6 +373,10 @@ class PlantTriageWorkflow:
         prediction = state["selected_prediction"]
         candidates = state.get("local_candidates", [])
         result = self.tools.build_local_result(prediction, state["selected_source"])
+        result["is_structured"] = True
+        result["summary"] = "This is a preliminary image-model match, not a confirmed diagnosis."
+        result["observations"] = []
+        result["causes"] = []
         result["local_note"] = (
             f"Plant AI automatically compared {len(candidates)} disease models and selected "
             f"the strongest crop-aware match from {state['selected_source']}."
@@ -324,6 +408,7 @@ class PlantTriageWorkflow:
                 "local confirmation, especially if symptoms are spreading."
             )
             result["warning"] = " ".join(filter(None, [result.get("warning"), recurrence_warning]))
+        self._attach_evidence(result, state)
         return {
             "disposition": "preliminary_triage",
             "result": result,
@@ -358,6 +443,7 @@ class PlantTriageWorkflow:
                     "A similar condition appears in your previous records; seek local confirmation if symptoms persist.",
                 ]
             )
+        self._attach_evidence(result, state)
         return {
             "disposition": "preliminary_triage",
             "result": result,
@@ -393,6 +479,7 @@ class PlantTriageWorkflow:
         builder.add_node("vision_models", self._vision_models)
         builder.add_node("ai_assessment", self._ai_assessment)
         builder.add_node("request_context", self._request_context)
+        builder.add_node("evidence_retrieval", self._evidence_retrieval)
         builder.add_node("finalize_rejection", self._finalize_rejection)
         builder.add_node("finalize_local", self._finalize_local)
         builder.add_node("finalize_ai", self._finalize_ai)
@@ -402,6 +489,7 @@ class PlantTriageWorkflow:
         builder.add_conditional_edges("leaf_gate", self._after_leaf)
         builder.add_conditional_edges("vision_models", self._after_vision)
         builder.add_conditional_edges("ai_assessment", self._after_ai)
+        builder.add_conditional_edges("evidence_retrieval", self._after_evidence)
         builder.add_edge("finalize_rejection", END)
         builder.add_edge("request_context", END)
         builder.add_edge("finalize_local", END)

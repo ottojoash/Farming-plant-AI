@@ -26,6 +26,7 @@ The fallback is an AI-assisted assessment, not additional training of the ResNet
 - Optional multimodal LangChain fallback with validated structured output
 - Typed LangGraph orchestration with conditional branches, bounded AI retries, and sanitized traces
 - Context-aware intake that pauses weak results to request only missing crop and symptom details
+- Versioned agricultural evidence retrieval with claim-level extension/IPM citations and safe unsupported-crop fallback
 - JPEG, PNG, and WebP validation with a 5 MB upload limit
 - Clear separation between local-model and AI-assisted results
 - Health-check endpoint at `/health`

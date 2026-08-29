@@ -73,8 +73,12 @@
             <ul>{% for item in result.causes %}<li>{{ item }}</li>{% endfor %}</ul>
           </article>
           <article class="result-section">
-            <h2>Recommended next steps</h2>
-            <ul>{% for item in result.actions %}<li>{{ item }}</li>{% endfor %}</ul>
+            <h2>{{ 'Source-backed next steps' if result.management_claims else 'Recommended next steps' }}</h2>
+            {% if result.management_claims %}
+              <ul class="cited-actions">{% for claim in result.management_claims %}<li>{{ claim.text }} <a href="{{ claim.url }}" target="_blank" rel="noopener noreferrer">{{ claim.source_name }} ↗</a></li>{% endfor %}</ul>
+            {% else %}
+              <ul>{% for item in result.actions %}<li>{{ item }}</li>{% endfor %}</ul>
+            {% endif %}
           </article>
         {% else %}
           <article class="result-section legacy-details">
@@ -88,6 +92,17 @@
         {% endif %}
       </div>
     </section>
+
+    {% if result.evidence %}
+      <section class="retrieved-evidence" aria-labelledby="retrieved-evidence-title">
+        <p class="eyebrow">Approved evidence library</p>
+        <h2 id="retrieved-evidence-title">Why these next steps are shown</h2>
+        <div class="evidence-card-grid">
+          {% for item in result.evidence %}<article class="evidence-card"><h3>{{ item.title }}</h3><p>{{ item.summary }}</p><small>{{ item.location_note }}</small><a class="source-link" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">Read {{ item.source_name }} ↗</a></article>{% endfor %}
+        </div>
+        <p class="corpus-note">Evidence corpus {{ result.evidence[0].corpus_version }} · retrieved {{ result.evidence[0].retrieved_at }}</p>
+      </section>
+    {% endif %}
 
     <section class="responsible-use">
       <div>

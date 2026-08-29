@@ -30,8 +30,11 @@ START
        | uncertain/requested + AI configured
        v
      ai_assessment (maximum two attempts)
-       | success ------------------> finalize_ai -------> END
-       | attempts exhausted -------> finalize_local ----> END
+       | success / attempts exhausted
+       v
+     evidence_retrieval
+       | AI result ----------------> finalize_ai -------> END
+       | local/fallback result ----> finalize_local ----> END
 ```
 
 The graph is compiled once when the application starts. Existing inference code
@@ -48,6 +51,7 @@ OpenCLIP gate and all registered classifiers without duplicating model logic.
 - leaf decision and confidence;
 - all local model candidates and selected prediction;
 - optional structured AI diagnosis;
+- approved crop-and-condition evidence with corpus provenance;
 - final disposition and UI result;
 - append-only recoverable errors; and
 - append-only structured trace events.
@@ -66,6 +70,7 @@ retention contract.
 | `vision_models` | Run the original and every registered classifier, then crop-aware selection. | Routes model failure to safe escalation. |
 | `request_context` | Pause a low-confidence result and identify only missing critical context. | Does not diagnose or consume a scan allowance. |
 | `ai_assessment` | Request structured multimodal assessment only when configured and needed. | Tries at most twice, then falls back to the cautious local result. |
+| `evidence_retrieval` | Match the final crop and condition against the versioned approved corpus. | Returns exact-scope cited actions or no management claim. |
 | `finalize_rejection` | Stop without assigning a crop or disease. | User receives better-upload guidance. |
 | `finalize_local` | Preserve local result, votes, threshold warning, and source. | Explicitly warns when AI is unavailable or retries fail. |
 | `finalize_ai` | Convert validated AI fields into the existing result contract. | Keeps uncertainty and the local comparison visible. |
@@ -106,7 +111,6 @@ external actions must use an explicit human approval node.
 This stage provides orchestration, not the finished competition agent. The
 following remain deliberately separate backlog items:
 
-- approved agricultural evidence retrieval (Issue #7);
 - independent verification, calibrated abstention, and human approval (Issue
   #8); and
 - committed representative trajectories for every agent (Issue #11).
