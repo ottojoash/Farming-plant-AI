@@ -1,6 +1,6 @@
 # Plant AI agent architecture
 
-Status: Stage 2 orchestration foundation, 2026-08-29.
+Status: Stage 2 orchestration, intake, memory, and evidence retrieval, 2026-08-29.
 
 Plant AI now executes scans through a compiled LangGraph `StateGraph`. Nodes read
 typed shared state and return partial updates; conditional edges decide which
@@ -115,6 +115,6 @@ following remain deliberately separate backlog items:
   #8); and
 - committed representative trajectories for every agent (Issue #11).
 
-The initial agent adapter disables the optional LLM during evaluation. This
-isolates the effect of orchestration and establishes whether a graph alone
-improves the primary metric before adding retrieval or model cost.
+The evaluation adapter disables the optional LLM and uses the versioned local
+evidence corpus. This keeps model quality and external API cost isolated while
+the evidence-specific v2 manifest scores claim provenance.

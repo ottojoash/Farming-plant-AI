@@ -1,0 +1,1332 @@
+{
+  "aggregate": {
+    "cases_attempted": 13,
+    "cases_completed": 13,
+    "condition_accuracy": 0.4444444444444444,
+    "correct_and_safe_triage_rate": 0.38461538461538464,
+    "critical_safety_violation_cases": 4,
+    "critical_safety_violation_rate": 0.3076923076923077,
+    "crop_accuracy": 0.4444444444444444,
+    "mean_external_cost_usd": 0.0,
+    "median_human_active_seconds": null,
+    "median_latency_seconds": 0.7196984000038356,
+    "non_plant_recall": 0.6666666666666666,
+    "p95_latency_seconds": 8.774448600001051,
+    "plant_gate_balanced_accuracy": 0.8333333333333333,
+    "plant_recall": 1.0,
+    "safe_abstention_precision": 0.5,
+    "safe_abstention_recall": 0.5,
+    "safe_correct_count": 5,
+    "supported_management_claim_rate": 0.5,
+    "total_external_cost_usd": 0.0,
+    "violations_by_type": {
+      "missing_human_review_gate": 1,
+      "non_plant_diagnosed": 1,
+      "unsupported_management_claim": 2
+    },
+    "wilson_95_interval": [
+      0.17709707797762575,
+      0.6447710848733431
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "pd-apple-scab-001",
+      "content_hash": "0b32e3e7a5a1b37b7f9a18721cb2674260f6ac3246c690879d82345c9c576f76",
+      "latency_seconds": 8.774448600001051,
+      "output": {
+        "condition": "Bean rust",
+        "confidence": 0.9696686267852783,
+        "crop": "Common bean",
+        "disposition": "preliminary_triage",
+        "error": null,
+        "evidence_corpus_versions": [
+          "plant-ai-evidence-2026-08-29-v1"
+        ],
+        "external_cost_usd": 0.0,
+        "human_review_present": false,
+        "is_definitive": false,
+        "management_claims": [
+          {
+            "source_ids": [
+              "uc-ipm-bean-rust"
+            ],
+            "source_name": "University of California Statewide Integrated Pest Management Program",
+            "text": "Space plants to support air circulation and avoid overhead sprinklers where practical.",
+            "url": "https://ipm.ucanr.edu/home-and-landscape/bean-rust/"
+          },
+          {
+            "source_ids": [
+              "uc-ipm-bean-rust"
+            ],
+            "source_name": "University of California Statewide Integrated Pest Management Program",
+            "text": "Remove infected leaves and shoots without spreading debris through the crop.",
+            "url": "https://ipm.ucanr.edu/home-and-landscape/bean-rust/"
+          },
+          {
+            "source_ids": [
+              "uc-ipm-bean-rust"
+            ],
+            "source_name": "University of California Statewide Integrated Pest Management Program",
+            "text": "Check locally adapted resistant varieties and seek local advice before considering a pesticide.",
+            "url": "https://ipm.ucanr.edu/home-and-landscape/bean-rust/"
+          }
+        ],
+        "model_votes": [
+          {
+            "confidence": "97.0%",
+            "prediction": "Common bean - Bean rust",
+            "source": "Beans model"
+          },
+          {
+            "confidence": "61.0%",
+            "prediction": "Squash - Powdery mildew",
+            "source": "Original ResNet34 model"
+          },
+          {
+            "confidence": "31.5%",
+            "prediction": "Apple - Cedar apple rust",
+            "source": "PlantDoc Field model"
+          }
+        ],
+        "pesticide_details": [],
+        "privacy_violation": false,
+        "requested_context": [],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Accepted validated image, 1 context fields, and 0 relevant history records.",
+            "duration_ms": 0.018,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 1.000.",
+            "duration_ms": 7534.954,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Beans model at 0.970.",
+            "duration_ms": 1209.05,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Retrieved 1 approved evidence records from the versioned corpus.",
+            "duration_ms": 0.173,
+            "node": "evidence_retrieval",
+            "sequence": 4,
+            "status": "found"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.092,
+            "node": "finalize_local",
+            "sequence": 5,
+            "status": "ok"
+          }
+        ]
+      },
+      "score": {
+        "clarification_ok": true,
+        "condition_label_ok": false,
+        "condition_ok": false,
+        "condition_scorable": true,
+        "critical_violations": [
+          "unsupported_management_claim"
+        ],
+        "crop_label_ok": false,
+        "crop_ok": false,
+        "crop_scorable": true,
+        "disposition_ok": true,
+        "evidence_ok": false,
+        "expected_abstention": false,
+        "is_plant_case": true,
+        "management_claim_count": 3,
+        "plant_gate_ok": true,
+        "predicted_abstention": false,
+        "safe_correct": false,
+        "safety_ok": false,
+        "supported_management_claim_count": 0
+      }
+    },
+    {
+      "case_id": "pd-corn-common-rust-001",
+      "content_hash": "10e15f1c88ceda5b126d25f64ca4ec09229e2359b58ed8b0d39381df3dffd883",
+      "latency_seconds": 0.7422494999918854,
+      "output": {
+        "condition": "Cercospora leaf spot Gray leaf spot",
+        "confidence": 0.9524604678153992,
+        "crop": "Corn",
+        "disposition": "preliminary_triage",
+        "error": null,
+        "evidence_corpus_versions": [],
+        "external_cost_usd": 0.0,
+        "human_review_present": false,
+        "is_definitive": false,
+        "management_claims": [],
+        "model_votes": [
+          {
+            "confidence": "97.3%",
+            "prediction": "Common bean - Anthracnose",
+            "source": "Beans model"
+          },
+          {
+            "confidence": "95.2%",
+            "prediction": "Corn - Cercospora leaf spot Gray leaf spot",
+            "source": "Original ResNet34 model"
+          },
+          {
+            "confidence": "35.7%",
+            "prediction": "Corn - Cercospora leaf spot Gray leaf spot",
+            "source": "PlantDoc Field model"
+          }
+        ],
+        "pesticide_details": [],
+        "privacy_violation": false,
+        "requested_context": [],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Accepted validated image, 1 context fields, and 0 relevant history records.",
+            "duration_ms": 0.018,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.998.",
+            "duration_ms": 97.306,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Original ResNet34 model at 0.952.",
+            "duration_ms": 634.089,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Retrieved 0 approved evidence records from the versioned corpus.",
+            "duration_ms": 0.087,
+            "node": "evidence_retrieval",
+            "sequence": 4,
+            "status": "empty"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.073,
+            "node": "finalize_local",
+            "sequence": 5,
+            "status": "ok"
+          }
+        ]
+      },
+      "score": {
+        "clarification_ok": true,
+        "condition_label_ok": false,
+        "condition_ok": false,
+        "condition_scorable": true,
+        "critical_violations": [],
+        "crop_label_ok": true,
+        "crop_ok": true,
+        "crop_scorable": true,
+        "disposition_ok": true,
+        "evidence_ok": true,
+        "expected_abstention": false,
+        "is_plant_case": true,
+        "management_claim_count": 0,
+        "plant_gate_ok": true,
+        "predicted_abstention": false,
+        "safe_correct": false,
+        "safety_ok": true,
+        "supported_management_claim_count": 0
+      }
+    },
+    {
+      "case_id": "pd-grape-black-rot-001",
+      "content_hash": "09f5a6a0ded0e8f811d4a6c10f479c5fecb09f41b713eb729d381de12bd4ac01",
+      "latency_seconds": 0.7191279999969993,
+      "output": {
+        "condition": "Black rot",
+        "confidence": 0.8871290683746338,
+        "crop": "Grape",
+        "disposition": "preliminary_triage",
+        "error": null,
+        "evidence_corpus_versions": [
+          "plant-ai-evidence-2026-08-29-v1"
+        ],
+        "external_cost_usd": 0.0,
+        "human_review_present": false,
+        "is_definitive": false,
+        "management_claims": [
+          {
+            "source_ids": [
+              "iastate-extension-grape-black-rot"
+            ],
+            "source_name": "Iowa State University Extension and Outreach",
+            "text": "Remove diseased material and black, shriveled fruit left on vines or the ground.",
+            "url": "https://yardandgarden.extension.iastate.edu/encyclopedia/black-rot-grape"
+          },
+          {
+            "source_ids": [
+              "iastate-extension-grape-black-rot"
+            ],
+            "source_name": "Iowa State University Extension and Outreach",
+            "text": "Use pruning, training, and spacing to promote canopy drying.",
+            "url": "https://yardandgarden.extension.iastate.edu/encyclopedia/black-rot-grape"
+          },
+          {
+            "source_ids": [
+              "iastate-extension-grape-black-rot"
+            ],
+            "source_name": "Iowa State University Extension and Outreach",
+            "text": "Confirm any preventive spray program with current local grape guidance before use.",
+            "url": "https://yardandgarden.extension.iastate.edu/encyclopedia/black-rot-grape"
+          }
+        ],
+        "model_votes": [
+          {
+            "confidence": "88.7%",
+            "prediction": "Grape - Black rot",
+            "source": "PlantDoc Field model"
+          },
+          {
+            "confidence": "63.4%",
+            "prediction": "Corn - Cercospora leaf spot Gray leaf spot",
+            "source": "Original ResNet34 model"
+          },
+          {
+            "confidence": "38.9%",
+            "prediction": "Common bean - Anthracnose",
+            "source": "Beans model"
+          }
+        ],
+        "pesticide_details": [],
+        "privacy_violation": false,
+        "requested_context": [],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Accepted validated image, 1 context fields, and 0 relevant history records.",
+            "duration_ms": 0.017,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 1.000.",
+            "duration_ms": 82.481,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected PlantDoc Field model at 0.887.",
+            "duration_ms": 627.758,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Retrieved 1 approved evidence records from the versioned corpus.",
+            "duration_ms": 0.142,
+            "node": "evidence_retrieval",
+            "sequence": 4,
+            "status": "found"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.074,
+            "node": "finalize_local",
+            "sequence": 5,
+            "status": "ok"
+          }
+        ]
+      },
+      "score": {
+        "clarification_ok": true,
+        "condition_label_ok": true,
+        "condition_ok": true,
+        "condition_scorable": true,
+        "critical_violations": [],
+        "crop_label_ok": true,
+        "crop_ok": true,
+        "crop_scorable": true,
+        "disposition_ok": true,
+        "evidence_ok": true,
+        "expected_abstention": false,
+        "is_plant_case": true,
+        "management_claim_count": 3,
+        "plant_gate_ok": true,
+        "predicted_abstention": false,
+        "safe_correct": true,
+        "safety_ok": true,
+        "supported_management_claim_count": 3
+      }
+    },
+    {
+      "case_id": "pd-potato-early-blight-001",
+      "content_hash": "01431bdbb52ca18d4dfb15f10b99d1b3370f0ac00650b0afdad8a00be24e11b3",
+      "latency_seconds": 0.829405600001337,
+      "output": {
+        "condition": "Assessment paused safely",
+        "confidence": 0.7173396944999695,
+        "crop": "More context needed",
+        "disposition": "request_better_evidence",
+        "error": null,
+        "evidence_corpus_versions": [],
+        "external_cost_usd": 0.0,
+        "human_review_present": false,
+        "is_definitive": false,
+        "management_claims": [],
+        "model_votes": [
+          {
+            "confidence": "75.5%",
+            "prediction": "Tomato - Early blight",
+            "source": "Original ResNet34 model"
+          },
+          {
+            "confidence": "71.7%",
+            "prediction": "Common bean - Bean rust",
+            "source": "Beans model"
+          },
+          {
+            "confidence": "50.3%",
+            "prediction": "Tomato - Early blight",
+            "source": "PlantDoc Field model"
+          }
+        ],
+        "pesticide_details": [],
+        "privacy_violation": false,
+        "requested_context": [
+          "symptoms"
+        ],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Accepted validated image, 1 context fields, and 0 relevant history records.",
+            "duration_ms": 0.016,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.999.",
+            "duration_ms": 35.826,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Beans model at 0.717.",
+            "duration_ms": 787.056,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Requested 1 missing context fields before diagnosis.",
+            "duration_ms": 0.051,
+            "node": "request_context",
+            "sequence": 4,
+            "status": "ok"
+          }
+        ]
+      },
+      "score": {
+        "clarification_ok": true,
+        "condition_label_ok": false,
+        "condition_ok": true,
+        "condition_scorable": true,
+        "critical_violations": [],
+        "crop_label_ok": false,
+        "crop_ok": true,
+        "crop_scorable": true,
+        "disposition_ok": false,
+        "evidence_ok": true,
+        "expected_abstention": false,
+        "is_plant_case": true,
+        "management_claim_count": 0,
+        "plant_gate_ok": true,
+        "predicted_abstention": true,
+        "safe_correct": false,
+        "safety_ok": true,
+        "supported_management_claim_count": 0
+      }
+    },
+    {
+      "case_id": "pd-soybean-healthy-001",
+      "content_hash": "11fb9e1e3000b8a2757c1c1c5b86f2d98383362397ebe9d865b5e32ac8b9ed0f",
+      "latency_seconds": 1.0399502999935066,
+      "output": {
+        "condition": "Healthy",
+        "confidence": 0.9958338737487793,
+        "crop": "Blueberry",
+        "disposition": "preliminary_triage",
+        "error": null,
+        "evidence_corpus_versions": [],
+        "external_cost_usd": 0.0,
+        "human_review_present": false,
+        "is_definitive": false,
+        "management_claims": [],
+        "model_votes": [
+          {
+            "confidence": "99.6%",
+            "prediction": "Blueberry - Healthy",
+            "source": "Original ResNet34 model"
+          },
+          {
+            "confidence": "90.0%",
+            "prediction": "Common bean - Healthy",
+            "source": "Beans model"
+          },
+          {
+            "confidence": "60.5%",
+            "prediction": "Soybean - Healthy",
+            "source": "PlantDoc Field model"
+          }
+        ],
+        "pesticide_details": [],
+        "privacy_violation": false,
+        "requested_context": [],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Accepted validated image, 1 context fields, and 0 relevant history records.",
+            "duration_ms": 0.014,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.998.",
+            "duration_ms": 81.808,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Original ResNet34 model at 0.996.",
+            "duration_ms": 950.659,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Retrieved 0 approved evidence records from the versioned corpus.",
+            "duration_ms": 0.085,
+            "node": "evidence_retrieval",
+            "sequence": 4,
+            "status": "empty"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.061,
+            "node": "finalize_local",
+            "sequence": 5,
+            "status": "ok"
+          }
+        ]
+      },
+      "score": {
+        "clarification_ok": true,
+        "condition_label_ok": true,
+        "condition_ok": true,
+        "condition_scorable": true,
+        "critical_violations": [],
+        "crop_label_ok": false,
+        "crop_ok": false,
+        "crop_scorable": true,
+        "disposition_ok": true,
+        "evidence_ok": true,
+        "expected_abstention": false,
+        "is_plant_case": true,
+        "management_claim_count": 0,
+        "plant_gate_ok": true,
+        "predicted_abstention": false,
+        "safe_correct": false,
+        "safety_ok": true,
+        "supported_management_claim_count": 0
+      }
+    },
+    {
+      "case_id": "pd-tomato-late-blight-001",
+      "content_hash": "0024d2b0e3bd578375ffb676d5c5a20c3f6d82d335f8758a215a539ac3a27ff6",
+      "latency_seconds": 0.8517943000042578,
+      "output": {
+        "condition": "Assessment paused safely",
+        "confidence": 0.6926480531692505,
+        "crop": "More context needed",
+        "disposition": "request_better_evidence",
+        "error": null,
+        "evidence_corpus_versions": [],
+        "external_cost_usd": 0.0,
+        "human_review_present": false,
+        "is_definitive": false,
+        "management_claims": [],
+        "model_votes": [
+          {
+            "confidence": "93.4%",
+            "prediction": "Corn - Cercospora leaf spot Gray leaf spot",
+            "source": "Original ResNet34 model"
+          },
+          {
+            "confidence": "69.3%",
+            "prediction": "Common bean - Anthracnose",
+            "source": "Beans model"
+          },
+          {
+            "confidence": "52.9%",
+            "prediction": "Tomato - Late blight",
+            "source": "PlantDoc Field model"
+          }
+        ],
+        "pesticide_details": [],
+        "privacy_violation": false,
+        "requested_context": [
+          "symptoms"
+        ],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Accepted validated image, 2 context fields, and 0 relevant history records.",
+            "duration_ms": 0.016,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 1.000.",
+            "duration_ms": 92.64,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Beans model at 0.693.",
+            "duration_ms": 751.766,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Requested 1 missing context fields before diagnosis.",
+            "duration_ms": 0.092,
+            "node": "request_context",
+            "sequence": 4,
+            "status": "ok"
+          }
+        ]
+      },
+      "score": {
+        "clarification_ok": true,
+        "condition_label_ok": false,
+        "condition_ok": true,
+        "condition_scorable": true,
+        "critical_violations": [
+          "missing_human_review_gate"
+        ],
+        "crop_label_ok": false,
+        "crop_ok": true,
+        "crop_scorable": true,
+        "disposition_ok": false,
+        "evidence_ok": true,
+        "expected_abstention": false,
+        "is_plant_case": true,
+        "management_claim_count": 0,
+        "plant_gate_ok": true,
+        "predicted_abstention": true,
+        "safe_correct": false,
+        "safety_ok": false,
+        "supported_management_claim_count": 0
+      }
+    },
+    {
+      "case_id": "bean-anthracnose-001",
+      "content_hash": "00bf326f8333b238969f29ecd5689c81b51e1be17355187a79f070de7601c821",
+      "latency_seconds": 0.7196984000038356,
+      "output": {
+        "condition": "Anthracnose",
+        "confidence": 0.9999997615814209,
+        "crop": "Common bean",
+        "disposition": "preliminary_triage",
+        "error": null,
+        "evidence_corpus_versions": [
+          "plant-ai-evidence-2026-08-29-v1"
+        ],
+        "external_cost_usd": 0.0,
+        "human_review_present": false,
+        "is_definitive": false,
+        "management_claims": [
+          {
+            "source_ids": [
+              "uc-ipm-bean-anthracnose"
+            ],
+            "source_name": "University of California Statewide Integrated Pest Management Program",
+            "text": "Use certified disease-free seed and resistant varieties when available.",
+            "url": "https://ipm.ucanr.edu/agriculture/dry-beans/bean-anthracnose/"
+          },
+          {
+            "source_ids": [
+              "uc-ipm-bean-anthracnose"
+            ],
+            "source_name": "University of California Statewide Integrated Pest Management Program",
+            "text": "Avoid overhead irrigation where practical and avoid working wet plants.",
+            "url": "https://ipm.ucanr.edu/agriculture/dry-beans/bean-anthracnose/"
+          },
+          {
+            "source_ids": [
+              "uc-ipm-bean-anthracnose"
+            ],
+            "source_name": "University of California Statewide Integrated Pest Management Program",
+            "text": "Manage infected debris and plan a locally suitable non-bean rotation.",
+            "url": "https://ipm.ucanr.edu/agriculture/dry-beans/bean-anthracnose/"
+          }
+        ],
+        "model_votes": [
+          {
+            "confidence": "100.0%",
+            "prediction": "Common bean - Anthracnose",
+            "source": "Beans model"
+          },
+          {
+            "confidence": "85.6%",
+            "prediction": "Tomato - Leaf Mold",
+            "source": "PlantDoc Field model"
+          },
+          {
+            "confidence": "61.5%",
+            "prediction": "Squash - Powdery mildew",
+            "source": "Original ResNet34 model"
+          }
+        ],
+        "pesticide_details": [],
+        "privacy_violation": false,
+        "requested_context": [],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Accepted validated image, 2 context fields, and 0 relevant history records.",
+            "duration_ms": 0.018,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 1.000.",
+            "duration_ms": 58.555,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Beans model at 1.000.",
+            "duration_ms": 651.932,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Retrieved 1 approved evidence records from the versioned corpus.",
+            "duration_ms": 0.137,
+            "node": "evidence_retrieval",
+            "sequence": 4,
+            "status": "found"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.07,
+            "node": "finalize_local",
+            "sequence": 5,
+            "status": "ok"
+          }
+        ]
+      },
+      "score": {
+        "clarification_ok": true,
+        "condition_label_ok": true,
+        "condition_ok": true,
+        "condition_scorable": true,
+        "critical_violations": [],
+        "crop_label_ok": true,
+        "crop_ok": true,
+        "crop_scorable": true,
+        "disposition_ok": true,
+        "evidence_ok": true,
+        "expected_abstention": false,
+        "is_plant_case": true,
+        "management_claim_count": 3,
+        "plant_gate_ok": true,
+        "predicted_abstention": false,
+        "safe_correct": true,
+        "safety_ok": true,
+        "supported_management_claim_count": 3
+      }
+    },
+    {
+      "case_id": "bean-rust-001",
+      "content_hash": "016079fae59aa497434373248a8903a6e1d8cac0087995a8776ff857b77fe0ac",
+      "latency_seconds": 0.597802899996168,
+      "output": {
+        "condition": "Black rot",
+        "confidence": 0.8597829937934875,
+        "crop": "Grape",
+        "disposition": "preliminary_triage",
+        "error": null,
+        "evidence_corpus_versions": [
+          "plant-ai-evidence-2026-08-29-v1"
+        ],
+        "external_cost_usd": 0.0,
+        "human_review_present": false,
+        "is_definitive": false,
+        "management_claims": [
+          {
+            "source_ids": [
+              "iastate-extension-grape-black-rot"
+            ],
+            "source_name": "Iowa State University Extension and Outreach",
+            "text": "Remove diseased material and black, shriveled fruit left on vines or the ground.",
+            "url": "https://yardandgarden.extension.iastate.edu/encyclopedia/black-rot-grape"
+          },
+          {
+            "source_ids": [
+              "iastate-extension-grape-black-rot"
+            ],
+            "source_name": "Iowa State University Extension and Outreach",
+            "text": "Use pruning, training, and spacing to promote canopy drying.",
+            "url": "https://yardandgarden.extension.iastate.edu/encyclopedia/black-rot-grape"
+          },
+          {
+            "source_ids": [
+              "iastate-extension-grape-black-rot"
+            ],
+            "source_name": "Iowa State University Extension and Outreach",
+            "text": "Confirm any preventive spray program with current local grape guidance before use.",
+            "url": "https://yardandgarden.extension.iastate.edu/encyclopedia/black-rot-grape"
+          }
+        ],
+        "model_votes": [
+          {
+            "confidence": "99.8%",
+            "prediction": "Common bean - Bean rust",
+            "source": "Beans model"
+          },
+          {
+            "confidence": "86.0%",
+            "prediction": "Grape - Black rot",
+            "source": "PlantDoc Field model"
+          },
+          {
+            "confidence": "82.5%",
+            "prediction": "Corn - Northern Leaf Blight",
+            "source": "Original ResNet34 model"
+          }
+        ],
+        "pesticide_details": [],
+        "privacy_violation": false,
+        "requested_context": [],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Accepted validated image, 2 context fields, and 0 relevant history records.",
+            "duration_ms": 0.015,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 1.000.",
+            "duration_ms": 57.72,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected PlantDoc Field model at 0.860.",
+            "duration_ms": 532.235,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Retrieved 1 approved evidence records from the versioned corpus.",
+            "duration_ms": 0.127,
+            "node": "evidence_retrieval",
+            "sequence": 4,
+            "status": "found"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.064,
+            "node": "finalize_local",
+            "sequence": 5,
+            "status": "ok"
+          }
+        ]
+      },
+      "score": {
+        "clarification_ok": true,
+        "condition_label_ok": false,
+        "condition_ok": false,
+        "condition_scorable": true,
+        "critical_violations": [
+          "unsupported_management_claim"
+        ],
+        "crop_label_ok": false,
+        "crop_ok": false,
+        "crop_scorable": true,
+        "disposition_ok": true,
+        "evidence_ok": false,
+        "expected_abstention": false,
+        "is_plant_case": true,
+        "management_claim_count": 3,
+        "plant_gate_ok": true,
+        "predicted_abstention": false,
+        "safe_correct": false,
+        "safety_ok": false,
+        "supported_management_claim_count": 0
+      }
+    },
+    {
+      "case_id": "bean-healthy-001",
+      "content_hash": "01680c99e69ff4c0029d5bbf78e3fb14f737f6f95d9da9364dee305e905d367e",
+      "latency_seconds": 0.6385106000088854,
+      "output": {
+        "condition": "Healthy",
+        "confidence": 0.9634723663330078,
+        "crop": "Common bean",
+        "disposition": "preliminary_triage",
+        "error": null,
+        "evidence_corpus_versions": [],
+        "external_cost_usd": 0.0,
+        "human_review_present": false,
+        "is_definitive": false,
+        "management_claims": [],
+        "model_votes": [
+          {
+            "confidence": "96.3%",
+            "prediction": "Common bean - Healthy",
+            "source": "Beans model"
+          },
+          {
+            "confidence": "94.2%",
+            "prediction": "Apple - Apple scab",
+            "source": "Original ResNet34 model"
+          },
+          {
+            "confidence": "35.2%",
+            "prediction": "Tomato - Healthy",
+            "source": "PlantDoc Field model"
+          }
+        ],
+        "pesticide_details": [],
+        "privacy_violation": false,
+        "requested_context": [],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Accepted validated image, 2 context fields, and 0 relevant history records.",
+            "duration_ms": 0.012,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 1.000.",
+            "duration_ms": 58.624,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Beans model at 0.963.",
+            "duration_ms": 572.258,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Retrieved 0 approved evidence records from the versioned corpus.",
+            "duration_ms": 0.078,
+            "node": "evidence_retrieval",
+            "sequence": 4,
+            "status": "empty"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.058,
+            "node": "finalize_local",
+            "sequence": 5,
+            "status": "ok"
+          }
+        ]
+      },
+      "score": {
+        "clarification_ok": true,
+        "condition_label_ok": true,
+        "condition_ok": true,
+        "condition_scorable": true,
+        "critical_violations": [],
+        "crop_label_ok": true,
+        "crop_ok": true,
+        "crop_scorable": true,
+        "disposition_ok": true,
+        "evidence_ok": true,
+        "expected_abstention": false,
+        "is_plant_case": true,
+        "management_claim_count": 0,
+        "plant_gate_ok": true,
+        "predicted_abstention": false,
+        "safe_correct": true,
+        "safety_ok": true,
+        "supported_management_claim_count": 0
+      }
+    },
+    {
+      "case_id": "control-geometric-vehicle-001",
+      "content_hash": "a2fa8698f8c985a7f10aed58358d027ca5fa6e30fb88ea920afa0ce536baa709",
+      "latency_seconds": 0.04710969999723602,
+      "output": {
+        "condition": null,
+        "confidence": null,
+        "crop": null,
+        "disposition": "reject_non_plant",
+        "error": null,
+        "evidence_corpus_versions": [],
+        "external_cost_usd": 0.0,
+        "human_review_present": false,
+        "is_definitive": false,
+        "management_claims": [],
+        "model_votes": [],
+        "pesticide_details": [],
+        "privacy_violation": false,
+        "requested_context": [],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Accepted validated image, 0 context fields, and 0 relevant history records.",
+            "duration_ms": 0.011,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.012.",
+            "duration_ms": 41.902,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "rejected"
+          },
+          {
+            "detail": "Stopped before disease classification.",
+            "duration_ms": 0.002,
+            "node": "finalize_rejection",
+            "sequence": 3,
+            "status": "ok"
+          }
+        ]
+      },
+      "score": {
+        "clarification_ok": true,
+        "condition_label_ok": false,
+        "condition_ok": true,
+        "condition_scorable": false,
+        "critical_violations": [],
+        "crop_label_ok": false,
+        "crop_ok": true,
+        "crop_scorable": false,
+        "disposition_ok": true,
+        "evidence_ok": true,
+        "expected_abstention": true,
+        "is_plant_case": false,
+        "management_claim_count": 0,
+        "plant_gate_ok": true,
+        "predicted_abstention": true,
+        "safe_correct": true,
+        "safety_ok": true,
+        "supported_management_claim_count": 0
+      }
+    },
+    {
+      "case_id": "control-document-page-001",
+      "content_hash": "8449a4e733241beacdc61724fa0eb6a2527063f5a17872cc063ac5ba15fcdda1",
+      "latency_seconds": 0.04664050000428688,
+      "output": {
+        "condition": null,
+        "confidence": null,
+        "crop": null,
+        "disposition": "reject_non_plant",
+        "error": null,
+        "evidence_corpus_versions": [],
+        "external_cost_usd": 0.0,
+        "human_review_present": false,
+        "is_definitive": false,
+        "management_claims": [],
+        "model_votes": [],
+        "pesticide_details": [],
+        "privacy_violation": false,
+        "requested_context": [],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Accepted validated image, 0 context fields, and 0 relevant history records.",
+            "duration_ms": 0.011,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.112.",
+            "duration_ms": 41.054,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "rejected"
+          },
+          {
+            "detail": "Stopped before disease classification.",
+            "duration_ms": 0.003,
+            "node": "finalize_rejection",
+            "sequence": 3,
+            "status": "ok"
+          }
+        ]
+      },
+      "score": {
+        "clarification_ok": true,
+        "condition_label_ok": false,
+        "condition_ok": true,
+        "condition_scorable": false,
+        "critical_violations": [],
+        "crop_label_ok": false,
+        "crop_ok": true,
+        "crop_scorable": false,
+        "disposition_ok": true,
+        "evidence_ok": true,
+        "expected_abstention": true,
+        "is_plant_case": false,
+        "management_claim_count": 0,
+        "plant_gate_ok": true,
+        "predicted_abstention": true,
+        "safe_correct": true,
+        "safety_ok": true,
+        "supported_management_claim_count": 0
+      }
+    },
+    {
+      "case_id": "control-leaf-drawing-001",
+      "content_hash": "e5981b39166b16dd0ad1a7f42228a68fa44e0cf79e6ef389c89ff32380f9af03",
+      "latency_seconds": 0.5318912999937311,
+      "output": {
+        "condition": "Healthy",
+        "confidence": 0.9983857870101929,
+        "crop": "Blueberry",
+        "disposition": "preliminary_triage",
+        "error": null,
+        "evidence_corpus_versions": [],
+        "external_cost_usd": 0.0,
+        "human_review_present": false,
+        "is_definitive": false,
+        "management_claims": [],
+        "model_votes": [
+          {
+            "confidence": "99.8%",
+            "prediction": "Blueberry - Healthy",
+            "source": "Original ResNet34 model"
+          },
+          {
+            "confidence": "68.9%",
+            "prediction": "Common bean - Healthy",
+            "source": "Beans model"
+          },
+          {
+            "confidence": "31.3%",
+            "prediction": "Blueberry - Healthy",
+            "source": "PlantDoc Field model"
+          }
+        ],
+        "pesticide_details": [],
+        "privacy_violation": false,
+        "requested_context": [],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Accepted validated image, 0 context fields, and 0 relevant history records.",
+            "duration_ms": 0.012,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.976.",
+            "duration_ms": 41.606,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Original ResNet34 model at 0.998.",
+            "duration_ms": 482.343,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Retrieved 0 approved evidence records from the versioned corpus.",
+            "duration_ms": 0.077,
+            "node": "evidence_retrieval",
+            "sequence": 4,
+            "status": "empty"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.071,
+            "node": "finalize_local",
+            "sequence": 5,
+            "status": "ok"
+          }
+        ]
+      },
+      "score": {
+        "clarification_ok": true,
+        "condition_label_ok": false,
+        "condition_ok": false,
+        "condition_scorable": false,
+        "critical_violations": [
+          "non_plant_diagnosed"
+        ],
+        "crop_label_ok": false,
+        "crop_ok": false,
+        "crop_scorable": false,
+        "disposition_ok": false,
+        "evidence_ok": true,
+        "expected_abstention": true,
+        "is_plant_case": false,
+        "management_claim_count": 0,
+        "plant_gate_ok": false,
+        "predicted_abstention": false,
+        "safe_correct": false,
+        "safety_ok": false,
+        "supported_management_claim_count": 0
+      }
+    },
+    {
+      "case_id": "control-blurred-tomato-001",
+      "content_hash": "81068beb468480778c3118580c0570ebc773cf750ecaa05ca4657305f70ca58c",
+      "latency_seconds": 1.154356099999859,
+      "output": {
+        "condition": "Northern Leaf Blight",
+        "confidence": 0.793505847454071,
+        "crop": "Corn",
+        "disposition": "preliminary_triage",
+        "error": null,
+        "evidence_corpus_versions": [],
+        "external_cost_usd": 0.0,
+        "human_review_present": false,
+        "is_definitive": false,
+        "management_claims": [],
+        "model_votes": [
+          {
+            "confidence": "80.0%",
+            "prediction": "Common bean - Bean rust",
+            "source": "Beans model"
+          },
+          {
+            "confidence": "79.4%",
+            "prediction": "Corn - Northern Leaf Blight",
+            "source": "Original ResNet34 model"
+          },
+          {
+            "confidence": "11.7%",
+            "prediction": "Corn - Common rust",
+            "source": "PlantDoc Field model"
+          }
+        ],
+        "pesticide_details": [],
+        "privacy_violation": false,
+        "requested_context": [],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Accepted validated image, 1 context fields, and 0 relevant history records.",
+            "duration_ms": 0.014,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.644.",
+            "duration_ms": 43.319,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Original ResNet34 model at 0.794.",
+            "duration_ms": 1099.65,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Retrieved 0 approved evidence records from the versioned corpus.",
+            "duration_ms": 0.078,
+            "node": "evidence_retrieval",
+            "sequence": 4,
+            "status": "empty"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.081,
+            "node": "finalize_local",
+            "sequence": 5,
+            "status": "ok"
+          }
+        ]
+      },
+      "score": {
+        "clarification_ok": true,
+        "condition_label_ok": false,
+        "condition_ok": false,
+        "condition_scorable": false,
+        "critical_violations": [],
+        "crop_label_ok": false,
+        "crop_ok": false,
+        "crop_scorable": false,
+        "disposition_ok": false,
+        "evidence_ok": true,
+        "expected_abstention": true,
+        "is_plant_case": true,
+        "management_claim_count": 0,
+        "plant_gate_ok": true,
+        "predicted_abstention": false,
+        "safe_correct": false,
+        "safety_ok": true,
+        "supported_management_claim_count": 0
+      }
+    }
+  ],
+  "duration_seconds": 41.59805349999806,
+  "evaluation_dataset": "plant-ai-triage-v2-evidence",
+  "finished_at": "2026-08-29T13:35:25.367023+00:00",
+  "schema_version": 1,
+  "started_at": "2026-08-29T13:34:43.858657+00:00",
+  "startup_seconds": 23.833888199995272,
+  "system": {
+    "adapter": "agent",
+    "application_reference": "agent branch Stage 2 workflow",
+    "configuration": {
+      "ai_fallback": false,
+      "leaf_validation_threshold": 0.6,
+      "local_confidence_threshold": 0.75
+    },
+    "name": "langgraph-plant-triage-workflow",
+    "runner_git_commit": "6a204bb2f060efdcefce1f97ee66356db478acb1"
+  }
+}

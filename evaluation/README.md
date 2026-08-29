@@ -25,7 +25,11 @@ python training\prepare_dataset.py beans_tanzania
 
 The manifest references exact held-out paths and SHA-256 digests. Preparation is
 deterministic, so a changed or missing asset causes a visible error instead of
-silently changing the benchmark.
+silently changing the benchmark. The evidence-aware comparison uses
+`cases/v2-evidence-manifest.json`; it keeps the same image assets and labels as
+v1 while adding case-specific approved source IDs for
+`Flask/evidence/corpus-v1.json`. The v1 manifest remains frozen for
+pre-evidence comparisons.
 
 ## Validate the case package
 

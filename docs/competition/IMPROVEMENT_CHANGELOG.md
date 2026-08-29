@@ -97,6 +97,35 @@ Full comparison: [`AGENT_ORCHESTRATION_RESULTS_V1.md`](AGENT_ORCHESTRATION_RESUL
 
 Full comparison: [`CONTEXT_MEMORY_RESULTS_V1.md`](CONTEXT_MEMORY_RESULTS_V1.md).
 
+## 2026-08-29 - Add versioned agricultural evidence retrieval
+
+- Commit/configuration: application `6a204bb`; evidence-aware evaluation
+  manifest `plant-ai-triage-v2-evidence`; AI fallback disabled.
+- Hypothesis: exact crop/condition retrieval from reviewed extension and IPM
+  sources will remove unsupported management claims and improve safe triage.
+- Change: added a hashed local corpus, deterministic LangGraph retrieval node,
+  claim-level source IDs/links, regional scope notes, paid-record provenance,
+  additive MariaDB/SQLite columns, and unsupported-crop fallback.
+- Evaluation dataset version: `plant-ai-triage-v2-evidence` (same 13 assets and
+  labels as v1, with approved source IDs added to expected disease cases).
+- Primary metric result: 5/13 (38.5%), up from the comparable baseline's 4/13
+  (30.8%).
+- Secondary results: crop and condition accuracy stayed at 44.4%; critical
+  safety-violation cases fell from 7 to 4; unsupported management violations
+  fell from 6 to 2; supported-management-claim rate reached 50.0%.
+- Human time, runtime, and API cost: human time not measured; 0.720-second
+  median and 8.774-second p95 per-case latency; USD 0.00 external API cost.
+- Regressions/failures: two misidentified cases retrieved wrong-scope evidence,
+  which the case-specific approval list correctly rejected. Vision confidence
+  and image-quality calibration remain unresolved.
+- Decision: keep the evidence retrieval layer. Proceed to independent
+  verification and human approval before broadening the corpus.
+- What we learned: claim-level provenance and omission on unsupported matches
+  materially reduce safety violations, but retrieval cannot repair a wrong
+  diagnosis or uncalibrated confidence.
+
+Full comparison: [`EVIDENCE_RETRIEVAL_RESULTS_V2.md`](EVIDENCE_RETRIEVAL_RESULTS_V2.md).
+
 ## Experiment entries
 
 Add one entry per material iteration using this template:

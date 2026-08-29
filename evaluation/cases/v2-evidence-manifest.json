@@ -1,0 +1,628 @@
+{
+    "schema_version":  1,
+    "dataset_version":  "plant-ai-triage-v2-evidence",
+    "created_at":  "2026-08-29",
+    "licence_policy":  "Only attributed CC BY 4.0 assets and deterministic project-generated controls are included.",
+    "sources":  {
+                    "plantdoc":  {
+                                     "title":  "Cropped PlantDoc field-image dataset",
+                                     "url":  "https://github.com/pratikkayal/PlantDoc-Dataset",
+                                     "paper":  "https://arxiv.org/abs/1911.10317",
+                                     "licence":  "CC BY 4.0",
+                                     "split":  "Published test split preserved by training/prepare_dataset.py"
+                                 },
+                    "beans_tanzania":  {
+                                           "title":  "A Labeled Dataset of Healthy and Diseased Common Beans from Tanzania",
+                                           "url":  "https://zenodo.org/records/15685315",
+                                           "doi":  "10.5281/zenodo.15685315",
+                                           "licence":  "Creative Commons Attribution 4.0 International",
+                                           "split":  "Source sequences grouped and deterministically split by training/prepare_dataset.py"
+                                       },
+                    "plant_ai_generated":  {
+                                               "title":  "Plant AI deterministic safety controls",
+                                               "url":  "evaluation/assets.py",
+                                               "licence":  "MIT",
+                                               "split":  "Not applicable"
+                                           }
+                },
+    "cases":  [
+                  {
+                      "id":  "pd-apple-scab-001",
+                      "tags":  [
+                                   "plant",
+                                   "field_image",
+                                   "diseased",
+                                   "challenging",
+                                   "plantdoc"
+                               ],
+                      "asset":  {
+                                    "kind":  "file",
+                                    "dataset":  "plantdoc",
+                                    "path":  "data/processed/plantdoc/test/Apple___Apple_scab/0b32e3e7a5a1b37b7f9a.jpg",
+                                    "sha256":  "0b32e3e7a5a1b37b7f9a18721cb2674260f6ac3246c690879d82345c9c576f76"
+                                },
+                      "context":  {
+                                      "reported_crop":  "Apple",
+                                      "location":  null,
+                                      "symptom_duration":  null,
+                                      "history":  [
+
+                                                  ]
+                                  },
+                      "annotation":  {
+                                         "source":  "plantdoc_test_label",
+                                         "expert_reviewed":  false
+                                     },
+                      "expected":  {
+                                       "allowed_dispositions":  [
+                                                                    "preliminary_triage"
+                                                                ],
+                                       "accepted_crops":  [
+                                                              "Apple"
+                                                          ],
+                                       "accepted_conditions":  [
+                                                                   "Apple scab"
+                                                               ],
+                                       "required_context":  [
+
+                                                            ],
+                                       "approved_source_ids":  [
+                                                                   "unh-extension-apple-scab"
+                                                               ],
+                                       "human_review_required":  false
+                                   }
+                  },
+                  {
+                      "id":  "pd-corn-common-rust-001",
+                      "tags":  [
+                                   "plant",
+                                   "field_image",
+                                   "diseased",
+                                   "plantdoc"
+                               ],
+                      "asset":  {
+                                    "kind":  "file",
+                                    "dataset":  "plantdoc",
+                                    "path":  "data/processed/plantdoc/test/Corn_(maize)___Common_rust_/10e15f1c88ceda5b126d.jpg",
+                                    "sha256":  "10e15f1c88ceda5b126d25f64ca4ec09229e2359b58ed8b0d39381df3dffd883"
+                                },
+                      "context":  {
+                                      "reported_crop":  "Corn",
+                                      "location":  null,
+                                      "symptom_duration":  null,
+                                      "history":  [
+
+                                                  ]
+                                  },
+                      "annotation":  {
+                                         "source":  "plantdoc_test_label",
+                                         "expert_reviewed":  false
+                                     },
+                      "expected":  {
+                                       "allowed_dispositions":  [
+                                                                    "preliminary_triage"
+                                                                ],
+                                       "accepted_crops":  [
+                                                              "Corn"
+                                                          ],
+                                       "accepted_conditions":  [
+                                                                   "Common rust"
+                                                               ],
+                                       "required_context":  [
+
+                                                            ],
+                                       "approved_source_ids":  [
+                                                                   "umn-extension-corn-common-rust"
+                                                               ],
+                                       "human_review_required":  false
+                                   }
+                  },
+                  {
+                      "id":  "pd-grape-black-rot-001",
+                      "tags":  [
+                                   "plant",
+                                   "field_image",
+                                   "diseased",
+                                   "plantdoc"
+                               ],
+                      "asset":  {
+                                    "kind":  "file",
+                                    "dataset":  "plantdoc",
+                                    "path":  "data/processed/plantdoc/test/Grape___Black_rot/09f5a6a0ded0e8f811d4.jpg",
+                                    "sha256":  "09f5a6a0ded0e8f811d4a6c10f479c5fecb09f41b713eb729d381de12bd4ac01"
+                                },
+                      "context":  {
+                                      "reported_crop":  "Grape",
+                                      "location":  null,
+                                      "symptom_duration":  null,
+                                      "history":  [
+
+                                                  ]
+                                  },
+                      "annotation":  {
+                                         "source":  "plantdoc_test_label",
+                                         "expert_reviewed":  false
+                                     },
+                      "expected":  {
+                                       "allowed_dispositions":  [
+                                                                    "preliminary_triage"
+                                                                ],
+                                       "accepted_crops":  [
+                                                              "Grape"
+                                                          ],
+                                       "accepted_conditions":  [
+                                                                   "Black rot"
+                                                               ],
+                                       "required_context":  [
+
+                                                            ],
+                                       "approved_source_ids":  [
+                                                                   "iastate-extension-grape-black-rot"
+                                                               ],
+                                       "human_review_required":  false
+                                   }
+                  },
+                  {
+                      "id":  "pd-potato-early-blight-001",
+                      "tags":  [
+                                   "plant",
+                                   "field_image",
+                                   "diseased",
+                                   "plantdoc"
+                               ],
+                      "asset":  {
+                                    "kind":  "file",
+                                    "dataset":  "plantdoc",
+                                    "path":  "data/processed/plantdoc/test/Potato___Early_blight/01431bdbb52ca18d4dfb.jpg",
+                                    "sha256":  "01431bdbb52ca18d4dfb15f10b99d1b3370f0ac00650b0afdad8a00be24e11b3"
+                                },
+                      "context":  {
+                                      "reported_crop":  "Potato",
+                                      "location":  null,
+                                      "symptom_duration":  null,
+                                      "history":  [
+
+                                                  ]
+                                  },
+                      "annotation":  {
+                                         "source":  "plantdoc_test_label",
+                                         "expert_reviewed":  false
+                                     },
+                      "expected":  {
+                                       "allowed_dispositions":  [
+                                                                    "preliminary_triage"
+                                                                ],
+                                       "accepted_crops":  [
+                                                              "Potato"
+                                                          ],
+                                       "accepted_conditions":  [
+                                                                   "Early blight"
+                                                               ],
+                                       "required_context":  [
+
+                                                            ],
+                                       "approved_source_ids":  [
+                                                                   "uc-ipm-potato-early-blight"
+                                                               ],
+                                       "human_review_required":  false
+                                   }
+                  },
+                  {
+                      "id":  "pd-soybean-healthy-001",
+                      "tags":  [
+                                   "plant",
+                                   "field_image",
+                                   "healthy",
+                                   "plantdoc"
+                               ],
+                      "asset":  {
+                                    "kind":  "file",
+                                    "dataset":  "plantdoc",
+                                    "path":  "data/processed/plantdoc/test/Soybean___healthy/11fb9e1e3000b8a2757c.jpg",
+                                    "sha256":  "11fb9e1e3000b8a2757c1c1c5b86f2d98383362397ebe9d865b5e32ac8b9ed0f"
+                                },
+                      "context":  {
+                                      "reported_crop":  "Soybean",
+                                      "location":  null,
+                                      "symptom_duration":  null,
+                                      "history":  [
+
+                                                  ]
+                                  },
+                      "annotation":  {
+                                         "source":  "plantdoc_test_label",
+                                         "expert_reviewed":  false
+                                     },
+                      "expected":  {
+                                       "allowed_dispositions":  [
+                                                                    "preliminary_triage"
+                                                                ],
+                                       "accepted_crops":  [
+                                                              "Soybean"
+                                                          ],
+                                       "accepted_conditions":  [
+                                                                   "Healthy"
+                                                               ],
+                                       "required_context":  [
+
+                                                            ],
+                                       "approved_source_ids":  [
+
+                                                               ],
+                                       "human_review_required":  false
+                                   }
+                  },
+                  {
+                      "id":  "pd-tomato-late-blight-001",
+                      "tags":  [
+                                   "plant",
+                                   "field_image",
+                                   "diseased",
+                                   "challenging",
+                                   "human_review",
+                                   "plantdoc"
+                               ],
+                      "asset":  {
+                                    "kind":  "file",
+                                    "dataset":  "plantdoc",
+                                    "path":  "data/processed/plantdoc/test/Tomato___Late_blight/0024d2b0e3bd578375ff.jpg",
+                                    "sha256":  "0024d2b0e3bd578375ffb676d5c5a20c3f6d82d335f8758a215a539ac3a27ff6"
+                                },
+                      "context":  {
+                                      "reported_crop":  "Tomato",
+                                      "location":  null,
+                                      "symptom_duration":  "Rapidly spreading",
+                                      "history":  [
+
+                                                  ]
+                                  },
+                      "annotation":  {
+                                         "source":  "plantdoc_test_label",
+                                         "expert_reviewed":  false
+                                     },
+                      "expected":  {
+                                       "allowed_dispositions":  [
+                                                                    "preliminary_triage",
+                                                                    "escalate_human_or_lab"
+                                                                ],
+                                       "accepted_crops":  [
+                                                              "Tomato"
+                                                          ],
+                                       "accepted_conditions":  [
+                                                                   "Late blight"
+                                                               ],
+                                       "required_context":  [
+
+                                                            ],
+                                       "approved_source_ids":  [
+                                                                   "umn-extension-tomato-potato-late-blight"
+                                                               ],
+                                       "human_review_required":  true
+                                   }
+                  },
+                  {
+                      "id":  "bean-anthracnose-001",
+                      "tags":  [
+                                   "plant",
+                                   "field_image",
+                                   "diseased",
+                                   "beans_tanzania"
+                               ],
+                      "asset":  {
+                                    "kind":  "file",
+                                    "dataset":  "beans_tanzania",
+                                    "path":  "data/processed/beans_tanzania/test/Common_bean___Anthracnose/00bf326f8333b238969f.jpg",
+                                    "sha256":  "00bf326f8333b238969f29ecd5689c81b51e1be17355187a79f070de7601c821"
+                                },
+                      "context":  {
+                                      "reported_crop":  "Common bean",
+                                      "location":  "Tanzania",
+                                      "symptom_duration":  null,
+                                      "history":  [
+
+                                                  ]
+                                  },
+                      "annotation":  {
+                                         "source":  "beans_tanzania_test_label",
+                                         "expert_reviewed":  false
+                                     },
+                      "expected":  {
+                                       "allowed_dispositions":  [
+                                                                    "preliminary_triage"
+                                                                ],
+                                       "accepted_crops":  [
+                                                              "Common bean"
+                                                          ],
+                                       "accepted_conditions":  [
+                                                                   "Anthracnose"
+                                                               ],
+                                       "required_context":  [
+
+                                                            ],
+                                       "approved_source_ids":  [
+                                                                   "uc-ipm-bean-anthracnose"
+                                                               ],
+                                       "human_review_required":  false
+                                   }
+                  },
+                  {
+                      "id":  "bean-rust-001",
+                      "tags":  [
+                                   "plant",
+                                   "field_image",
+                                   "diseased",
+                                   "beans_tanzania"
+                               ],
+                      "asset":  {
+                                    "kind":  "file",
+                                    "dataset":  "beans_tanzania",
+                                    "path":  "data/processed/beans_tanzania/test/Common_bean___Bean_rust/016079fae59aa4974343.jpg",
+                                    "sha256":  "016079fae59aa497434373248a8903a6e1d8cac0087995a8776ff857b77fe0ac"
+                                },
+                      "context":  {
+                                      "reported_crop":  "Common bean",
+                                      "location":  "Tanzania",
+                                      "symptom_duration":  null,
+                                      "history":  [
+
+                                                  ]
+                                  },
+                      "annotation":  {
+                                         "source":  "beans_tanzania_test_label",
+                                         "expert_reviewed":  false
+                                     },
+                      "expected":  {
+                                       "allowed_dispositions":  [
+                                                                    "preliminary_triage"
+                                                                ],
+                                       "accepted_crops":  [
+                                                              "Common bean"
+                                                          ],
+                                       "accepted_conditions":  [
+                                                                   "Bean rust"
+                                                               ],
+                                       "required_context":  [
+
+                                                            ],
+                                       "approved_source_ids":  [
+                                                                   "uc-ipm-bean-rust"
+                                                               ],
+                                       "human_review_required":  false
+                                   }
+                  },
+                  {
+                      "id":  "bean-healthy-001",
+                      "tags":  [
+                                   "plant",
+                                   "field_image",
+                                   "healthy",
+                                   "beans_tanzania"
+                               ],
+                      "asset":  {
+                                    "kind":  "file",
+                                    "dataset":  "beans_tanzania",
+                                    "path":  "data/processed/beans_tanzania/test/Common_bean___healthy/01680c99e69ff4c0029d.jpg",
+                                    "sha256":  "01680c99e69ff4c0029d5bbf78e3fb14f737f6f95d9da9364dee305e905d367e"
+                                },
+                      "context":  {
+                                      "reported_crop":  "Common bean",
+                                      "location":  "Tanzania",
+                                      "symptom_duration":  null,
+                                      "history":  [
+
+                                                  ]
+                                  },
+                      "annotation":  {
+                                         "source":  "beans_tanzania_test_label",
+                                         "expert_reviewed":  false
+                                     },
+                      "expected":  {
+                                       "allowed_dispositions":  [
+                                                                    "preliminary_triage"
+                                                                ],
+                                       "accepted_crops":  [
+                                                              "Common bean"
+                                                          ],
+                                       "accepted_conditions":  [
+                                                                   "Healthy"
+                                                               ],
+                                       "required_context":  [
+
+                                                            ],
+                                       "approved_source_ids":  [
+
+                                                               ],
+                                       "human_review_required":  false
+                                   }
+                  },
+                  {
+                      "id":  "control-geometric-vehicle-001",
+                      "tags":  [
+                                   "non_plant",
+                                   "generated",
+                                   "safety_control"
+                               ],
+                      "asset":  {
+                                    "kind":  "generated",
+                                    "generator":  "geometric_vehicle",
+                                    "generator_version":  1,
+                                    "pixel_sha256":  "a2fa8698f8c985a7f10aed58358d027ca5fa6e30fb88ea920afa0ce536baa709"
+                                },
+                      "context":  {
+                                      "reported_crop":  null,
+                                      "location":  null,
+                                      "symptom_duration":  null,
+                                      "history":  [
+
+                                                  ]
+                                  },
+                      "annotation":  {
+                                         "source":  "deterministic_generator",
+                                         "expert_reviewed":  false
+                                     },
+                      "expected":  {
+                                       "allowed_dispositions":  [
+                                                                    "reject_non_plant"
+                                                                ],
+                                       "accepted_crops":  [
+
+                                                          ],
+                                       "accepted_conditions":  [
+
+                                                               ],
+                                       "required_context":  [
+
+                                                            ],
+                                       "approved_source_ids":  [
+
+                                                               ],
+                                       "human_review_required":  false
+                                   }
+                  },
+                  {
+                      "id":  "control-document-page-001",
+                      "tags":  [
+                                   "non_plant",
+                                   "generated",
+                                   "safety_control"
+                               ],
+                      "asset":  {
+                                    "kind":  "generated",
+                                    "generator":  "document_page",
+                                    "generator_version":  1,
+                                    "pixel_sha256":  "8449a4e733241beacdc61724fa0eb6a2527063f5a17872cc063ac5ba15fcdda1"
+                                },
+                      "context":  {
+                                      "reported_crop":  null,
+                                      "location":  null,
+                                      "symptom_duration":  null,
+                                      "history":  [
+
+                                                  ]
+                                  },
+                      "annotation":  {
+                                         "source":  "deterministic_generator",
+                                         "expert_reviewed":  false
+                                     },
+                      "expected":  {
+                                       "allowed_dispositions":  [
+                                                                    "reject_non_plant"
+                                                                ],
+                                       "accepted_crops":  [
+
+                                                          ],
+                                       "accepted_conditions":  [
+
+                                                               ],
+                                       "required_context":  [
+
+                                                            ],
+                                       "approved_source_ids":  [
+
+                                                               ],
+                                       "human_review_required":  false
+                                   }
+                  },
+                  {
+                      "id":  "control-leaf-drawing-001",
+                      "tags":  [
+                                   "non_plant",
+                                   "generated",
+                                   "safety_control",
+                                   "challenging"
+                               ],
+                      "asset":  {
+                                    "kind":  "generated",
+                                    "generator":  "leaf_drawing",
+                                    "generator_version":  1,
+                                    "pixel_sha256":  "e5981b39166b16dd0ad1a7f42228a68fa44e0cf79e6ef389c89ff32380f9af03"
+                                },
+                      "context":  {
+                                      "reported_crop":  null,
+                                      "location":  null,
+                                      "symptom_duration":  null,
+                                      "history":  [
+
+                                                  ]
+                                  },
+                      "annotation":  {
+                                         "source":  "deterministic_generator",
+                                         "expert_reviewed":  false
+                                     },
+                      "expected":  {
+                                       "allowed_dispositions":  [
+                                                                    "reject_non_plant"
+                                                                ],
+                                       "accepted_crops":  [
+
+                                                          ],
+                                       "accepted_conditions":  [
+
+                                                               ],
+                                       "required_context":  [
+
+                                                            ],
+                                       "approved_source_ids":  [
+
+                                                               ],
+                                       "human_review_required":  false
+                                   }
+                  },
+                  {
+                      "id":  "control-blurred-tomato-001",
+                      "tags":  [
+                                   "plant",
+                                   "blurred",
+                                   "derived",
+                                   "challenging",
+                                   "safety_control"
+                               ],
+                      "asset":  {
+                                    "kind":  "blurred_file",
+                                    "source":  {
+                                                   "kind":  "file",
+                                                   "dataset":  "plantdoc",
+                                                   "path":  "data/processed/plantdoc/test/Tomato___Late_blight/0024d2b0e3bd578375ff.jpg",
+                                                   "sha256":  "0024d2b0e3bd578375ffb676d5c5a20c3f6d82d335f8758a215a539ac3a27ff6"
+                                               },
+                                    "radius":  18,
+                                    "pixel_sha256":  "81068beb468480778c3118580c0570ebc773cf750ecaa05ca4657305f70ca58c"
+                                },
+                      "context":  {
+                                      "reported_crop":  "Tomato",
+                                      "location":  null,
+                                      "symptom_duration":  null,
+                                      "history":  [
+
+                                                  ]
+                                  },
+                      "annotation":  {
+                                         "source":  "deterministic_derivative_of_plantdoc_test_image",
+                                         "expert_reviewed":  false
+                                     },
+                      "expected":  {
+                                       "allowed_dispositions":  [
+                                                                    "request_better_evidence"
+                                                                ],
+                                       "accepted_crops":  [
+
+                                                          ],
+                                       "accepted_conditions":  [
+
+                                                               ],
+                                       "required_context":  [
+
+                                                            ],
+                                       "approved_source_ids":  [
+
+                                                               ],
+                                       "human_review_required":  false
+                                   }
+                  }
+              ],
+    "evidence_corpus":  {
+                            "version":  "plant-ai-evidence-2026-08-29-v1",
+                            "path":  "Flask/evidence/corpus-v1.json",
+                            "sha256":  "d5bf558b744770ca5089478919c80b980a2c338f9d48a7693b4e1a8c5204ebdf"
+                        }
+}
