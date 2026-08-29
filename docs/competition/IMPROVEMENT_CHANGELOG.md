@@ -152,6 +152,28 @@ Full comparison: [`EVIDENCE_RETRIEVAL_RESULTS_V2.md`](EVIDENCE_RETRIEVAL_RESULTS
 
 Verification artifact: [`results/agent-verification-v2.json`](results/agent-verification-v2.json).
 
+## 2026-08-29 - Capture representative sanitized trajectories
+
+- Commit/configuration: trajectory fixtures captured from the `agent` branch;
+  no external services or private credentials.
+- Hypothesis: readable traces make routing, retries, safe failures, and human
+  checkpoints auditable without rerunning the full model stack.
+- Change: added a versioned artifact covering local evidence success, non-plant
+  rejection, missing-context clarification, required-tool failure, and bounded
+  AI retry paths.
+- Evaluation dataset version: fixture trajectories linked to source commit
+  `58b14ea`; the artifact is not an accuracy benchmark.
+- Primary quality metric: not applicable; this stage measures observability.
+- Regressions/failures: fixture evidence is intentionally synthetic and cannot
+  substitute for production tool responses or expert review.
+- Decision: keep the artifact format and regenerate it whenever the graph state
+  or node contract changes.
+- What we learned: a small sanitized trace schema can expose every safety path
+  while keeping image bytes, prompts, account history, and secrets out of the
+  submission.
+
+Trajectory guide: [`TRAJECTORIES.md`](TRAJECTORIES.md).
+
 ## Experiment entries
 
 Add one entry per material iteration using this template:
