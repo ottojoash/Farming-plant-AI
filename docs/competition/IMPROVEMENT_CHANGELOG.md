@@ -70,6 +70,33 @@ Full evaluation details: [`BASELINE_RESULTS_V1.md`](BASELINE_RESULTS_V1.md) and
 
 Full comparison: [`AGENT_ORCHESTRATION_RESULTS_V1.md`](AGENT_ORCHESTRATION_RESULTS_V1.md).
 
+## 2026-08-29 - Add context-aware intake and owned plant memory
+
+- Commit/configuration: application `c357c67`; AI fallback disabled; local
+  confidence threshold 0.75.
+- Hypothesis: targeted context requests and relevant prior records will make
+  uncertain triage safer and add continuity without exposing account data.
+- Change: added bounded field context, a low-confidence clarification node,
+  paid-plan retrieval of the five newest owned crop records, recurrence
+  qualification, and sanitized trace summaries.
+- Evaluation dataset version: `plant-ai-triage-v1`.
+- Primary metric result: 4/13 (30.8%), unchanged from orchestration.
+- Secondary results: crop and condition accuracy remained 44.4%; safe-abstention
+  precision fell from 100.0% to 50.0%, recall remained 50.0%, and the critical
+  safety-violation rate remained 53.8%.
+- Human time, runtime, and API cost: human time not measured; 0.725-second
+  median and 8.101-second p95 per-case latency; USD 0.00 external API cost.
+- Regressions/failures: two low-confidence disease cases requested symptoms,
+  but the blurred control remained an overconfident corn prediction at 79.4%.
+  The frozen manifest contains no authenticated longitudinal history case.
+- Decision: keep the privacy and continuity controls, but do not claim a quality
+  gain. Add evidence retrieval and independent uncertainty checks next.
+- What we learned: classifier confidence alone cannot identify every poor image,
+  and memory requires an explicit longitudinal evaluation case to measure its
+  effect rather than only its access-control correctness.
+
+Full comparison: [`CONTEXT_MEMORY_RESULTS_V1.md`](CONTEXT_MEMORY_RESULTS_V1.md).
+
 ## Experiment entries
 
 Add one entry per material iteration using this template:
