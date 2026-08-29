@@ -40,6 +40,8 @@ class TriageState(TypedDict, total=False):
     ai_diagnosis: Any
     ai_requested: bool
     ai_failed: bool
+    missing_context: list[str]
+    memory_count: int
     errors: Annotated[list[str], operator.add]
     trace: Annotated[list[TraceEvent], operator.add]
     disposition: Disposition
@@ -69,6 +71,8 @@ class WorkflowOutcome:
     local_candidates: list[tuple[str, Prediction]]
     selected_prediction: Prediction | None
     leaf_confidence: float | None
+    missing_context: list[str]
+    memory_count: int
 
 
 class PlantTriageWorkflow:
@@ -96,9 +100,25 @@ class PlantTriageWorkflow:
                 "errors": ["intake: missing validated image or MIME type"],
                 "trace": [self._event("intake", "error", "Validated image input is missing.", started)],
             }
+        context = dict(state.get("context") or {})
+        history = list(context.get("history") or [])[:5]
+        context["history"] = history
+        supplied = [
+            key
+            for key in ("reported_crop", "location", "symptoms", "symptom_duration", "recent_treatment")
+            if context.get(key)
+        ]
         return {
-            "context": dict(state.get("context") or {}),
-            "trace": [self._event("intake", "ok", "Validated image and available context accepted.", started)],
+            "context": context,
+            "memory_count": len(history),
+            "trace": [
+                self._event(
+                    "intake",
+                    "ok",
+                    f"Accepted validated image, {len(supplied)} context fields, and {len(history)} relevant history records.",
+                    started,
+                )
+            ],
         }
 
     def _leaf_gate(self, state: TriageState) -> dict[str, Any]:
@@ -140,11 +160,18 @@ class PlantTriageWorkflow:
                 raise RuntimeError("No vision model produced a candidate")
             source, prediction = self.tools.select_candidate(state["image_bytes"], candidates)
             needs_ai = bool(state.get("force_ai")) or prediction.confidence < self.tools.local_confidence_threshold
+            missing_context = []
+            if prediction.confidence < self.tools.local_confidence_threshold:
+                if not state.get("context", {}).get("reported_crop"):
+                    missing_context.append("reported_crop")
+                if not state.get("context", {}).get("symptoms"):
+                    missing_context.append("symptoms")
             return {
                 "local_candidates": candidates,
                 "selected_source": source,
                 "selected_prediction": prediction,
                 "ai_requested": needs_ai,
+                "missing_context": missing_context,
                 "trace": [
                     self._event(
                         "vision_models",
@@ -163,9 +190,55 @@ class PlantTriageWorkflow:
     def _after_vision(self, state: TriageState) -> str:
         if state.get("errors"):
             return "safe_failure"
+        if state.get("missing_context"):
+            return "request_context"
         if state.get("ai_requested") and self.tools.ai_available():
             return "ai_assessment"
         return "finalize_local"
+
+    def _request_context(self, state: TriageState) -> dict[str, Any]:
+        started = time.perf_counter()
+        labels = {
+            "reported_crop": "Tell us which crop or plant this is, if known.",
+            "symptoms": "Describe what changed, where it appears, and whether it is spreading.",
+        }
+        actions = [labels[item] for item in state.get("missing_context", [])]
+        result = {
+            "source": "Plant AI intake agent",
+            "is_ai": False,
+            "is_structured": True,
+            "crop": "More context needed",
+            "disease": "Assessment paused safely",
+            "confidence_text": "Uncertain",
+            "summary": "The model evidence is uncertain. Add the missing field context before Plant AI assigns a preliminary condition.",
+            "observations": [],
+            "causes": [],
+            "actions": actions,
+            "warning": "No diagnosis or treatment recommendation has been made.",
+            "model_votes": self.tools.format_model_votes(state.get("local_candidates", [])),
+        }
+        return {
+            "disposition": "request_better_evidence",
+            "result": result,
+            "trace": [
+                self._event(
+                    "request_context",
+                    "ok",
+                    f"Requested {len(actions)} missing context fields before diagnosis.",
+                    started,
+                )
+            ],
+        }
+
+    @staticmethod
+    def _history_note(state: TriageState, crop: str, condition: str) -> tuple[str | None, bool]:
+        history = state.get("context", {}).get("history", [])
+        relevant = [item for item in history if str(item.get("crop", "")).casefold() == crop.casefold()]
+        if not relevant:
+            return None, False
+        repeated = any(str(item.get("condition", "")).casefold() == condition.casefold() for item in relevant)
+        note = f"Compared this assessment with {len(relevant)} previous {crop} record(s) from your premium history."
+        return note, repeated
 
     def _ai_assessment(self, state: TriageState) -> dict[str, Any]:
         started = time.perf_counter()
@@ -242,6 +315,15 @@ class PlantTriageWorkflow:
                         "not configured. Please try a clearer image or consult a plant specialist."
                     )
         result["model_votes"] = self.tools.format_model_votes(candidates)
+        history_note, repeated = self._history_note(state, result["crop"], result["disease"])
+        if history_note:
+            result["history_note"] = history_note
+        if repeated:
+            recurrence_warning = (
+                "A similar condition appears in your previous records. Repeated image predictions still require "
+                "local confirmation, especially if symptoms are spreading."
+            )
+            result["warning"] = " ".join(filter(None, [result.get("warning"), recurrence_warning]))
         return {
             "disposition": "preliminary_triage",
             "result": result,
@@ -266,6 +348,16 @@ class PlantTriageWorkflow:
             "local_note": self.tools.local_comparison_note(prediction, bool(state.get("force_ai"))),
             "model_votes": self.tools.format_model_votes(state.get("local_candidates", [])),
         }
+        history_note, repeated = self._history_note(state, result["crop"], result["disease"])
+        if history_note:
+            result["history_note"] = history_note
+        if repeated:
+            result["warning"] = " ".join(
+                [
+                    result["warning"],
+                    "A similar condition appears in your previous records; seek local confirmation if symptoms persist.",
+                ]
+            )
         return {
             "disposition": "preliminary_triage",
             "result": result,
@@ -277,6 +369,7 @@ class PlantTriageWorkflow:
         result = {
             "source": "Plant AI safety workflow",
             "is_ai": False,
+            "is_structured": True,
             "crop": "Unknown",
             "disease": "Unable to assess safely",
             "confidence_text": "Low",
@@ -299,6 +392,7 @@ class PlantTriageWorkflow:
         builder.add_node("leaf_gate", self._leaf_gate)
         builder.add_node("vision_models", self._vision_models)
         builder.add_node("ai_assessment", self._ai_assessment)
+        builder.add_node("request_context", self._request_context)
         builder.add_node("finalize_rejection", self._finalize_rejection)
         builder.add_node("finalize_local", self._finalize_local)
         builder.add_node("finalize_ai", self._finalize_ai)
@@ -309,6 +403,7 @@ class PlantTriageWorkflow:
         builder.add_conditional_edges("vision_models", self._after_vision)
         builder.add_conditional_edges("ai_assessment", self._after_ai)
         builder.add_edge("finalize_rejection", END)
+        builder.add_edge("request_context", END)
         builder.add_edge("finalize_local", END)
         builder.add_edge("finalize_ai", END)
         builder.add_edge("safe_failure", END)
@@ -344,4 +439,6 @@ class PlantTriageWorkflow:
             local_candidates=final.get("local_candidates", []),
             selected_prediction=final.get("selected_prediction"),
             leaf_confidence=final.get("leaf_confidence"),
+            missing_context=final.get("missing_context", []),
+            memory_count=int(final.get("memory_count", 0)),
         )

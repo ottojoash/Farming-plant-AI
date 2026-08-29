@@ -19,7 +19,7 @@ from agent_workflow import PlantTriageWorkflow, WorkflowTools
 from ai_diagnosis import diagnose_with_ai, is_ai_available
 from crop_models import CropModelRegistry
 from database import User, bootstrap_admin, db, get_int_setting, seed_defaults
-from entitlements import record_successful_scan, scan_allowance
+from entitlements import record_successful_scan, relevant_plant_history, scan_allowance
 from leaf_validator import LeafValidator
 from model import Prediction, predict_image
 import utils
@@ -146,6 +146,7 @@ def create_app(test_config: dict | None = None) -> Flask:
                 image_bytes,
                 mime_type,
                 force_ai=request.form.get("analysis_mode") == "ai",
+                context=build_scan_context(request.form),
             )
             if outcome.disposition == "reject_non_plant":
                 logger.info(
@@ -158,6 +159,7 @@ def create_app(test_config: dict | None = None) -> Flask:
                     422,
                 )
             result = outcome.result
+            result["disposition"] = outcome.disposition
             result["workflow_trace"] = outcome.trace
             if outcome.errors:
                 logger.warning("Plant triage workflow completed with recoverable errors: %s", outcome.errors)
@@ -168,7 +170,8 @@ def create_app(test_config: dict | None = None) -> Flask:
                     if result["is_ai"] or outcome.selected_prediction is None
                     else outcome.selected_prediction.confidence
                 )
-                record_successful_scan(result, history_confidence)
+                if outcome.disposition != "request_better_evidence":
+                    record_successful_scan(result, history_confidence)
             except SQLAlchemyError:
                 db.session.rollback()
                 logger.exception("Could not record scan usage")
@@ -343,6 +346,23 @@ def trusted_references() -> list[dict]:
             "url": "https://ipm.ucanr.edu/home-and-landscape/understanding-pesticides/",
         },
     ]
+
+
+def _clean_form_value(form, name: str, maximum: int) -> str | None:
+    value = " ".join((form.get(name) or "").split())
+    return value[:maximum] or None
+
+
+def build_scan_context(form) -> dict:
+    context = {
+        "reported_crop": _clean_form_value(form, "reported_crop", 120),
+        "location": _clean_form_value(form, "location", 120),
+        "symptoms": _clean_form_value(form, "symptoms", 500),
+        "symptom_duration": _clean_form_value(form, "symptom_duration", 80),
+        "recent_treatment": _clean_form_value(form, "recent_treatment", 300),
+    }
+    context["history"] = relevant_plant_history(context["reported_crop"])
+    return context
 
 
 def build_triage_workflow() -> PlantTriageWorkflow:

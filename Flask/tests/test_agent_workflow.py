@@ -52,7 +52,9 @@ def test_non_plant_branch_stops_before_disease_models():
             predict_original=predict,
         )
     )
-    outcome = workflow.run(b"image", "image/jpeg")
+    outcome = workflow.run(
+        b"image", "image/jpeg", context={"reported_crop": "Cassava", "symptoms": "Mottling"}
+    )
 
     assert outcome.disposition == "reject_non_plant"
     assert calls["vision"] == 0
@@ -65,7 +67,9 @@ def test_non_plant_branch_stops_before_disease_models():
 
 def test_local_branch_runs_all_model_tools_and_returns_serializable_trace():
     workflow = PlantTriageWorkflow(make_tools())
-    outcome = workflow.run(b"image", "image/jpeg")
+    outcome = workflow.run(
+        b"image", "image/jpeg", context={"reported_crop": "Tomato", "symptoms": "Yellowing"}
+    )
 
     assert outcome.disposition == "preliminary_triage"
     assert outcome.result["crop"] == "Tomato"
@@ -105,7 +109,9 @@ def test_ai_node_retries_once_then_returns_structured_result():
             diagnose_ai=diagnose,
         )
     )
-    outcome = workflow.run(b"image", "image/jpeg")
+    outcome = workflow.run(
+        b"image", "image/jpeg", context={"reported_crop": "Cassava", "symptoms": "Mottling"}
+    )
 
     assert calls["ai"] == 2
     assert outcome.result["source"] == "AI-assisted fallback"
@@ -130,7 +136,9 @@ def test_ai_failure_after_bounded_retries_falls_back_to_cautious_local_result():
         ),
         ai_max_attempts=2,
     )
-    outcome = workflow.run(b"image", "image/jpeg")
+    outcome = workflow.run(
+        b"image", "image/jpeg", context={"reported_crop": "Tomato", "symptoms": "Yellowing"}
+    )
 
     assert calls["ai"] == 2
     assert outcome.disposition == "preliminary_triage"
@@ -150,3 +158,45 @@ def test_vision_tool_failure_returns_safe_escalation_without_diagnosis():
     assert outcome.result["disease"] == "Unable to assess safely"
     assert outcome.errors and outcome.errors[0].startswith("vision_models:")
     assert outcome.trace[-1]["node"] == "safe_failure"
+
+
+def test_uncertain_result_requests_only_missing_critical_context():
+    workflow = PlantTriageWorkflow(
+        make_tools(
+            predict_original=lambda _image: Prediction("Tomato___healthy", 0.20),
+            predict_registered=lambda _image: [],
+        )
+    )
+    outcome = workflow.run(b"image", "image/jpeg", context={"reported_crop": "Tomato"})
+
+    assert outcome.disposition == "request_better_evidence"
+    assert outcome.missing_context == ["symptoms"]
+    assert outcome.result["source"] == "Plant AI intake agent"
+    assert outcome.result["actions"] == [
+        "Describe what changed, where it appears, and whether it is spreading."
+    ]
+    assert outcome.trace[-1]["node"] == "request_context"
+
+
+def test_relevant_history_qualifies_repeated_condition_without_exposing_content_in_trace():
+    workflow = PlantTriageWorkflow(make_tools())
+    context = {
+        "reported_crop": "Tomato",
+        "history": [
+            {
+                "record_id": 9,
+                "crop": "Tomato",
+                "condition": "Healthy",
+                "source": "Previous model",
+                "scanned_at": "2026-08-20T10:00:00",
+            }
+        ],
+    }
+    outcome = workflow.run(b"image", "image/jpeg", context=context)
+
+    assert outcome.memory_count == 1
+    assert "1 previous Tomato record" in outcome.result["history_note"]
+    assert "similar condition" in outcome.result["warning"]
+    rendered_trace = json.dumps(outcome.trace)
+    assert "record_id" not in rendered_trace
+    assert "2026-08-20" not in rendered_trace

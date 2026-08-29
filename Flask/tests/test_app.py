@@ -64,7 +64,11 @@ def test_valid_upload_renders_local_result(client, jpeg_bytes, monkeypatch):
 
     response = client.post(
         "/predict",
-        data={"file": (io.BytesIO(jpeg_bytes), "leaf.jpg")},
+        data={
+            "file": (io.BytesIO(jpeg_bytes), "leaf.jpg"),
+            "reported_crop": "Unknown plant",
+            "symptoms": "A green area",
+        },
         content_type="multipart/form-data",
     )
 
@@ -85,7 +89,11 @@ def test_all_registered_models_are_scanned_automatically(client, jpeg_bytes, mon
 
     response = client.post(
         "/predict",
-        data={"file": (io.BytesIO(jpeg_bytes), "leaf.jpg")},
+        data={
+            "file": (io.BytesIO(jpeg_bytes), "leaf.jpg"),
+            "reported_crop": "Unknown plant",
+            "symptoms": "A green area",
+        },
         content_type="multipart/form-data",
     )
 
@@ -157,13 +165,34 @@ def test_ai_fallback_output_is_escaped(client, jpeg_bytes, monkeypatch):
 
     response = client.post(
         "/predict",
-        data={"file": (io.BytesIO(jpeg_bytes), "leaf.jpg")},
+        data={
+            "file": (io.BytesIO(jpeg_bytes), "leaf.jpg"),
+            "reported_crop": "Unknown plant",
+            "symptoms": "A green area",
+        },
         content_type="multipart/form-data",
     )
 
     assert response.status_code == 200
     assert b"<script>" not in response.data
     assert b"&lt;script&gt;" in response.data
+
+
+def test_uncertain_scan_requests_context_without_using_trial_allowance(client, jpeg_bytes, monkeypatch):
+    monkeypatch.setattr("app.predict_image", lambda _: Prediction("Tomato___healthy", 0.20))
+    monkeypatch.setattr("app.is_ai_available", lambda: False)
+
+    response = client.post(
+        "/predict",
+        data={"file": (io.BytesIO(jpeg_bytes), "leaf.jpg"), "reported_crop": "Tomato"},
+        content_type="multipart/form-data",
+    )
+
+    assert response.status_code == 200
+    assert b"More context needed" in response.data
+    assert b"Describe what changed" in response.data
+    with client.session_transaction() as session:
+        assert session.get("anonymous_scan_count", 0) == 0
 
 
 def test_user_can_request_ai_for_unsupported_crop(client, jpeg_bytes, monkeypatch):
@@ -188,6 +217,8 @@ def test_user_can_request_ai_for_unsupported_crop(client, jpeg_bytes, monkeypatc
         data={
             "file": (io.BytesIO(jpeg_bytes), "cassava.jpg"),
             "analysis_mode": "ai",
+            "reported_crop": "Cassava",
+            "symptoms": "Mottled leaf",
         },
         content_type="multipart/form-data",
     )

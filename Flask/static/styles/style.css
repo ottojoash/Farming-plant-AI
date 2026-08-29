@@ -172,6 +172,16 @@ th, td { border-bottom: 1px solid var(--line); padding: 13px 10px; text-align: l
 th { color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .07em; }
 .user-control-form, .row-actions { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
 .user-control-form select { min-height: 38px; }
+.scan-context-panel { margin: 18px 0; border: 1px solid var(--line); background: rgba(255,255,255,.55); }
+.scan-context-panel summary { cursor: pointer; padding: 14px 16px; font-weight: 700; }
+.scan-context-panel summary span { display: block; margin-top: 3px; color: var(--muted); font-size: .82rem; font-weight: 500; }
+.scan-context-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 4px 16px 16px; }
+.scan-context-grid label { display: grid; gap: 6px; color: var(--muted); font-size: .86rem; font-weight: 600; }
+.scan-context-grid input, .scan-context-grid textarea { width: 100%; min-height: 46px; border: 1px solid var(--line); background: white; padding: 10px 12px; color: var(--ink); font: inherit; resize: vertical; }
+.scan-context-grid .context-wide { grid-column: 1 / -1; }
+.context-privacy { margin: 0; padding: 0 16px 16px; color: var(--muted); font-size: .82rem; }
+.history-note { border-left-color: var(--accent); }
+@media (max-width: 680px) { .scan-context-grid { grid-template-columns: 1fr; } .scan-context-grid .context-wide { grid-column: auto; } }
 .small-button { border: 0; padding: 9px 13px; background: var(--ink); color: white; font: inherit; font-weight: 700; cursor: pointer; }
 .danger-button { background: var(--error); }
 .request-list article { display: flex; justify-content: space-between; align-items: center; gap: 20px; border-top: 1px solid var(--line); padding: 16px 0; }

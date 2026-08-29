@@ -25,6 +25,7 @@ The fallback is an AI-assisted assessment, not additional training of the ResNet
 - Confidence score and configurable acceptance threshold
 - Optional multimodal LangChain fallback with validated structured output
 - Typed LangGraph orchestration with conditional branches, bounded AI retries, and sanitized traces
+- Context-aware intake that pauses weak results to request only missing crop and symptom details
 - JPEG, PNG, and WebP validation with a 5 MB upload limit
 - Clear separation between local-model and AI-assisted results
 - Health-check endpoint at `/health`
@@ -32,7 +33,7 @@ The fallback is an AI-assisted assessment, not additional training of the ResNet
 - Automated route, upload, and class-mapping tests
 - Shared user/admin authentication with hashed passwords and CSRF-protected forms
 - Anonymous two-scan trial and configurable free monthly scan allowance
-- Premium unlimited scanning with metadata-only plant history
+- Premium unlimited scanning with metadata-only plant history used as bounded, account-owned agent memory
 - Role-based user and administrator dashboards
 - Administrator-managed pricing, limits, users, plans, and upgrade approvals
 

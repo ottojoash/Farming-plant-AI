@@ -8,11 +8,12 @@
   </section>
   {% if result.warning %}<div class="alert alert-warning" role="alert">{{ result.warning }}</div>{% endif %}
   {% if result.local_note %}<p class="local-note">{{ result.local_note }}</p>{% endif %}
+  {% if result.history_note %}<p class="local-note history-note">{{ result.history_note }}</p>{% endif %}
   <section class="result-layout">
     <div class="plant-preview"><img src="{{ preview_url }}" alt="Uploaded plant used for this assessment"><p>Uploaded image</p></div>
     <div class="result-content">
       {% if result.model_votes %}<article class="result-section"><h2>Models checked automatically</h2><ul>{% for vote in result.model_votes %}<li><strong>{{ vote.source }}:</strong> {{ vote.prediction }} ({{ vote.confidence }})</li>{% endfor %}</ul></article>{% endif %}
-      {% if result.is_ai %}
+      {% if result.is_ai or result.is_structured %}
         <article class="result-section"><h2>Assessment</h2><p>{{ result.summary }}</p></article>
         <article class="result-section"><h2>Visible observations</h2><ul>{% for item in result.observations %}<li>{{ item }}</li>{% endfor %}</ul></article>
         <article class="result-section"><h2>Possible causes</h2><ul>{% for item in result.causes %}<li>{{ item }}</li>{% endfor %}</ul></article>

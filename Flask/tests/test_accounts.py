@@ -229,6 +229,87 @@ def test_dashboard_scanner_has_preview_and_upload_controls(client):
     assert b"dashboard-image-preview" in page.data
     assert b"dashboard-file-input" in page.data
     assert b"Scanning every plant model" in page.data
+    assert b'name="reported_crop"' in page.data
+    assert b'name="symptoms"' in page.data
+
+
+def test_premium_memory_uses_only_owned_records_for_the_named_crop(client, app, jpeg_bytes, monkeypatch):
+    owner_id = create_user(app, "premium@example.com", "premium-pass-123", plan="monthly")
+    other_id = create_user(app, "other@example.com", "other-pass-123", plan="monthly")
+    with app.app_context():
+        db.session.add_all(
+            [
+                ScanRecord(
+                    user_id=owner_id,
+                    crop="Tomato",
+                    condition="Healthy",
+                    confidence=0.91,
+                    source="Previous owner model",
+                ),
+                ScanRecord(
+                    user_id=owner_id,
+                    crop="Apple",
+                    condition="Healthy",
+                    confidence=0.88,
+                    source="Different crop model",
+                ),
+                ScanRecord(
+                    user_id=other_id,
+                    crop="Tomato",
+                    condition="Late blight",
+                    confidence=0.84,
+                    source="Other user's model",
+                ),
+            ]
+        )
+        db.session.commit()
+    login(client, "premium@example.com", "premium-pass-123")
+    mock_fast_prediction(monkeypatch)
+
+    response = client.post(
+        "/predict",
+        data={
+            "file": (io.BytesIO(jpeg_bytes), "tomato.jpg"),
+            "reported_crop": "Tomato",
+            "symptoms": "No visible damage",
+        },
+        content_type="multipart/form-data",
+    )
+
+    assert response.status_code == 200
+    assert b"Compared this assessment with 1 previous Tomato record" in response.data
+    assert b"similar condition appears in your previous records" in response.data
+    assert b"Other user" not in response.data
+
+
+def test_free_account_does_not_receive_scan_history_as_agent_memory(client, app, jpeg_bytes, monkeypatch):
+    user_id = create_user(app, "free-memory@example.com", "free-pass-123", plan="free")
+    with app.app_context():
+        db.session.add(
+            ScanRecord(
+                user_id=user_id,
+                crop="Tomato",
+                condition="Healthy",
+                confidence=0.91,
+                source="Legacy record",
+            )
+        )
+        db.session.commit()
+    login(client, "free-memory@example.com", "free-pass-123")
+    mock_fast_prediction(monkeypatch)
+
+    response = client.post(
+        "/predict",
+        data={
+            "file": (io.BytesIO(jpeg_bytes), "tomato.jpg"),
+            "reported_crop": "Tomato",
+            "symptoms": "No visible damage",
+        },
+        content_type="multipart/form-data",
+    )
+
+    assert response.status_code == 200
+    assert b"previous Tomato record" not in response.data
 
 
 def test_flutterwave_checkout_creates_pending_payment(client, app, monkeypatch):

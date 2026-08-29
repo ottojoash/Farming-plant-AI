@@ -22,6 +22,9 @@ START
        v
      vision_models
        | tool failure -------------> safe_failure ------> END
+       | low confidence + missing context
+       v
+     request_context -----------------------------------> END
        | accepted local result ----> finalize_local ----> END
        | uncertain/requested + no AI configured --------^
        | uncertain/requested + AI configured
@@ -37,10 +40,11 @@ OpenCLIP gate and all registered classifiers without duplicating model logic.
 
 ## Typed shared state
 
-`TriageState` carries only run-scoped data:
+`TriageState` carries only bounded run-scoped data:
 
 - validated image bytes and MIME type;
 - caller context and whether AI assistance was requested;
+- up to five plan-authorized, crop-matched history summaries;
 - leaf decision and confidence;
 - all local model candidates and selected prediction;
 - optional structured AI diagnosis;
@@ -48,9 +52,10 @@ OpenCLIP gate and all registered classifiers without duplicating model logic.
 - append-only recoverable errors; and
 - append-only structured trace events.
 
-The graph has no cross-user memory yet. Plant-history memory belongs to Issue
-#6 and must enforce account ownership and retention rules before it enters this
-state.
+Private history is retrieved before graph execution only for the current paid
+account. It is bounded to five matching records and never copied into traces.
+See [`CONTEXT_AND_MEMORY.md`](CONTEXT_AND_MEMORY.md) for the ownership and
+retention contract.
 
 ## Node contracts
 
@@ -59,6 +64,7 @@ state.
 | `intake` | Accept already validated image and available context. | Records an error if required input is absent. |
 | `leaf_gate` | Call OpenCLIP before any disease model. | Rejects non-plants or routes tool failure to safe escalation. |
 | `vision_models` | Run the original and every registered classifier, then crop-aware selection. | Routes model failure to safe escalation. |
+| `request_context` | Pause a low-confidence result and identify only missing critical context. | Does not diagnose or consume a scan allowance. |
 | `ai_assessment` | Request structured multimodal assessment only when configured and needed. | Tries at most twice, then falls back to the cautious local result. |
 | `finalize_rejection` | Stop without assigning a crop or disease. | User receives better-upload guidance. |
 | `finalize_local` | Preserve local result, votes, threshold warning, and source. | Explicitly warns when AI is unavailable or retries fail. |
@@ -100,7 +106,6 @@ external actions must use an explicit human approval node.
 This stage provides orchestration, not the finished competition agent. The
 following remain deliberately separate backlog items:
 
-- context questions and plan-aware plant-history memory (Issue #6);
 - approved agricultural evidence retrieval (Issue #7);
 - independent verification, calibrated abstention, and human approval (Issue
   #8); and

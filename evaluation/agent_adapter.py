@@ -49,7 +49,7 @@ class AgentWorkflowAdapter:
             "confidence": (
                 outcome.selected_prediction.confidence if outcome.selected_prediction else None
             ),
-            "requested_context": [],
+            "requested_context": outcome.missing_context,
             "management_claims": management_claims,
             "is_definitive": False,
             "pesticide_details": [],

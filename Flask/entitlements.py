@@ -9,6 +9,9 @@ from flask_login import current_user
 from database import ScanRecord, ScanUsage, db, get_int_setting
 
 
+MAX_AGENT_HISTORY_RECORDS = 5
+
+
 class _PlainTextExtractor(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -66,6 +69,31 @@ def scan_allowance() -> dict:
         "remaining": max(0, limit - used),
         "audience": "anonymous",
     }
+
+
+def relevant_plant_history(reported_crop: str | None) -> list[dict]:
+    """Return bounded, owned premium memory for an explicitly named crop."""
+    crop = " ".join((reported_crop or "").split())[:120]
+    if not crop or not current_user.is_authenticated or not current_user.has_premium:
+        return []
+    records = (
+        ScanRecord.query.filter_by(user_id=current_user.id)
+        .filter(db.func.lower(ScanRecord.crop) == crop.lower())
+        .order_by(ScanRecord.created_at.desc())
+        .limit(MAX_AGENT_HISTORY_RECORDS)
+        .all()
+    )
+    return [
+        {
+            "record_id": record.id,
+            "crop": record.crop,
+            "condition": record.condition,
+            "confidence": record.confidence,
+            "source": record.source,
+            "scanned_at": record.created_at.isoformat(),
+        }
+        for record in records
+    ]
 
 
 def record_successful_scan(result: dict, confidence: float | None) -> None:

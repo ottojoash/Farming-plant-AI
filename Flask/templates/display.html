@@ -38,6 +38,9 @@
     {% if result.local_note %}
       <p class="local-note">{{ result.local_note }}</p>
     {% endif %}
+    {% if result.history_note %}
+      <p class="local-note history-note">{{ result.history_note }}</p>
+    {% endif %}
 
     <section class="result-layout">
       <div class="plant-preview">
@@ -56,7 +59,7 @@
             </ul>
           </article>
         {% endif %}
-        {% if result.is_ai %}
+        {% if result.is_ai or result.is_structured %}
           <article class="result-section">
             <h2>Assessment</h2>
             <p>{{ result.summary }}</p>

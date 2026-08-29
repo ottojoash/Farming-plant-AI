@@ -86,6 +86,17 @@
             <strong id="upload-title">Choose a photo</strong>
             <span id="upload-help">or drag and drop it here</span>
           </label>
+          <details class="scan-context-panel">
+            <summary>Add field context <span>Recommended when the result may be uncertain</span></summary>
+            <div class="scan-context-grid">
+              <label><span>Crop or plant, if known</span><input name="reported_crop" maxlength="120" autocomplete="off" placeholder="e.g. Tomato, common bean"></label>
+              <label><span>Location, optional</span><input name="location" maxlength="120" autocomplete="address-level2" placeholder="County, region, or country"></label>
+              <label class="context-wide"><span>Visible symptoms</span><textarea name="symptoms" maxlength="500" rows="3" placeholder="What changed, where is it visible, and is it spreading?"></textarea></label>
+              <label><span>How long has this been visible?</span><input name="symptom_duration" maxlength="80" placeholder="e.g. 4 days"></label>
+              <label><span>Recent treatment, optional</span><input name="recent_treatment" maxlength="300" placeholder="Watering, fertilizer, spray, or none"></label>
+            </div>
+            <p class="context-privacy">Context is used for this assessment. Free-text location and symptoms are not saved. Premium memory uses only your own previous diagnosis records for the crop you name.</p>
+          </details>
           {% if ai_available %}
             <label class="ai-option">
               <input type="checkbox" name="analysis_mode" value="ai">
