@@ -9,6 +9,7 @@
   {% if result.warning %}<div class="alert alert-warning" role="alert">{{ result.warning }}</div>{% endif %}
   {% if result.local_note %}<p class="local-note">{{ result.local_note }}</p>{% endif %}
   {% if result.history_note %}<p class="local-note history-note">{{ result.history_note }}</p>{% endif %}
+  {% if result.review_checkpoint %}<aside class="review-checkpoint" aria-label="Human review checkpoint"><strong>Human review checkpoint · {{ result.review_checkpoint.approval|title }}</strong><p>{{ result.review_checkpoint.message }}</p>{% if result.review_checkpoint.reasons %}<small>Flagged for: {{ result.review_checkpoint.reasons|join(', ') }}.</small>{% endif %}</aside>{% endif %}
   <section class="result-layout">
     <div class="plant-preview"><img src="{{ preview_url }}" alt="Uploaded plant used for this assessment"><p>Uploaded image</p></div>
     <div class="result-content">

@@ -50,6 +50,7 @@ class AgentWorkflowAdapter:
             "is_definitive": False,
             "pesticide_details": [],
             "human_review_present": outcome.disposition == "escalate_human_or_lab",
+            "review_checkpoint": result.get("review_checkpoint"),
             "privacy_violation": False,
             "external_cost_usd": 0.0,
             "model_votes": result.get("model_votes", []),

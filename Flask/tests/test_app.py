@@ -78,6 +78,7 @@ def test_valid_upload_renders_local_result(client, jpeg_bytes, monkeypatch):
     assert b"99.0%" in response.data
     assert b"Improve the evidence before deciding" in response.data
     assert b"Treat only after confirming the cause" in response.data
+    assert b"Human review checkpoint" in response.data
 
 
 def test_matching_condition_renders_cited_evidence_instead_of_legacy_guidance(

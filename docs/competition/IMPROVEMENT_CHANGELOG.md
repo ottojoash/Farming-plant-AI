@@ -126,6 +126,28 @@ Full comparison: [`CONTEXT_MEMORY_RESULTS_V1.md`](CONTEXT_MEMORY_RESULTS_V1.md).
 
 Full comparison: [`EVIDENCE_RETRIEVAL_RESULTS_V2.md`](EVIDENCE_RETRIEVAL_RESULTS_V2.md).
 
+## 2026-08-29 - Add verification and human approval checkpoints
+
+- Commit/configuration: application verification stage on the `agent` branch;
+  local confidence threshold 0.75 and cross-model crop disagreement margin 0.15.
+- Hypothesis: explicit verification reasons and a pending human checkpoint will
+  prevent reports from being mistaken for autonomous treatment decisions.
+- Change: added a post-retrieval verification node, visible pending checkpoint
+  in anonymous and signed-in reports, clarification/safe-failure checkpoint
+  states, and trace/evaluation fields.
+- Evaluation dataset version: `plant-ai-triage-v2-evidence` (same 13 assets).
+- Primary quality metric: unchanged by design; this stage measures control and
+  review visibility rather than classifier accuracy.
+- Safety controls: non-plant rejection, context abstention, source-backed-only
+  actions, and human-review reasons are all covered by automated tests.
+- Regressions/failures: thresholds are not calibrated probabilities and the
+  current benchmark has no interactive reviewer, so approval completion and
+  handling time are not measured.
+- Decision: keep the gate and require reviewer trajectory coverage before any
+  consequential-action integration.
+- What we learned: review state must be explicit in both the UI and trace; a
+  warning string alone is not an auditable approval boundary.
+
 ## Experiment entries
 
 Add one entry per material iteration using this template:

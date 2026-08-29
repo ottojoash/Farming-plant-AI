@@ -71,6 +71,7 @@ retention contract.
 | `request_context` | Pause a low-confidence result and identify only missing critical context. | Does not diagnose or consume a scan allowance. |
 | `ai_assessment` | Request structured multimodal assessment only when configured and needed. | Tries at most twice, then falls back to the cautious local result. |
 | `evidence_retrieval` | Match the final crop and condition against the versioned approved corpus. | Returns exact-scope cited actions or no management claim. |
+| `verification` | Compare confidence, cross-model crop agreement, and evidence availability. | Adds a pending human checkpoint with explicit review reasons. |
 | `finalize_rejection` | Stop without assigning a crop or disease. | User receives better-upload guidance. |
 | `finalize_local` | Preserve local result, votes, threshold warning, and source. | Explicitly warns when AI is unavailable or retries fail. |
 | `finalize_ai` | Convert validated AI fields into the existing result contract. | Keeps uncertainty and the local comparison visible. |
@@ -111,8 +112,6 @@ external actions must use an explicit human approval node.
 This stage provides orchestration, not the finished competition agent. The
 following remain deliberately separate backlog items:
 
-- independent verification, calibrated abstention, and human approval (Issue
-  #8); and
 - committed representative trajectories for every agent (Issue #11).
 
 The evaluation adapter disables the optional LLM and uses the versioned local

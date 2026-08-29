@@ -44,6 +44,7 @@ class TriageState(TypedDict, total=False):
     memory_count: int
     evidence: list[dict[str, Any]]
     evidence_error: bool
+    verification: dict[str, Any]
     errors: Annotated[list[str], operator.add]
     trace: Annotated[list[TraceEvent], operator.add]
     disposition: Disposition
@@ -219,6 +220,12 @@ class PlantTriageWorkflow:
             "actions": actions,
             "warning": "No diagnosis or treatment recommendation has been made.",
             "model_votes": self.tools.format_model_votes(state.get("local_candidates", [])),
+            "review_checkpoint": {
+                "status": "blocked",
+                "reasons": ["missing critical context"],
+                "approval": "pending",
+                "message": "Add the requested context before a qualified person reviews a preliminary condition.",
+            },
         }
         return {
             "disposition": "request_better_evidence",
@@ -327,16 +334,64 @@ class PlantTriageWorkflow:
             }
 
     @staticmethod
-    def _after_evidence(state: TriageState) -> str:
+    def _after_evidence(_state: TriageState) -> str:
+        return "verification"
+
+    @staticmethod
+    def _after_verification(state: TriageState) -> str:
         if state.get("ai_diagnosis") is not None and not state.get("ai_failed"):
             return "finalize_ai"
         return "finalize_local"
+
+    def _verification(self, state: TriageState) -> dict[str, Any]:
+        started = time.perf_counter()
+        candidates = sorted(
+            state.get("local_candidates", []), key=lambda item: item[1].confidence, reverse=True
+        )
+        selected = state.get("selected_prediction")
+        reasons: list[str] = []
+        if selected is None or selected.confidence < self.tools.local_confidence_threshold:
+            reasons.append("low model confidence")
+        if len(candidates) > 1:
+            margin = candidates[0][1].confidence - candidates[1][1].confidence
+            first_crop = candidates[0][1].label.split("___", 1)[0]
+            second_crop = candidates[1][1].label.split("___", 1)[0]
+            if first_crop != second_crop and margin < 0.15:
+                reasons.append("models disagree on crop")
+        if not state.get("evidence"):
+            reasons.append("no matching approved guidance")
+        verification = {
+            "status": "review_required" if reasons else "review_recommended",
+            "reasons": reasons,
+            "approval": "pending",
+            "message": "Confirm the crop and condition with a qualified person before any treatment decision.",
+        }
+        return {
+            "verification": verification,
+            "trace": [
+                self._event(
+                    "verification",
+                    "review_required" if reasons else "review_recommended",
+                    f"Human checkpoint pending; {len(reasons)} verification reason(s).",
+                    started,
+                )
+            ],
+        }
 
     @staticmethod
     def _attach_evidence(result: dict[str, Any], state: TriageState) -> dict[str, Any]:
         evidence = state.get("evidence", [])
         result.pop("details_html", None)
         result["evidence"] = evidence
+        result["review_checkpoint"] = state.get(
+            "verification",
+            {
+                "status": "review_required",
+                "reasons": ["verification state unavailable"],
+                "approval": "pending",
+                "message": "Confirm the crop and condition with a qualified person before any treatment decision.",
+            },
+        )
         result["management_claims"] = [
             {
                 "text": action,
@@ -432,6 +487,12 @@ class PlantTriageWorkflow:
             "warning": diagnosis.uncertainty_note,
             "local_note": self.tools.local_comparison_note(prediction, bool(state.get("force_ai"))),
             "model_votes": self.tools.format_model_votes(state.get("local_candidates", [])),
+            "review_checkpoint": {
+                "status": "review_required",
+                "reasons": ["required analysis tool failed"],
+                "approval": "pending",
+                "message": "A qualified plant-health professional should review this incomplete assessment.",
+            },
         }
         history_note, repeated = self._history_note(state, result["crop"], result["disease"])
         if history_note:
@@ -490,6 +551,8 @@ class PlantTriageWorkflow:
         builder.add_conditional_edges("vision_models", self._after_vision)
         builder.add_conditional_edges("ai_assessment", self._after_ai)
         builder.add_conditional_edges("evidence_retrieval", self._after_evidence)
+        builder.add_node("verification", self._verification)
+        builder.add_conditional_edges("verification", self._after_verification)
         builder.add_edge("finalize_rejection", END)
         builder.add_edge("request_context", END)
         builder.add_edge("finalize_local", END)

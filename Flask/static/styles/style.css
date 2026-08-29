@@ -145,6 +145,9 @@ main { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
 .evidence-card small { display: block; margin: 12px 0; color: var(--muted); }
 .corpus-note { margin: 18px 0 0; color: var(--muted); font-size: .78rem; }
 .cited-actions a { color: var(--green); font-size: .8rem; font-weight: 700; }
+.review-checkpoint { margin: 20px 0; padding: 16px 20px; border-left: 4px solid var(--green); background: #edf4e5; }
+.review-checkpoint p { margin: 6px 0; }
+.review-checkpoint small { color: var(--muted); }
 .result-action { max-width: 330px; margin-top: 26px; }
 
 .auth-page { min-height: calc(100vh - 84px); display: grid; grid-template-columns: 1fr 460px; gap: clamp(50px, 9vw, 130px); align-items: center; padding: 60px 0; }

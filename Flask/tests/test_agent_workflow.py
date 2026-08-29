@@ -80,6 +80,7 @@ def test_local_branch_runs_all_model_tools_and_returns_serializable_trace():
         "leaf_gate",
         "vision_models",
         "evidence_retrieval",
+        "verification",
         "finalize_local",
     ]
     json.dumps(outcome.trace)
@@ -110,8 +111,9 @@ def test_evidence_node_attaches_only_source_backed_management_claims():
             "url": "https://extension.example.edu/tomato",
         }
     ]
-    assert outcome.trace[-2]["node"] == "evidence_retrieval"
-    assert outcome.trace[-2]["status"] == "found"
+    evidence_event = next(event for event in outcome.trace if event["node"] == "evidence_retrieval")
+    assert evidence_event["status"] == "found"
+    assert outcome.trace[-2]["node"] == "verification"
 
 
 def test_evidence_failure_omits_treatment_claims_and_continues_safely():
@@ -125,7 +127,8 @@ def test_evidence_failure_omits_treatment_claims_and_continues_safely():
     assert outcome.disposition == "preliminary_triage"
     assert outcome.result["management_claims"] == []
     assert "evidence library was unavailable" in outcome.result["warning"]
-    assert outcome.trace[-2]["status"] == "error"
+    evidence_event = next(event for event in outcome.trace if event["node"] == "evidence_retrieval")
+    assert evidence_event["status"] == "error"
 
 
 def test_ai_node_retries_once_then_returns_structured_result():
@@ -223,6 +226,18 @@ def test_uncertain_result_requests_only_missing_critical_context():
         "Describe what changed, where it appears, and whether it is spreading."
     ]
     assert outcome.trace[-1]["node"] == "request_context"
+
+
+def test_verification_records_pending_human_checkpoint_and_reasons():
+    workflow = PlantTriageWorkflow(make_tools())
+
+    outcome = workflow.run(b"image", "image/jpeg")
+
+    checkpoint = outcome.result["review_checkpoint"]
+    assert checkpoint["approval"] == "pending"
+    assert checkpoint["status"] == "review_required"
+    assert "no matching approved guidance" in checkpoint["reasons"]
+    assert any(event["node"] == "verification" for event in outcome.trace)
 
 
 def test_relevant_history_qualifies_repeated_condition_without_exposing_content_in_trace():
