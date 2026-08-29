@@ -12,7 +12,7 @@ Checked against the live HackerEarth challenge page on 2026-08-29:
 | Baseline and meaningful advanced solution | Frozen pre-agentic baseline and the evidence-aware, verification-enabled agent are both documented and evaluated on versioned cases. | Ready |
 | Complete code and improvement changelog | Repository source plus [`IMPROVEMENT_CHANGELOG.md`](IMPROVEMENT_CHANGELOG.md). | Ready |
 | Clean-environment reproduction | [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md), Python 3.11 lock snapshot, smoke test, and offline evaluation commands. | Ready |
-| Solution video (maximum 5 minutes) | [`plant-ai-demo.mp4`](plant-ai-demo.mp4) is a 2:25 narrated demo. | Needs external hosting URL |
+| Solution video (maximum 5 minutes) | [`plant-ai-demo.mp4`](plant-ai-demo.mp4) is a 2:25 narrated demo. | Needs external hosting URL and, ideally, a short live run showing one realistic execution start-to-finish |
 | Representative agent trajectories | Sanitized success, rejection, clarification, retry, safe-failure, evidence, and verification trajectories in [`TRAJECTORIES.md`](TRAJECTORIES.md). | Ready |
 | Human control for consequential actions | The verification checkpoint requires approval before treatment guidance; non-plant and uncertain cases terminate or escalate safely. | Ready |
 | Reproducible evidence for claims | Versioned manifests, raw JSON results, source IDs, and rubric audit are committed. | Ready |
@@ -20,7 +20,7 @@ Checked against the live HackerEarth challenge page on 2026-08-29:
 
 ## What remains before clicking Submit
 
-1. Upload `plant-ai-demo.mp4` to a permitted public host (for example YouTube or Vimeo) and paste the resulting URL into HackerEarth. A local file path cannot satisfy a hosted-video field.
+1. Upload `plant-ai-demo.mp4` to a permitted public host (for example YouTube or Vimeo) and paste the resulting URL into HackerEarth. Before uploading, consider replacing or extending the slideshow with a short live application run, because the challenge asks the video to show one realistic execution start-to-finish. A local file path cannot satisfy a hosted-video field.
 2. If the form asks for a live demo URL, deploy the application to a public service or mark the demo unavailable. The current project is reproducible locally but is not deployed by this repository.
 3. Register as one individual, confirm eligibility, and submit the `agent` branch/repository URL. Only the latest complete submission is evaluated.
 4. Revoke and rotate any credential that appeared in old commits or screenshots, then verify the final public repository contains no secrets.
@@ -28,4 +28,3 @@ Checked against the live HackerEarth challenge page on 2026-08-29:
 ## Assessment
 
 The implementation is technically ready for the challenge's engineering gates. Submission is not yet complete because HackerEarth requires an externally hosted video URL (and may request a public demo URL), and the final click must be performed from the participant's authenticated HackerEarth account. No HackerEarth submission connector or account authorization is available in this workspace, so those external steps cannot be completed automatically.
-
