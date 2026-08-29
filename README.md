@@ -8,6 +8,7 @@
 > The judge-ready package is indexed by the [demo script](docs/competition/DEMO_SCRIPT.md),
 > [rubric audit](docs/competition/RUBRIC_AUDIT.md), and
 > [clean-clone guide](docs/competition/REPRODUCIBILITY.md).
+> The narrated demo is [plant-ai-demo.mp4](docs/competition/plant-ai-demo.mp4).
 
 Plant AI is a Flask application that screens plant-leaf photos for signs of disease. It combines:
 

@@ -12,8 +12,8 @@ Audit date: 2026-08-29. Branch: `agent`.
 | Measured improvement | `BASELINE_RESULTS_V1.md`, `EVIDENCE_RETRIEVAL_RESULTS_V2.md`, changelog | Ready |
 | Reproducibility | `REPRODUCIBILITY.md`, lock file, smoke test, evaluation README | Ready |
 | Privacy and secret handling | `.gitignore`, `.env.example`, sanitized traces, credential disclosure note | Ready with owner credential-revocation action |
-| Five-minute demo | `DEMO_SCRIPT.md` | Recording required |
-| Video claims | Must use the exact committed metrics and limitations in the script | Recording required |
+| Five-minute demo | `DEMO_SCRIPT.md`, `plant-ai-demo.mp4` (2:25) | Ready |
+| Video claims | Matches committed metrics and limitations in the script | Ready |
 
 ## Measured headline
 
