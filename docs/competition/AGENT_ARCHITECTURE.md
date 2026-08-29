@@ -1,0 +1,111 @@
+# Plant AI agent architecture
+
+Status: Stage 2 orchestration foundation, 2026-08-29.
+
+Plant AI now executes scans through a compiled LangGraph `StateGraph`. Nodes read
+typed shared state and return partial updates; conditional edges decide which
+tool or safety path runs next. This follows the official LangGraph graph model:
+
+- [StateGraph reference](https://reference.langchain.com/python/langgraph/graph/state/StateGraph)
+- [LangGraph conditional-edge guidance](https://docs.langchain.com/oss/python/langgraph/graph-api)
+- [LangGraph fault-tolerance guidance](https://docs.langchain.com/oss/python/langgraph/fault-tolerance)
+
+## Current graph
+
+```text
+START
+  -> intake
+  -> leaf_gate
+       | rejected -----------------> finalize_rejection -> END
+       | tool failure -------------> safe_failure ------> END
+       | accepted
+       v
+     vision_models
+       | tool failure -------------> safe_failure ------> END
+       | accepted local result ----> finalize_local ----> END
+       | uncertain/requested + no AI configured --------^
+       | uncertain/requested + AI configured
+       v
+     ai_assessment (maximum two attempts)
+       | success ------------------> finalize_ai -------> END
+       | attempts exhausted -------> finalize_local ----> END
+```
+
+The graph is compiled once when the application starts. Existing inference code
+is exposed through injected callbacks, so the graph orchestrates the same
+OpenCLIP gate and all registered classifiers without duplicating model logic.
+
+## Typed shared state
+
+`TriageState` carries only run-scoped data:
+
+- validated image bytes and MIME type;
+- caller context and whether AI assistance was requested;
+- leaf decision and confidence;
+- all local model candidates and selected prediction;
+- optional structured AI diagnosis;
+- final disposition and UI result;
+- append-only recoverable errors; and
+- append-only structured trace events.
+
+The graph has no cross-user memory yet. Plant-history memory belongs to Issue
+#6 and must enforce account ownership and retention rules before it enters this
+state.
+
+## Node contracts
+
+| Node | Responsibility | Safe output |
+| --- | --- | --- |
+| `intake` | Accept already validated image and available context. | Records an error if required input is absent. |
+| `leaf_gate` | Call OpenCLIP before any disease model. | Rejects non-plants or routes tool failure to safe escalation. |
+| `vision_models` | Run the original and every registered classifier, then crop-aware selection. | Routes model failure to safe escalation. |
+| `ai_assessment` | Request structured multimodal assessment only when configured and needed. | Tries at most twice, then falls back to the cautious local result. |
+| `finalize_rejection` | Stop without assigning a crop or disease. | User receives better-upload guidance. |
+| `finalize_local` | Preserve local result, votes, threshold warning, and source. | Explicitly warns when AI is unavailable or retries fail. |
+| `finalize_ai` | Convert validated AI fields into the existing result contract. | Keeps uncertainty and the local comparison visible. |
+| `safe_failure` | Handle required-tool failure without inventing a diagnosis. | Returns `escalate_human_or_lab` and low-risk next steps. |
+
+## Trace schema
+
+Every node appends events with:
+
+- `sequence`;
+- `node`;
+- `status`;
+- a sanitized `detail` summary;
+- `duration_ms`; and
+- `attempt` when applicable.
+
+Raw images, credentials, private history, and prompts are not copied into trace
+events. Evaluation outputs pair the trace with a case content hash, normalized
+result, configuration, and exact commit. That is enough to reconstruct the path
+and inspect tool selection without publishing user data.
+
+## Failure and retry policy
+
+- Leaf/model failures are not treated as evidence about a disease. They route to
+  a safe escalation report.
+- Optional AI calls are bounded to two attempts within the `ai_assessment` node.
+- Exhausted AI attempts retain the local evidence and add a warning; they do not
+  fail the entire HTTP request.
+- Graph recursion is capped at 12 steps.
+- The original classifier and registered-model registry remain responsible for
+  their own inference isolation.
+
+No irreversible or consequential tool is present. Future pesticide-related or
+external actions must use an explicit human approval node.
+
+## Current boundaries
+
+This stage provides orchestration, not the finished competition agent. The
+following remain deliberately separate backlog items:
+
+- context questions and plan-aware plant-history memory (Issue #6);
+- approved agricultural evidence retrieval (Issue #7);
+- independent verification, calibrated abstention, and human approval (Issue
+  #8); and
+- committed representative trajectories for every agent (Issue #11).
+
+The initial agent adapter disables the optional LLM during evaluation. This
+isolates the effect of orchestration and establishes whether a graph alone
+improves the primary metric before adding retrieval or model cost.

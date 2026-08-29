@@ -12,6 +12,7 @@ Plant AI is a Flask application that screens plant-leaf photos for signs of dise
 2. A local ResNet34 classifier trained on 38 healthy and diseased leaf classes from 14 crops.
 3. Optional crop-specific models trained with the included dataset pipeline.
 4. An optional LangChain and OpenAI vision fallback for low-confidence images or plants outside the local dataset.
+5. A typed LangGraph workflow that routes rejection, local inference, optional AI assistance, and safe failures.
 
 The fallback is an AI-assisted assessment, not additional training of the ResNet model. New classes require a labelled dataset, evaluation, and model retraining before they become supported local predictions.
 
@@ -23,6 +24,7 @@ The fallback is an AI-assisted assessment, not additional training of the ResNet
 - Dataset download, preparation, evaluation, and crop-model registration tools
 - Confidence score and configurable acceptance threshold
 - Optional multimodal LangChain fallback with validated structured output
+- Typed LangGraph orchestration with conditional branches, bounded AI retries, and sanitized traces
 - JPEG, PNG, and WebP validation with a 5 MB upload limit
 - Clear separation between local-model and AI-assisted results
 - Health-check endpoint at `/health`
@@ -227,24 +229,28 @@ python -m pytest Flask\tests -q
 Uploaded image
       |
       v
-Validate and decode image
+Validate/decode image and enter typed agent state
       |
       v
-OpenCLIP leaf gate -- not a leaf --> reject with upload guidance
+Intake node -> OpenCLIP leaf gate -- not a leaf --> reject with upload guidance
       |
       v
-Selected original or registered crop model
+Vision node runs original and all registered crop models
       |
       v
-Local prediction (or optional experimental cross-model comparison)
+Crop-aware local selection
       |
       +-- confidence >= threshold --> known-class guidance
       |
       +-- confidence < threshold
               |
-              +-- API key configured --> LangChain vision assessment
+              +-- API configured --> structured AI node (maximum two attempts)
+              |                              |
+              |                              +-- failure --> cautious local fallback
               |
-              +-- no API key ---------> uncertain local result and warning
+              +-- no API ----------> uncertain local result and warning
+
+Any required-tool failure routes to a safe escalation result rather than a diagnosis.
 ```
 
 The vision fallback uses structured fields for plant name, likely condition, visible observations, possible causes, next steps, and uncertainty. It is instructed not to provide pesticide products or dosages.

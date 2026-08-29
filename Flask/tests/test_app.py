@@ -12,6 +12,7 @@ def test_health_endpoint_reports_ready_local_model(client):
 
     assert response.status_code == 200
     assert response.get_json()["local_model"] == "ready"
+    assert response.get_json()["agent_workflow"] == "ready"
 
 
 def test_home_page_loads(client):

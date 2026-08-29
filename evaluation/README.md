@@ -51,6 +51,16 @@ Wilson interval.
 
 ## Score normalized output from another system
 
+Run the current local agent workflow with structured traces:
+
+```powershell
+python -m evaluation.run --adapter agent --output evaluation\results\agent-v1.json
+```
+
+The Stage 2 adapter disables the optional LLM call so its first comparison is
+deterministic and free. Later LLM experiments must record their exact model,
+prompt/configuration, token use, and external cost.
+
 An agent runner should emit the same per-case `output` fields. Re-score it
 without invoking models:
 

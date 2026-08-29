@@ -40,6 +40,10 @@ def _adapter(name: str):
         from evaluation.baseline_adapter import BaselineAdapter
 
         return BaselineAdapter(PROJECT_ROOT)
+    if name == "agent":
+        from evaluation.agent_adapter import AgentWorkflowAdapter
+
+        return AgentWorkflowAdapter(PROJECT_ROOT)
     raise ValueError(f"Unknown adapter: {name}")
 
 
@@ -134,7 +138,7 @@ def score_existing(manifest: dict[str, Any], result_path: Path) -> dict[str, Any
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run and score the Plant AI competition evaluation")
     parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
-    parser.add_argument("--adapter", choices=["baseline"], default="baseline")
+    parser.add_argument("--adapter", choices=["baseline", "agent"], default="baseline")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument("--score-results", type=Path)

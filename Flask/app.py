@@ -15,6 +15,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
 
 from accounts import accounts, payment_webhooks, pricing
+from agent_workflow import PlantTriageWorkflow, WorkflowTools
 from ai_diagnosis import diagnose_with_ai, is_ai_available
 from crop_models import CropModelRegistry
 from database import User, bootstrap_admin, db, get_int_setting, seed_defaults
@@ -114,6 +115,7 @@ def create_app(test_config: dict | None = None) -> Flask:
             "local_model": "ready",
             "leaf_validator": "ready",
             "ai_fallback": "ready" if is_ai_available() else "not_configured",
+            "agent_workflow": "ready",
             "database": app.config["DATABASE_BACKEND"],
         }
 
@@ -140,69 +142,32 @@ def create_app(test_config: dict | None = None) -> Flask:
             return _render_upload_error(str(exc), 400)
 
         try:
-            leaf_validation = LEAF_VALIDATOR.validate(image_bytes)
-            if not leaf_validation.is_leaf:
-                logger.info("Rejected non-leaf upload with leaf confidence %.3f", leaf_validation.confidence)
+            outcome = TRIAGE_WORKFLOW.run(
+                image_bytes,
+                mime_type,
+                force_ai=request.form.get("analysis_mode") == "ai",
+            )
+            if outcome.disposition == "reject_non_plant":
+                logger.info(
+                    "Rejected non-leaf upload with leaf confidence %.3f",
+                    outcome.leaf_confidence or 0.0,
+                )
                 return _render_upload_error(
                     "This image does not appear to contain a clear plant leaf. Please upload a close, "
                     "well-lit photograph of a living leaf.",
                     422,
                 )
-            local_candidates = [("Original ResNet34 model", predict_image(image_bytes))]
-            local_candidates.extend(CROP_MODELS.predict_all(image_bytes))
-            local_source, local_prediction = select_local_candidate(image_bytes, local_candidates)
-            result = build_local_result(local_prediction, local_source)
-            result["local_note"] = (
-                f"Plant AI automatically compared {len(local_candidates)} disease models and selected "
-                f"the strongest crop-aware match from {local_source}."
-            )
-            force_ai = request.form.get("analysis_mode") == "ai"
-
-            if force_ai or local_prediction.confidence < LOCAL_CONFIDENCE_THRESHOLD:
-                if is_ai_available():
-                    try:
-                        ai_result = diagnose_with_ai(image_bytes, mime_type)
-                        result = {
-                            "source": "AI-assisted fallback",
-                            "is_ai": True,
-                            "crop": ai_result.plant_name,
-                            "disease": ai_result.likely_condition,
-                            "confidence_text": ai_result.confidence_level.title(),
-                            "summary": ai_result.summary,
-                            "observations": ai_result.visible_observations,
-                            "causes": ai_result.possible_causes,
-                            "actions": ai_result.recommended_next_steps,
-                            "warning": ai_result.uncertainty_note,
-                            "local_note": local_comparison_note(local_prediction, force_ai),
-                        }
-                    except Exception:
-                        logger.exception("AI-assisted fallback failed")
-                        if force_ai and local_prediction.confidence >= LOCAL_CONFIDENCE_THRESHOLD:
-                            result["warning"] = (
-                                "The requested AI-assisted analysis is temporarily unavailable. "
-                                "The closest local-model result is shown instead."
-                            )
-                        else:
-                            result["warning"] = (
-                                "The AI-assisted fallback is temporarily unavailable and the local result is "
-                                "below the acceptance threshold. Please try again or consult a plant specialist."
-                            )
-                else:
-                    if force_ai and local_prediction.confidence >= LOCAL_CONFIDENCE_THRESHOLD:
-                        result["warning"] = (
-                            "AI-assisted analysis was requested but OPENAI_API_KEY is not configured. "
-                            "The closest local-model result is shown instead."
-                        )
-                    else:
-                        result["warning"] = (
-                            "This local prediction is below the acceptance threshold. Configure "
-                        "OPENAI_API_KEY to enable the AI-assisted fallback, or consult a plant specialist."
-                        )
-
-            result["model_votes"] = format_model_votes(local_candidates)
+            result = outcome.result
+            result["workflow_trace"] = outcome.trace
+            if outcome.errors:
+                logger.warning("Plant triage workflow completed with recoverable errors: %s", outcome.errors)
 
             try:
-                history_confidence = None if result["is_ai"] else local_prediction.confidence
+                history_confidence = (
+                    None
+                    if result["is_ai"] or outcome.selected_prediction is None
+                    else outcome.selected_prediction.confidence
+                )
                 record_successful_scan(result, history_confidence)
             except SQLAlchemyError:
                 db.session.rollback()
@@ -380,6 +345,25 @@ def trusted_references() -> list[dict]:
     ]
 
 
+def build_triage_workflow() -> PlantTriageWorkflow:
+    """Build a graph whose tool callbacks resolve current module globals at run time."""
+    return PlantTriageWorkflow(
+        WorkflowTools(
+            validate_leaf=lambda image: LEAF_VALIDATOR.validate(image),
+            predict_original=lambda image: predict_image(image),
+            predict_registered=lambda image: CROP_MODELS.predict_all(image),
+            select_candidate=lambda image, candidates: select_local_candidate(image, candidates),
+            build_local_result=lambda prediction, source: build_local_result(prediction, source),
+            format_model_votes=lambda candidates: format_model_votes(candidates),
+            local_comparison_note=lambda prediction, force_ai: local_comparison_note(prediction, force_ai),
+            ai_available=lambda: is_ai_available(),
+            diagnose_ai=lambda image, mime: diagnose_with_ai(image, mime),
+            local_confidence_threshold=LOCAL_CONFIDENCE_THRESHOLD,
+        )
+    )
+
+
+TRIAGE_WORKFLOW = build_triage_workflow()
 app = create_app()
 
 
