@@ -5,6 +5,9 @@
 > the [problem and success measures](docs/competition/PROBLEM_AND_METRICS.md),
 > the [versioned evaluation harness](evaluation/README.md), and the
 > [Improvement Changelog](docs/competition/IMPROVEMENT_CHANGELOG.md).
+> The judge-ready package is indexed by the [demo script](docs/competition/DEMO_SCRIPT.md),
+> [rubric audit](docs/competition/RUBRIC_AUDIT.md), and
+> [clean-clone guide](docs/competition/REPRODUCIBILITY.md).
 
 Plant AI is a Flask application that screens plant-leaf photos for signs of disease. It combines:
 
