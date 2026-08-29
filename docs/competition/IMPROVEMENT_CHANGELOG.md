@@ -148,6 +148,8 @@ Full comparison: [`EVIDENCE_RETRIEVAL_RESULTS_V2.md`](EVIDENCE_RETRIEVAL_RESULTS
 - What we learned: review state must be explicit in both the UI and trace; a
   warning string alone is not an auditable approval boundary.
 
+Verification artifact: [`results/agent-verification-v2.json`](results/agent-verification-v2.json).
+
 ## Experiment entries
 
 Add one entry per material iteration using this template:

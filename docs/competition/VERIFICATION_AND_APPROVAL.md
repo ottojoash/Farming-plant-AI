@@ -39,3 +39,12 @@ margin is a conservative review signal for materially conflicting model crops.
 Neither threshold proves a disease or image quality. Issue #11 will add
 representative trajectory artifacts, and future calibration work should measure
 these gates against expert-reviewed images.
+
+## Frozen-case check
+
+On the evidence-aware v2 manifest, the verification-enabled agent retained the
+5/13 correct-and-safe rate and 4/13 critical-violation cases from the retrieval
+stage. Seven plant cases were marked `review_required`, two low-confidence cases
+were `blocked` pending context, and two were `review_recommended`; non-plant
+rejections terminate before a checkpoint. The machine-readable trace is
+[`results/agent-verification-v2.json`](results/agent-verification-v2.json).
