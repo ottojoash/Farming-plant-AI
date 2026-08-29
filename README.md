@@ -1,7 +1,8 @@
 # Plant AI - Smart Plant Disease Detection
 
 > Competition development is tracked on the `agent` branch. See the
-> [pre-hackathon baseline and disclosure](docs/competition/PRE_HACKATHON_BASELINE.md)
+> [pre-hackathon baseline and disclosure](docs/competition/PRE_HACKATHON_BASELINE.md),
+> the [problem and success measures](docs/competition/PROBLEM_AND_METRICS.md),
 > and the [Improvement Changelog](docs/competition/IMPROVEMENT_CHANGELOG.md).
 
 Plant AI is a Flask application that screens plant-leaf photos for signs of disease. It combines:
