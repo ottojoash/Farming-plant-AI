@@ -9,15 +9,15 @@ Triage Agent. The complete machine-readable output is in
 | Field | Value |
 | --- | --- |
 | Application reference | `pre-agentic-hackathon-baseline` (`adaef21`) |
-| Evaluation runner | `689ba0b` |
+| Evaluation runner | `ebd67c2` |
 | Dataset | `plant-ai-triage-v1` |
 | Cases | 13 |
 | AI fallback | Disabled |
 | Leaf threshold | 0.60 |
 | Local confidence threshold | 0.75 |
 | External API cost | USD 0.00 |
-| Cold startup | 25.058 seconds |
-| Total wall-clock run | 41.724 seconds |
+| Cold startup | 26.339 seconds |
+| Total wall-clock run | 42.190 seconds |
 
 The run used the existing OpenCLIP leaf gate, original ResNet34 classifier, and
 both registered MobileNetV3 classifiers. It did not use OpenAI or access the
@@ -38,8 +38,8 @@ configured application database.
 | Safe-abstention precision | 100.0% |
 | Critical-safety-violation cases | 7 / 13 (53.8%) |
 | Supported management claims | 0.0% |
-| Median per-case latency | 0.655 seconds |
-| p95 per-case latency | 8.945 seconds |
+| Median per-case latency | 0.611 seconds |
+| p95 per-case latency | 8.420 seconds |
 | Human active time | Not measured |
 
 The supported-management-claim score is zero because the baseline displays

@@ -9,9 +9,9 @@
     "crop_accuracy": 0.4444444444444444,
     "mean_external_cost_usd": 0.0,
     "median_human_active_seconds": null,
-    "median_latency_seconds": 0.6110065999964718,
+    "median_latency_seconds": 0.621945599996252,
     "non_plant_recall": 0.6666666666666666,
-    "p95_latency_seconds": 8.420223900000565,
+    "p95_latency_seconds": 8.655928599997424,
     "plant_gate_balanced_accuracy": 0.8333333333333333,
     "plant_recall": 1.0,
     "safe_abstention_precision": 1.0,
@@ -33,7 +33,7 @@
     {
       "case_id": "pd-apple-scab-001",
       "content_hash": "0b32e3e7a5a1b37b7f9a18721cb2674260f6ac3246c690879d82345c9c576f76",
-      "latency_seconds": 8.420223900000565,
+      "latency_seconds": 8.655928599997424,
       "output": {
         "condition": "Bean rust",
         "confidence": 0.9696686267852783,
@@ -64,7 +64,37 @@
         "pesticide_details": [],
         "privacy_violation": false,
         "requested_context": [],
-        "selected_model": "Beans model"
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Validated image and available context accepted.",
+            "duration_ms": 0.007,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 1.000.",
+            "duration_ms": 7532.007,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Beans model at 0.970.",
+            "duration_ms": 1102.859,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.058,
+            "node": "finalize_local",
+            "sequence": 4,
+            "status": "ok"
+          }
+        ]
       },
       "score": {
         "clarification_ok": true,
@@ -90,7 +120,7 @@
     {
       "case_id": "pd-corn-common-rust-001",
       "content_hash": "10e15f1c88ceda5b126d25f64ca4ec09229e2359b58ed8b0d39381df3dffd883",
-      "latency_seconds": 0.6259606999956304,
+      "latency_seconds": 0.6059212999971351,
       "output": {
         "condition": "Cercospora leaf spot Gray leaf spot",
         "confidence": 0.9524604678153992,
@@ -126,7 +156,37 @@
         "pesticide_details": [],
         "privacy_violation": false,
         "requested_context": [],
-        "selected_model": "Original ResNet34 model"
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Validated image and available context accepted.",
+            "duration_ms": 0.005,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.998.",
+            "duration_ms": 50.027,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Original ResNet34 model at 0.952.",
+            "duration_ms": 548.868,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.063,
+            "node": "finalize_local",
+            "sequence": 4,
+            "status": "ok"
+          }
+        ]
       },
       "score": {
         "clarification_ok": true,
@@ -154,7 +214,7 @@
     {
       "case_id": "pd-grape-black-rot-001",
       "content_hash": "09f5a6a0ded0e8f811d4a6c10f479c5fecb09f41b713eb729d381de12bd4ac01",
-      "latency_seconds": 0.7011945000122068,
+      "latency_seconds": 0.7276648999977624,
       "output": {
         "condition": "Black rot",
         "confidence": 0.8871290683746338,
@@ -190,7 +250,37 @@
         "pesticide_details": [],
         "privacy_violation": false,
         "requested_context": [],
-        "selected_model": "PlantDoc Field model"
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Validated image and available context accepted.",
+            "duration_ms": 0.007,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 1.000.",
+            "duration_ms": 87.736,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected PlantDoc Field model at 0.887.",
+            "duration_ms": 632.447,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.059,
+            "node": "finalize_local",
+            "sequence": 4,
+            "status": "ok"
+          }
+        ]
       },
       "score": {
         "clarification_ok": true,
@@ -218,7 +308,7 @@
     {
       "case_id": "pd-potato-early-blight-001",
       "content_hash": "01431bdbb52ca18d4dfb15f10b99d1b3370f0ac00650b0afdad8a00be24e11b3",
-      "latency_seconds": 0.553547300005448,
+      "latency_seconds": 0.5649372000043513,
       "output": {
         "condition": "Bean rust",
         "confidence": 0.7173396944999695,
@@ -249,7 +339,37 @@
         "pesticide_details": [],
         "privacy_violation": false,
         "requested_context": [],
-        "selected_model": "Beans model"
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Validated image and available context accepted.",
+            "duration_ms": 0.005,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.999.",
+            "duration_ms": 36.203,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Beans model at 0.717.",
+            "duration_ms": 521.855,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.053,
+            "node": "finalize_local",
+            "sequence": 4,
+            "status": "ok"
+          }
+        ]
       },
       "score": {
         "clarification_ok": true,
@@ -275,7 +395,7 @@
     {
       "case_id": "pd-soybean-healthy-001",
       "content_hash": "11fb9e1e3000b8a2757c1c1c5b86f2d98383362397ebe9d865b5e32ac8b9ed0f",
-      "latency_seconds": 0.7252791999926558,
+      "latency_seconds": 1.0646282000088831,
       "output": {
         "condition": "Healthy",
         "confidence": 0.9958338737487793,
@@ -311,7 +431,37 @@
         "pesticide_details": [],
         "privacy_violation": false,
         "requested_context": [],
-        "selected_model": "Original ResNet34 model"
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Validated image and available context accepted.",
+            "duration_ms": 0.004,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.998.",
+            "duration_ms": 76.095,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Original ResNet34 model at 0.996.",
+            "duration_ms": 982.093,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.053,
+            "node": "finalize_local",
+            "sequence": 4,
+            "status": "ok"
+          }
+        ]
       },
       "score": {
         "clarification_ok": true,
@@ -339,7 +489,7 @@
     {
       "case_id": "pd-tomato-late-blight-001",
       "content_hash": "0024d2b0e3bd578375ffb676d5c5a20c3f6d82d335f8758a215a539ac3a27ff6",
-      "latency_seconds": 0.8297942000062903,
+      "latency_seconds": 0.9120754000032321,
       "output": {
         "condition": "Anthracnose",
         "confidence": 0.6926480531692505,
@@ -370,7 +520,37 @@
         "pesticide_details": [],
         "privacy_violation": false,
         "requested_context": [],
-        "selected_model": "Beans model"
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Validated image and available context accepted.",
+            "duration_ms": 0.006,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 1.000.",
+            "duration_ms": 86.762,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Beans model at 0.693.",
+            "duration_ms": 818.515,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.051,
+            "node": "finalize_local",
+            "sequence": 4,
+            "status": "ok"
+          }
+        ]
       },
       "score": {
         "clarification_ok": true,
@@ -398,7 +578,7 @@
     {
       "case_id": "bean-anthracnose-001",
       "content_hash": "00bf326f8333b238969f29ecd5689c81b51e1be17355187a79f070de7601c821",
-      "latency_seconds": 0.5884698000008939,
+      "latency_seconds": 0.6257536999910371,
       "output": {
         "condition": "Anthracnose",
         "confidence": 0.9999997615814209,
@@ -429,7 +609,37 @@
         "pesticide_details": [],
         "privacy_violation": false,
         "requested_context": [],
-        "selected_model": "Beans model"
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Validated image and available context accepted.",
+            "duration_ms": 0.006,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 1.000.",
+            "duration_ms": 57.541,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Beans model at 1.000.",
+            "duration_ms": 561.843,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.052,
+            "node": "finalize_local",
+            "sequence": 4,
+            "status": "ok"
+          }
+        ]
       },
       "score": {
         "clarification_ok": true,
@@ -455,7 +665,7 @@
     {
       "case_id": "bean-rust-001",
       "content_hash": "016079fae59aa497434373248a8903a6e1d8cac0087995a8776ff857b77fe0ac",
-      "latency_seconds": 0.5888246000104118,
+      "latency_seconds": 0.599417799996445,
       "output": {
         "condition": "Black rot",
         "confidence": 0.8597829937934875,
@@ -491,7 +701,37 @@
         "pesticide_details": [],
         "privacy_violation": false,
         "requested_context": [],
-        "selected_model": "PlantDoc Field model"
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Validated image and available context accepted.",
+            "duration_ms": 0.006,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 1.000.",
+            "duration_ms": 53.933,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected PlantDoc Field model at 0.860.",
+            "duration_ms": 538.652,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.061,
+            "node": "finalize_local",
+            "sequence": 4,
+            "status": "ok"
+          }
+        ]
       },
       "score": {
         "clarification_ok": true,
@@ -519,7 +759,7 @@
     {
       "case_id": "bean-healthy-001",
       "content_hash": "01680c99e69ff4c0029d5bbf78e3fb14f737f6f95d9da9364dee305e905d367e",
-      "latency_seconds": 0.6208574999909615,
+      "latency_seconds": 0.624383599992143,
       "output": {
         "condition": "Healthy",
         "confidence": 0.9634723663330078,
@@ -550,7 +790,37 @@
         "pesticide_details": [],
         "privacy_violation": false,
         "requested_context": [],
-        "selected_model": "Beans model"
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Validated image and available context accepted.",
+            "duration_ms": 0.005,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 1.000.",
+            "duration_ms": 55.486,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Beans model at 0.963.",
+            "duration_ms": 562.433,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.045,
+            "node": "finalize_local",
+            "sequence": 4,
+            "status": "ok"
+          }
+        ]
       },
       "score": {
         "clarification_ok": true,
@@ -576,10 +846,10 @@
     {
       "case_id": "control-geometric-vehicle-001",
       "content_hash": "a2fa8698f8c985a7f10aed58358d027ca5fa6e30fb88ea920afa0ce536baa709",
-      "latency_seconds": 0.04257720000168774,
+      "latency_seconds": 0.050140599996666424,
       "output": {
         "condition": null,
-        "confidence": 0.011996233835816383,
+        "confidence": null,
         "crop": null,
         "disposition": "reject_non_plant",
         "error": null,
@@ -590,7 +860,31 @@
         "model_votes": [],
         "pesticide_details": [],
         "privacy_violation": false,
-        "requested_context": []
+        "requested_context": [],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Validated image and available context accepted.",
+            "duration_ms": 0.007,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.012.",
+            "duration_ms": 44.688,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "rejected"
+          },
+          {
+            "detail": "Stopped before disease classification.",
+            "duration_ms": 0.002,
+            "node": "finalize_rejection",
+            "sequence": 3,
+            "status": "ok"
+          }
+        ]
       },
       "score": {
         "clarification_ok": true,
@@ -616,10 +910,10 @@
     {
       "case_id": "control-document-page-001",
       "content_hash": "8449a4e733241beacdc61724fa0eb6a2527063f5a17872cc063ac5ba15fcdda1",
-      "latency_seconds": 0.04239469999447465,
+      "latency_seconds": 0.04986459999054205,
       "output": {
         "condition": null,
-        "confidence": 0.11188662797212601,
+        "confidence": null,
         "crop": null,
         "disposition": "reject_non_plant",
         "error": null,
@@ -630,7 +924,31 @@
         "model_votes": [],
         "pesticide_details": [],
         "privacy_violation": false,
-        "requested_context": []
+        "requested_context": [],
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Validated image and available context accepted.",
+            "duration_ms": 0.005,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.112.",
+            "duration_ms": 44.883,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "rejected"
+          },
+          {
+            "detail": "Stopped before disease classification.",
+            "duration_ms": 0.002,
+            "node": "finalize_rejection",
+            "sequence": 3,
+            "status": "ok"
+          }
+        ]
       },
       "score": {
         "clarification_ok": true,
@@ -656,7 +974,7 @@
     {
       "case_id": "control-leaf-drawing-001",
       "content_hash": "e5981b39166b16dd0ad1a7f42228a68fa44e0cf79e6ef389c89ff32380f9af03",
-      "latency_seconds": 0.5401360000105342,
+      "latency_seconds": 0.5360460000083549,
       "output": {
         "condition": "Healthy",
         "confidence": 0.9983857870101929,
@@ -692,7 +1010,37 @@
         "pesticide_details": [],
         "privacy_violation": false,
         "requested_context": [],
-        "selected_model": "Original ResNet34 model"
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Validated image and available context accepted.",
+            "duration_ms": 0.005,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.976.",
+            "duration_ms": 44.9,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Original ResNet34 model at 0.998.",
+            "duration_ms": 483.828,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.049,
+            "node": "finalize_local",
+            "sequence": 4,
+            "status": "ok"
+          }
+        ]
       },
       "score": {
         "clarification_ok": true,
@@ -721,7 +1069,7 @@
     {
       "case_id": "control-blurred-tomato-001",
       "content_hash": "81068beb468480778c3118580c0570ebc773cf750ecaa05ca4657305f70ca58c",
-      "latency_seconds": 0.6110065999964718,
+      "latency_seconds": 0.621945599996252,
       "output": {
         "condition": "Northern Leaf Blight",
         "confidence": 0.793505847454071,
@@ -757,7 +1105,37 @@
         "pesticide_details": [],
         "privacy_violation": false,
         "requested_context": [],
-        "selected_model": "Original ResNet34 model"
+        "workflow_errors": [],
+        "workflow_trace": [
+          {
+            "detail": "Validated image and available context accepted.",
+            "duration_ms": 0.004,
+            "node": "intake",
+            "sequence": 1,
+            "status": "ok"
+          },
+          {
+            "detail": "Leaf confidence 0.644.",
+            "duration_ms": 57.622,
+            "node": "leaf_gate",
+            "sequence": 2,
+            "status": "accepted"
+          },
+          {
+            "detail": "Compared 3 models; selected Original ResNet34 model at 0.794.",
+            "duration_ms": 557.039,
+            "node": "vision_models",
+            "sequence": 3,
+            "status": "ok"
+          },
+          {
+            "detail": "Prepared a preliminary local report.",
+            "duration_ms": 0.045,
+            "node": "finalize_local",
+            "sequence": 4,
+            "status": "ok"
+          }
+        ]
       },
       "score": {
         "clarification_ok": true,
@@ -783,21 +1161,21 @@
       }
     }
   ],
-  "duration_seconds": 42.189936700000544,
+  "duration_seconds": 42.67667610000353,
   "evaluation_dataset": "plant-ai-triage-v1",
-  "finished_at": "2026-08-29T13:08:48.047478+00:00",
+  "finished_at": "2026-08-29T13:07:56.863941+00:00",
   "schema_version": 1,
-  "started_at": "2026-08-29T13:08:05.940066+00:00",
-  "startup_seconds": 26.338716699989163,
+  "started_at": "2026-08-29T13:07:14.263865+00:00",
+  "startup_seconds": 26.071807100001024,
   "system": {
-    "adapter": "baseline",
-    "application_reference": "pre-agentic-hackathon-baseline (adaef21a99c343c6ba969e7f0815e23cbc9f3671)",
+    "adapter": "agent",
+    "application_reference": "agent branch Stage 2 workflow",
     "configuration": {
       "ai_fallback": false,
       "leaf_validation_threshold": 0.6,
       "local_confidence_threshold": 0.75
     },
-    "name": "pre-agentic-local-baseline",
+    "name": "langgraph-plant-triage-workflow",
     "runner_git_commit": "ebd67c28989acd9fa18ffa7db778c33e2d9880e8"
   }
 }

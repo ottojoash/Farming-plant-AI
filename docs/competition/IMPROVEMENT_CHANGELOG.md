@@ -14,7 +14,7 @@ used in competition claims.
 | Primary metric | 4/13 correct and safe cases (30.8%; 95% Wilson interval 12.7%-57.6%) |
 | Versioned evaluation cases | `plant-ai-triage-v1` (13 cases) |
 | Human time | Not measured |
-| Runtime per evaluated case | Median 0.655 seconds; p95 8.945 seconds; cold startup 25.058 seconds |
+| Runtime per evaluated case | Median 0.611 seconds; p95 8.420 seconds; cold startup 26.339 seconds |
 | External API cost | USD 0.00 (AI fallback disabled) |
 
 The regression-suite result proves that the existing application behavior passed
@@ -25,7 +25,7 @@ Full evaluation details: [`BASELINE_RESULTS_V1.md`](BASELINE_RESULTS_V1.md) and
 
 ## 2026-08-29 - Freeze evaluation v1 and measure the local baseline
 
-- Commit/configuration: evaluation runner `689ba0b`; application reference
+- Commit/configuration: evaluation runner `ebd67c2`; application reference
   `pre-agentic-hackathon-baseline` (`adaef21`); AI fallback disabled.
 - Hypothesis: the existing regression tests do not demonstrate reliable and safe
   field triage.
@@ -35,8 +35,8 @@ Full evaluation details: [`BASELINE_RESULTS_V1.md`](BASELINE_RESULTS_V1.md) and
 - Primary metric result: 4/13 (30.8%) correct and safe cases.
 - Secondary results: 44.4% crop accuracy, 44.4% condition accuracy, 83.3%
   plant-gate balanced accuracy, and 53.8% critical-safety-violation case rate.
-- Human time, runtime, and API cost: human time not measured; 0.655-second
-  median and 8.945-second p95 per-case latency; USD 0.00 external API cost.
+- Human time, runtime, and API cost: human time not measured; 0.611-second
+  median and 8.420-second p95 per-case latency; USD 0.00 external API cost.
 - Regressions/failures: a generated leaf drawing was classified as blueberry; a
   blurred tomato image was classified as corn; six cases showed uncited static
   management guidance; a required human-review gate was absent.
@@ -45,6 +45,30 @@ Full evaluation details: [`BASELINE_RESULTS_V1.md`](BASELINE_RESULTS_V1.md) and
 - What we learned: automatic multi-model comparison is not sufficient when
   independently trained confidence scores compete, and a semantic leaf gate can
   still accept leaf-shaped artwork. Safety and evidence must be explicit stages.
+
+## 2026-08-29 - Add typed LangGraph orchestration
+
+- Commit/configuration: application `64c40a9`; offline evaluation configuration
+  `ebd67c2`; AI fallback disabled.
+- Hypothesis: explicit conditional orchestration will improve control,
+  observability, and safe failure, but will not by itself fix model quality.
+- Change: introduced typed shared state, eight graph nodes, conditional routing,
+  two bounded AI attempts, safe tool-failure escalation, and sanitized traces.
+- Evaluation dataset version: `plant-ai-triage-v1`.
+- Primary metric result: 4/13 (30.8%), identical to baseline.
+- Secondary results: crop and condition accuracy remained 44.4%; all 13 agent
+  cases produced structured traces; safety-violation rate remained 53.8%.
+- Human time, runtime, and API cost: human time not measured; 0.622-second
+  median and 8.656-second p95 per-case latency; USD 0.00 external API cost.
+- Regressions/failures: no quality regression; the first pre-fix run revealed a
+  model-hub/cache delay through a 1,895-second leaf-gate trace. Evaluation now
+  uses the verified local model cache without network checks.
+- Decision: keep the orchestration foundation. Do not claim a quality gain.
+- What we learned: an agent framework makes failures inspectable and containable,
+  but context, evidence retrieval, and independent verification are the parts
+  expected to improve correct-and-safe triage.
+
+Full comparison: [`AGENT_ORCHESTRATION_RESULTS_V1.md`](AGENT_ORCHESTRATION_RESULTS_V1.md).
 
 ## Experiment entries
 
