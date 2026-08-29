@@ -52,8 +52,10 @@ def validate_assets(manifest: dict[str, Any]) -> list[dict[str, str]]:
 
 
 def run_evaluation(manifest: dict[str, Any], adapter_name: str) -> dict[str, Any]:
-    adapter = _adapter(adapter_name)
     started = datetime.now(timezone.utc)
+    timer_started = time.perf_counter()
+    adapter = _adapter(adapter_name)
+    startup_seconds = time.perf_counter() - timer_started
     cases = []
     for case in manifest["cases"]:
         image_bytes, digest = materialize_asset(case["asset"], PROJECT_ROOT)
@@ -101,7 +103,8 @@ def run_evaluation(manifest: dict[str, Any], adapter_name: str) -> dict[str, Any
         },
         "started_at": started.isoformat(),
         "finished_at": finished.isoformat(),
-        "duration_seconds": (finished - started).total_seconds(),
+        "startup_seconds": startup_seconds,
+        "duration_seconds": time.perf_counter() - timer_started,
         "cases": cases,
         "aggregate": aggregate(cases),
     }
