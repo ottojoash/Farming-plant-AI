@@ -38,4 +38,3 @@ Add one entry per material iteration using this template:
 - Decision: keep, revise, or remove
 - What we learned:
 ```
-
