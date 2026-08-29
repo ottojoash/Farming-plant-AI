@@ -105,7 +105,9 @@ Full comparison: [`CONTEXT_MEMORY_RESULTS_V1.md`](CONTEXT_MEMORY_RESULTS_V1.md).
   sources will remove unsupported management claims and improve safe triage.
 - Change: added a hashed local corpus, deterministic LangGraph retrieval node,
   claim-level source IDs/links, regional scope notes, paid-record provenance,
-  additive MariaDB/SQLite columns, and unsupported-crop fallback.
+  additive MariaDB/SQLite columns, and unsupported-crop fallback. Removed the
+  legacy unscoped known-class management block from final reports; it is now
+  omitted unless claim-level approved evidence is available.
 - Evaluation dataset version: `plant-ai-triage-v2-evidence` (same 13 assets and
   labels as v1, with approved source IDs added to expected disease cases).
 - Primary metric result: 5/13 (38.5%), up from the comparable baseline's 4/13
