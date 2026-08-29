@@ -113,6 +113,13 @@ def run_evaluation(manifest: dict[str, Any], adapter_name: str) -> dict[str, Any
 def score_existing(manifest: dict[str, Any], result_path: Path) -> dict[str, Any]:
     result = json.loads(result_path.read_text(encoding="utf-8"))
     by_id = {case["id"]: case for case in manifest["cases"]}
+    result_ids = [item["case_id"] for item in result["cases"]]
+    if len(result_ids) != len(set(result_ids)):
+        raise ValueError("Result case IDs must be unique")
+    missing = sorted(set(by_id) - set(result_ids))
+    unknown = sorted(set(result_ids) - set(by_id))
+    if missing or unknown:
+        raise ValueError(f"Results must contain every manifest case; missing={missing}, unknown={unknown}")
     scored = []
     for item in result["cases"]:
         case = by_id[item["case_id"]]

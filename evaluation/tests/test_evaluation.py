@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from pathlib import Path
+import json
 
 from evaluation.assets import generated_asset
-from evaluation.run import DEFAULT_MANIFEST, load_manifest
+from evaluation.run import DEFAULT_MANIFEST, load_manifest, score_existing
 from evaluation.scoring import aggregate, score_case, wilson_interval
 
 
@@ -78,3 +78,18 @@ def test_aggregate_reports_full_count_and_interval():
     assert report["cases_completed"] == 1
     assert report["correct_and_safe_triage_rate"] == 0.5
     assert report["wilson_95_interval"] == wilson_interval(1, 2)
+
+
+def test_rescoring_refuses_incomplete_results(tmp_path):
+    manifest = load_manifest(DEFAULT_MANIFEST)
+    path = tmp_path / "partial.json"
+    path.write_text(
+        json.dumps({"cases": [{"case_id": manifest["cases"][0]["id"], "output": {}}]}),
+        encoding="utf-8",
+    )
+    try:
+        score_existing(manifest, path)
+    except ValueError as exc:
+        assert "missing=" in str(exc)
+    else:
+        raise AssertionError("Incomplete result files must not be scored")
